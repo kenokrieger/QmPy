@@ -32,17 +32,17 @@ def _read_schrodinger(inputfilepath):
         msg = "Input file could not be read, please check the file permissions"
         print(msg)
         raise PermissionError
-    mass = list(schrodingerslist[0].spilt(" "))[0]
-    x_min = list(schrodingerslist[1].spilt(" "))[0]
-    x_max = list(schrodingerslist[1].spilt(" "))[1]
-    nPoint = list(schrodingerslist[1].spilt(" "))[2]
-    first_EV = list(schrodingerslist[2].spilt(" "))[0]
-    last_EV = list(schrodingerslist[2].spilt(" "))[1]
-    interpol_type = list(schrodingerslist[3].spilt(" "))[0]
-    interpol_num = list(schrodingerslist[4].spilt(" "))[0]
+    mass = float(list(schrodingerslist[0].spilt(" "))[0])
+    xmin = float(list(schrodingerslist[1].spilt(" "))[0])
+    xmax = float(list(schrodingerslist[1].spilt(" "))[1])
+    nPoint = int(list(schrodingerslist[1].spilt(" "))[2])
+    firstEV = int(list(schrodingerslist[2].spilt(" "))[0])
+    lastEV = int(list(schrodingerslist[2].spilt(" "))[1])
+    interpoltype = list(schrodingerslist[3].spilt(" "))[0]
+    interpolnum = int(list(schrodingerslist[4].spilt(" "))[0])
     xy_dec = list()
     for ii in range(5, len(schrodingerslist)):
         xy_dec.append(list(schrodingerslist[ii].split(" ")))
-    interpol_xy_decs = np.array(xy_dec)
-    return mass, x_min, x_max, nPoint, first_EV, last_EV, interpol_type,
-    interpol_num, interpol_xy_decs
+    new_xy_dec = np.array(xy_dec)
+    interpolxydecs = new_xy_dec.astype(np.float)
+    return mass, xmin, xmax, nPoint, firstEV, lastEV, interpoltype, interpolnum, interpolxydecs
