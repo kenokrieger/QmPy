@@ -1,2 +1,4 @@
 .spyproject/
 Thumbs.db
+.pytest_cache/
+__pycache__/
