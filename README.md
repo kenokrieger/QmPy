@@ -1,6 +1,6 @@
 # QmPy
 
-QmPy is a python module containing routines to numerically solve and visualize
+QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials.
 
 ## Status

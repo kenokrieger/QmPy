@@ -17,6 +17,9 @@ def infwell(n, L, m):
 #harmonic oscillator
 def osci(n, m, omega, hbar=1):
     def wfunc(x):
-        func = str(psi_n(n, x,m ,omega)).replace('hbar', '1')
+        func = str(psi_n(n, x, m, omega)).replace('hbar', '1')
         return eval(func)  
     return wfunc
+
+
+
