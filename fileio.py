@@ -15,14 +15,23 @@ def _read_schrodinger(inputfilepath):
         inputfilepath: Path of the file which is going to be read
 
     Raises:
-        FileNotFoundError: (Needs to be added) If input file could not be found
-        PermissionError: (Needs to be added)
+        FileNotFoundError: If input file could not be found
+        PermissionError: If input file could not be read
 
     Returns:
         The different parameters: mass, x_min, x_max, nPoint, first_EV,
         last_EV, interpol_type, interpol_num, and interpol_xy_decs
     """
-    schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath)]
+    try:
+        schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath)]
+    except FileNotFoundError:
+        msg = "Input file or path was not found"
+        print(msg)
+        raise FileNotFoundError
+    except PermissionError:
+        msg = "Input file could not be read, please check the file permissions"
+        print(msg)
+        raise PermissionError
     mass = list(schrodingerslist[0].spilt(" "))[0]
     x_min = list(schrodingerslist[1].spilt(" "))[0]
     x_max = list(schrodingerslist[1].spilt(" "))[1]
