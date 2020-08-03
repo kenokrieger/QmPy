@@ -57,7 +57,7 @@ def _linear(x, y):
     return intfunc
 
 
-def _cspline(x, y)
+def _cspline(x, y):
     """
     Uses natural cubic spline interpolation to find a function matching
     a dataset.
@@ -70,11 +70,11 @@ def _cspline(x, y)
         intfunc (PPoly): The interpolated function.    
         
     """
-    infunc = CubicSpline(x, y)
+    intfunc = CubicSpline(x, y)
     return intfunc
 
 
-def _poly(x, y)
+def _poly(x, y):
     """
     Uses polynomial interpolation to find a function matching
     a dataset.
@@ -87,7 +87,7 @@ def _poly(x, y)
         intfunc (PPoly): The interpolated function.    
         
     """
-    infunc = KroghInterpolator(x, y)
+    intfunc = KroghInterpolator(x, y)
     return intfunc    
 
 
@@ -126,7 +126,4 @@ def _geny(x, func):
     """
     y = func(x)
     return y
-    
-    
-    
     
