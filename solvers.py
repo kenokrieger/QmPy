@@ -18,7 +18,7 @@ def schroedinger(mass, xcords, potential):
         energies (1darray): The energy levels of each wavefunctions. The
             entries correspond to the rows in wfuncs.
         wfuncs (ndarray): Array where each row contains the numerical value
-            of a computed wavefunction. Each row corresponds to one
+            of a computed wavefunction. Each column corresponds to one
             x-coordinate of the input array.
 
     """
