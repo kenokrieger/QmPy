@@ -35,10 +35,10 @@ def _read_schrodinger(inputfilepath):
     mass = float(list(schrodingerslist[0].spilt(" "))[0])
     xmin = float(list(schrodingerslist[1].spilt(" "))[0])
     xmax = float(list(schrodingerslist[1].spilt(" "))[1])
-    nPoint = int(list(schrodingerslist[1].spilt(" "))[2])
-    xopt = (xmin, xmax, nPoint)
-    firstEV = int(list(schrodingerslist[2].spilt(" "))[0])
-    lastEV = int(list(schrodingerslist[2].spilt(" "))[1])
+    npoint = int(list(schrodingerslist[1].spilt(" "))[2])
+    xopt = (xmin, xmax, npoint)
+    first_ev = int(list(schrodingerslist[2].spilt(" "))[0])
+    last_ev = int(list(schrodingerslist[2].spilt(" "))[1])
     interpoltype = list(schrodingerslist[3].spilt(" "))[0]
     interpolnum = int(list(schrodingerslist[4].spilt(" "))[0])
     xy_dec = list()
@@ -46,5 +46,5 @@ def _read_schrodinger(inputfilepath):
         xy_dec.append(list(schrodingerslist[ii].split(" ")))
     new_xy_dec = np.array(xy_dec)
     interpolxydecs = new_xy_dec.astype(np.float)
-    return (mass, xmin, xmax, nPoint, xopt, firstEV, lastEV, interpoltype,
+    return (mass, xmin, xmax, npoint, xopt, first_ev, last_ev, interpoltype,
             interpolnum, interpolxydecs)

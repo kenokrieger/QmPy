@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Tests for the private _interpolation module"""
-from _interpolation import _interpolate
+
 from numpy import array, arange, allclose
 import pytest
+from _interpolation import _interpolate
 
 POINTS = [5, 10, 100, 1000, 5000, 10000]
 XSHAPE = array([0, 7, 25, 100, 150])
@@ -10,40 +11,40 @@ YSHAPE = array([-5, 3, 25, -5.5, 10])
 KINDS = ['linear', 'cspline', 'polynomial']
 
 
-@pytest.mark.parametrize('n', POINTS)
-def test_shape_lin(n):
+@pytest.mark.parametrize('nn', POINTS)
+def test_shape_lin(nn):
     """Tests whether computed arrays have the correct shape"""
-    xopt = (0, 150, n)
+    xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt)
 
     if xint.shape != yint.shape:
         assert xint.shape != yint.shape
     else:
-        assert xint.shape[0] == n and yint.shape[0] == n
+        assert xint.shape[0] == nn and yint.shape[0] == nn
 
 
-@pytest.mark.parametrize('n', POINTS)
-def test_shape_cspline(n):
+@pytest.mark.parametrize('nn', POINTS)
+def test_shape_cspline(nn):
     """Tests whether computed arrays have the correct shape"""
-    xopt = (0, 150, n)
+    xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='cspline')
 
     if xint.shape != yint.shape:
         assert xint.shape != yint.shape
     else:
-        assert xint.shape[0] == n and yint.shape[0] == n
+        assert xint.shape[0] == nn and yint.shape[0] == nn
 
 
-@pytest.mark.parametrize('n', POINTS)
-def test_shape_poly(n):
+@pytest.mark.parametrize('nn', POINTS)
+def test_shape_poly(nn):
     """Tests whether computed arrays have the correct shape"""
-    xopt = (0, 150, n)
+    xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='polynomial')
 
     if xint.shape != yint.shape:
         assert xint.shape != yint.shape
     else:
-        assert xint.shape[0] == n and yint.shape[0] == n
+        assert xint.shape[0] == nn and yint.shape[0] == nn
 
 
 @pytest.mark.parametrize('kind', KINDS)

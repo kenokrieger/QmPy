@@ -62,7 +62,3 @@ if __name__ == '__main__':
     np.savetxt('test_data/wfuncs_osci.ref', wfuncs)
     np.savetxt('test_data/energies_osci.ref', np.array(energies))
     """
-
-
-
-
