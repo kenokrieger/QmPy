@@ -45,4 +45,5 @@ def _read_schrodinger(inputfilepath):
         xy_dec.append(list(schrodingerslist[ii].split(" ")))
     new_xy_dec = np.array(xy_dec)
     interpolxydecs = new_xy_dec.astype(np.float)
-    return mass, xmin, xmax, nPoint, firstEV, lastEV, interpoltype, interpolnum, interpolxydecs
+    return (mass, xmin, xmax, nPoint, firstEV, lastEV, interpoltype,
+            interpolnum, interpolxydecs)
