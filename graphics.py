@@ -18,7 +18,33 @@ def QM_Plottings(dirname):
         Plots of the potential, the eigenvalues and the respective
     wave functions
     """
-    potdata, energiesdata, wavefuncsdata, expvaluesdata = _readplotsfiles(dirname)
+    potdata, energdata, wfuncsdata, expvaldata = _readplotsfiles(dirname)
+    # Isolate x coordinates from potdata array
+    xcoordslist = []
+    for ii in range(0, len(potdata)):
+        elementsx = potdata[ii]
+        xcoords = elementsx[0]
+        xcoordslist.append(xcoords)
+    xcoordsarray = np.array(xcoordslist)
+
+    # Isolate potentials from potdata array
+    potslist = []
+    for ii in range(0, len(potdata)):
+        elementspot = potdata[ii]
+        pots = elementspot[1]
+        potslist.append(pots)
+    potsarray = np.array(potslist)
+
+    # Isolate wave functions from wfuncsdata array
+    wfuncslist = []
+    for ii in range(0, len(potdata)):
+        elementswfunc = wfuncsdata[ii]
+        wfuncs = list(elementswfunc)
+        wfuncs.remove(elementswfunc[0])
+        wfuncslist.append(wfuncs)
+    wfuncsarray = np.array(wfuncslist)
+
+    # Isolate expected values from expvaldata array
 
 
 
@@ -42,7 +68,7 @@ def _readplotsfiles(dirname):
     wavefuncspath = os.path.join(dirname, "wavefuncs.dat")
     expvaluespath = os.path.join(dirname, "expvalues.dat")
     potdata =  np.loadtxt(potpath)
-    energiesdata = np.loadtxt(energiespath)
-    wavefuncsdata = np.loadtxt(wavefuncspath)
-    expvaluesdata = np.loadtxt(expvaluespath)
-    return potdata, energiesdata, wavefuncsdata, expvaluesdata
+    energdata = np.loadtxt(energiespath)
+    wfuncsdata = np.loadtxt(wavefuncspath)
+    expvaldata = np.loadtxt(expvaluespath)
+    return potdata, energdata, wfuncsdata, expvaldata
