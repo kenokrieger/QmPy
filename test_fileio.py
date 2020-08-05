@@ -10,13 +10,14 @@ TESTDATADIR = "test_data"
 def test_inf_potwell():
     """Tests the _read_schrodinger function for the infinite potential well"""
     datapath = os.path.join(TESTDATADIR, "inf_potwell")
-    (mass, xmin, xmax, nPoint, firstEV, lastEV, interpoltype,
+    (mass, xmin, xmax, nPoint, xopt, firstEV, lastEV, interpoltype,
      interpolnum, interpolxydecs) =_read_schrodinger(datapath)
     expected_interpolxydecs = np.array([[-2.0, 0.0], [2.0, 0.0]], dtype=float)
     assert mass == 2.0
     assert xmin == -2.0
     assert xmax == 2.0
     assert nPoint == 1999
+    assert xopt == (-2.0, 2.0, 1999)
     assert firstEV == 1
     assert lastEV == 5
     assert interpoltype == "linear"
@@ -26,7 +27,7 @@ def test_inf_potwell():
 def test_asym_potwell():
     """Tests the _read_schrodinger function for the asymetric potential well"""
     datapath = os.path.join(TESTDATADIR, "asym_potwell")
-    (mass, xmin, xmax, nPoint, firstEV, lastEV, interpoltype,
+    (mass, xmin, xmax, nPoint, xopt, firstEV, lastEV, interpoltype,
      interpolnum, interpolxydecs) =_read_schrodinger(datapath)
     expected_interpolxydecs = np.array([[0.0, 30.0], [1.0, 11.8], [2.0, 1.7],
                                         [3.0, 0.0], [5.0, 0.6], [7.0, 1.6],
@@ -37,6 +38,7 @@ def test_asym_potwell():
     assert xmin == 0.0
     assert xmax == 20.0
     assert nPoint == 1999
+    assert xopt == (0.0, 20.0, 1999)
     assert firstEV == 1
     assert lastEV == 7
     assert interpoltype == "cspline"
@@ -46,7 +48,7 @@ def test_asym_potwell():
 def test_harm_osci():
     """Tests the _read_schrodinger function for the asymetric potential well"""
     datapath = os.path.join(TESTDATADIR, "asym_potwell")
-    (mass, xmin, xmax, nPoint, firstEV, lastEV, interpoltype,
+    (mass, xmin, xmax, nPoint, xopt, firstEV, lastEV, interpoltype,
      interpolnum, interpolxydecs) =_read_schrodinger(datapath)
     expected_interpolxydecs = np.array([[-1.0, 0.5], [0.0, 0.0], [1.0, 0.5]],
                                         dtype=float)
@@ -54,6 +56,7 @@ def test_harm_osci():
     assert xmin == -5.0
     assert xmax == 5.0
     assert nPoint == 1999
+    assert xopt == (-5.0, 5.0, 1999)
     assert firstEV == 1
     assert lastEV == 5
     assert interpoltype == "polynomial"
