@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-import numpy as np
+""" Contains functions for plotting the  potential, the eigenvalues and the
+    respective wave functions as well as the expected values for each
+    eigenvalue from the files that contain the solution of the problem.
+"""
 import os
+import numpy as np
 import matplotlib.pyplot as plt
 
-def QM_Plottings(dirname):
+def qm_plottings(dirname):
     """Plots the potential, the eigenvalues and the respective
     wave functions as well as the expected values for each eigenvalue
     from the files that contain the solution of the problem
@@ -57,7 +61,7 @@ def _readplotsfiles(dirname):
     energiespath = os.path.join(dirname, "energies.dat")
     wavefuncspath = os.path.join(dirname, "wavefuncs.dat")
     expvaluespath = os.path.join(dirname, "expvalues.dat")
-    potdata =  np.loadtxt(potpath)
+    potdata = np.loadtxt(potpath)
     energdata = np.loadtxt(energiespath)
     wfuncsdata = np.loadtxt(wavefuncspath)
     expvaldata = np.loadtxt(expvaluespath)
@@ -129,5 +133,5 @@ def _isolate_plot_data(dirname):
         uncertainitylist.append(expvals)
     uncertainityarray = np.array(uncertainitylist)
 
-
-    return xcoordsarray, potsarray, energarray, wfuncsarray, expvalsarray, uncertainityarray
+    return (xcoordsarray, potsarray, energarray, wfuncsarray, expvalsarray,
+            uncertainityarray)
