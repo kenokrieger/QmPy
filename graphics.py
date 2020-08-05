@@ -18,11 +18,25 @@ def QM_Plottings(dirname):
         Plots of the potential, the eigenvalues and the respective
     wave functions
     """
-    (xcoordsarray, potsarray, energarray,
-     wfuncsarray, expvalsarray) = _isolate_plot_data(dirname)
-
-
-
+    (xcoordsarray, potsarray, energarray, wfuncsarray,
+     expvalsarray, uncertainityarray) = _isolate_plot_data(dirname)
+    plt.subplot(1, 2, 1)
+    plt.xlabel("x [Bohr]")
+    plt.ylabel("Energy [Hartree]")
+    plt.title("Potential, eigenstates, <x>")
+    plt.plot(xcoordsarray, potsarray, color="black") # Potential
+    for ii in range(0, len(wfuncsarray[0])): # Wave functions (eigenstates)
+        plt.plot(xcoordsarray, wfuncsarray[:, ii])
+    for ii in range(0, len(energarray)): # Energies (Eigenvalues)
+        plt.plot(xcoordsarray, energarray[ii], color="grey")
+    # First subpolt still needs a expected value plot
+    plt.subplot(1, 2, 2)
+    plt.xlabel("x [Bohr]")
+    plt.ylabel("Energy [Hartree]")
+    plt.title("sigma x") # This still needs latex code version
+    for ii in range(0, len(energarray)): # Energies (Eigenvalues)
+        plt.plot(xcoordsarray, energarray[ii], color="grey")
+    # This part needs the sigma x plots
 
 def _readplotsfiles(dirname):
     """Reads the files and exports the data needed to use the QM_Plottings
@@ -102,8 +116,18 @@ def _isolate_plot_data(dirname):
     for ii in range(0, len(expvaldata)):
         elementsexpval = expvaldata[ii]
         expvals = list(elementsexpval)
-        expvals.remove(elementsexpval[0])
+        expvals.remove(elementsexpval[1])
         expvallist.append(expvals)
     expvalsarray = np.array(expvallist)
 
-    return xcoordsarray, potsarray, energarray, wfuncsarray, expvalsarray
+    # Isolate uncetainity from expvaldata array
+    uncertainitylist = []
+    for ii in range(0, len(expvaldata)):
+        elementsuncertainity = expvaldata[ii]
+        uncertains = list(elementsuncertainity)
+        uncertains.remove(elementsuncertainity[0])
+        uncertainitylist.append(expvals)
+    uncertainityarray = np.array(uncertainitylist)
+
+
+    return xcoordsarray, potsarray, energarray, wfuncsarray, expvalsarray, uncertainityarray
