@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 #infinite well
 def infwell(n, L, m):
     energy = n ** 2 * pi ** 2 / (2 * m * L ** 2)
-    if n%2:
+    if n % 2:
         def wfunc(x):
             return sqrt(2 / L) * sin(n * pi / L * x)
     else:

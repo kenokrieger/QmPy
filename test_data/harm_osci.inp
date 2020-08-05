@@ -1,0 +1,8 @@
+4.0 # mass
+-5.0 5.0 1999 # xMin xMax nPoint
+1 5 # first and last eigenvalue to print
+polynomial # interpolation type
+3 # nr. of interpolation points and xy declarations
+-1.0 0.5
+0.0 0.0
+1.0 0.5
