@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 def QM_Plottings(dirname):
     """Plots the potential, the eigenvalues and the respective
-    wave functions from the files that contain the solution
-    of the problem
+    wave functions as well as the expected values for each eigenvalue
+    from the files that contain the solution of the problem
 
     Args:
         dirname: Name of the directory or path from which
@@ -18,33 +18,9 @@ def QM_Plottings(dirname):
         Plots of the potential, the eigenvalues and the respective
     wave functions
     """
-    potdata, energdata, wfuncsdata, expvaldata = _readplotsfiles(dirname)
-    # Isolate x coordinates from potdata array
-    xcoordslist = []
-    for ii in range(0, len(potdata)):
-        elementsx = potdata[ii]
-        xcoords = elementsx[0]
-        xcoordslist.append(xcoords)
-    xcoordsarray = np.array(xcoordslist)
+    (xcoordsarray, potsarray, energarray,
+     wfuncsarray, expvalsarray) = _isolate_plot_data(dirname)
 
-    # Isolate potentials from potdata array
-    potslist = []
-    for ii in range(0, len(potdata)):
-        elementspot = potdata[ii]
-        pots = elementspot[1]
-        potslist.append(pots)
-    potsarray = np.array(potslist)
-
-    # Isolate wave functions from wfuncsdata array
-    wfuncslist = []
-    for ii in range(0, len(potdata)):
-        elementswfunc = wfuncsdata[ii]
-        wfuncs = list(elementswfunc)
-        wfuncs.remove(elementswfunc[0])
-        wfuncslist.append(wfuncs)
-    wfuncsarray = np.array(wfuncslist)
-
-    # Isolate expected values from expvaldata array
 
 
 
@@ -72,3 +48,62 @@ def _readplotsfiles(dirname):
     wfuncsdata = np.loadtxt(wavefuncspath)
     expvaldata = np.loadtxt(expvaluespath)
     return potdata, energdata, wfuncsdata, expvaldata
+
+def _isolate_plot_data(dirname):
+    """ Isolates the necessary data to plot the potential, the eigenvalues
+    and the respective wave functions as well as the expected values
+    for each eigenvalue
+
+    Args:
+        dirname: Name of the directory or path from which
+        the files are going to be ploted. The directory must have
+        the four following files: potential.dat, energies.dat,
+        wavefuncs.dat, and expvalues.dat.
+
+    Return:
+        xcoordsarray
+        potsarray
+        energarray
+        wfuncsarray
+        expvalsarray
+
+    """
+    potdata, energdata, wfuncsdata, expvaldata = _readplotsfiles(dirname)
+    # Isolate x coordinates from potdata array
+    xcoordslist = []
+    for ii in range(0, len(potdata)):
+        elementsx = potdata[ii]
+        xcoords = elementsx[0]
+        xcoordslist.append(xcoords)
+    xcoordsarray = np.array(xcoordslist)
+
+    # Isolate potentials from potdata array
+    potslist = []
+    for ii in range(0, len(potdata)):
+        elementspot = potdata[ii]
+        pots = elementspot[1]
+        potslist.append(pots)
+    potsarray = np.array(potslist)
+
+    # Energdata has already the wished form
+    energarray = energdata
+
+    # Isolate wave functions from wfuncsdata array
+    wfuncslist = []
+    for ii in range(0, len(potdata)):
+        elementswfunc = wfuncsdata[ii]
+        wfuncs = list(elementswfunc)
+        wfuncs.remove(elementswfunc[0])
+        wfuncslist.append(wfuncs)
+    wfuncsarray = np.array(wfuncslist)
+
+    # Isolate expected values from expvaldata array
+    expvallist = []
+    for ii in range(0, len(expvaldata)):
+        elementsexpval = expvaldata[ii]
+        expvals = list(elementsexpval)
+        expvals.remove(elementsexpval[0])
+        expvallist.append(expvals)
+    expvalsarray = np.array(expvallist)
+
+    return xcoordsarray, potsarray, energarray, wfuncsarray, expvalsarray
