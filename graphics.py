@@ -12,7 +12,7 @@ def QM_Plottings(dirname):
         dirname: Name of the directory or path from which
         the files are going to be ploted. The directory must have
         the four following files: potential.dat, energies.dat,
-        wfuncs.dat, and expvalues.dat.
+        wavefuncs.dat, and expvalues.dat.
 
 
     Return:
