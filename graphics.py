@@ -27,7 +27,7 @@ def qm_plottings(dirname):
     plt.subplot(1, 2, 1)
     plt.xlabel("x [Bohr]")
     plt.ylabel("Energy [Hartree]")
-    plt.title("Potential, eigenstates, <x>")
+    plt.title( r'Potential, eigenstates, $ \langle x \rangle $')
     plt.plot(xcoordsarray, potsarray, color="black") # Potential
     for ii in range(0, len(wfuncsarray[0])): # Wave functions (eigenstates)
         plt.plot(xcoordsarray, wfuncsarray[:, ii])
@@ -40,7 +40,7 @@ def qm_plottings(dirname):
     plt.subplot(1, 2, 2)
     plt.xlabel("x [Bohr]")
     plt.ylabel("Energy [Hartree]")
-    plt.title("sigma x") # This still needs latex code version
+    plt.title(r'$\sigma_{x}$')
     for ii in range(0, len(energarray)): # Energies (Eigenvalues)
         plt.plot(xcoordsarray, energarray[ii], color="grey")
     for ii in range(0, len(uncertainityarray)): # expected value plot
