@@ -9,17 +9,21 @@ def schroedinger(mass, xcords, potential):
     values of a potential.
 
     Args:
+
         mass (float): The mass of the system in atomic units.
         xcords (1darray): X-coordinates corresponding to the potential
             values.
         potential (1darray): Numerical values of the potential.
 
     Returns:
-        energies (1darray): The energy levels of each wavefunctions. The
-            entries correspond to the rows in wfuncs.
-        wfuncs (ndarray): Array where each row contains the numerical value
-            of a computed wavefunction. Each column corresponds to one
-            x-coordinate of the input array.
+        touple: ``energies, wfuncs``
+
+            - **energies** (*1darray*) - The energy levels of each wavefunctions.
+              The entries correspond to the rows in wfuncs.
+
+            - **wfuncs** (*ndarray*) - Array where each row contains the numerical
+              value of a computed wavefunction. Each column corresponds to one
+              x-coordinate of the input array.
 
     """
     step = np.abs(xcords[0] - xcords[-1]) / len(xcords)
