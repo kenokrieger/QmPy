@@ -33,14 +33,20 @@ def qm_plottings(dirname):
         plt.plot(xcoordsarray, wfuncsarray[:, ii])
     for ii in range(0, len(energarray)): # Energies (Eigenvalues)
         plt.plot(xcoordsarray, energarray[ii], color="grey")
-    # First subpolt still needs a expected value plot
+    for ii in range(0, len(expvalsarray)): # expected value plot
+        plt.scatter(expvalsarray[ii], energarray[ii], color="green",
+                    marker="x")
+    plt.show()
     plt.subplot(1, 2, 2)
     plt.xlabel("x [Bohr]")
     plt.ylabel("Energy [Hartree]")
     plt.title("sigma x") # This still needs latex code version
     for ii in range(0, len(energarray)): # Energies (Eigenvalues)
         plt.plot(xcoordsarray, energarray[ii], color="grey")
-    # This part needs the sigma x plots
+    for ii in range(0, len(uncertainityarray)): # expected value plot
+        plt.scatter(uncertainityarray[ii], energarray[ii], color="purple",
+                    marker="+")# sigma x plots
+    plt.show()
 
 def _readplotsfiles(dirname):
     """Reads the files and exports the data needed to use the QM_Plottings
