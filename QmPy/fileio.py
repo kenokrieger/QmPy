@@ -5,6 +5,7 @@
    Schrodinger's equation into an output file.
 """
 
+import os
 import numpy as np
 
 def _read_schrodinger(inputfilepath):
@@ -48,3 +49,30 @@ def _read_schrodinger(inputfilepath):
     interpolxydecs = new_xy_dec.astype(np.float)
     return (mass, xmin, xmax, npoint, xopt, first_ev, last_ev, interpoltype,
             interpolnum, interpolxydecs)
+
+def write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
+    """Writes the potentials with the respective x coordinates, the energies,
+    the eigestates with the respective x coordinates, and expected values with
+    the respective uncertainities on files named respectively: potentials.dat,
+    energies.dat, wavefuncs.dat, and expvalues.dat.
+
+    Args:
+        dirname: Path of the file in which data should be written
+        potdata: The data to be written on potentials.dat
+        energdata: The data to be written on energies.dat
+        wfuncsdata: The data to be written on wavefuncs.dat
+        expvaldata: The data to be written on expvalues.dat
+    """
+    potpath = os.path.join(dirname, "potential.dat")
+    energiespath = os.path.join(dirname, "energies.dat")
+    wavefuncspath = os.path.join(dirname, "wavefuncs.dat")
+    expvaluespath = os.path.join(dirname, "expvalues.dat")
+    np.savetxt(potpath, potdata)
+    np.savetxt(energiespath, energdata)
+    np.savetxt(wavefuncspath, wfuncsdata)
+    np.savetxt(expvaluespath, expvaldata)
+
+    #except FileNotFoundError:
+        #msg = "Output file or path not found"
+        #print("Output file or path not found")
+        #raise FileNotFoundError(msg)
