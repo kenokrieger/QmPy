@@ -30,16 +30,18 @@ def qm_plottings(dirname):
     plt.title( r'Potential, eigenstates, $ \langle x \rangle $')
     plt.plot(xcoordsarray, potsarray, color="black") # Potential
     for ii in range(0, len(wfuncsarray[0])): # Wave functions (eigenstates)
-        plt.plot(xcoordsarray, wfuncsarray[:, ii])
+        offsetwfunc = wfuncsarray[:, ii] + energarray[ii]
+        if ii % 2 == 0:
+            plt.plot(xcoordsarray, offsetwfunc[:, ii], color="red")
+        else:
+            plt.plot(xcoordsarray, offsetwfunc[:, ii], color="blue")
     for ii in range(0, len(energarray)): # Energies (Eigenvalues)
         plt.plot(xcoordsarray, energarray[ii], color="grey")
     for ii in range(0, len(expvalsarray)): # expected value plot
         plt.scatter(expvalsarray[ii], energarray[ii], color="green",
                     marker="x")
-    plt.show()
     plt.subplot(1, 2, 2)
     plt.xlabel("x [Bohr]")
-    plt.ylabel("Energy [Hartree]")
     plt.title(r'$\sigma_{x}$')
     for ii in range(0, len(energarray)): # Energies (Eigenvalues)
         plt.plot(xcoordsarray, energarray[ii], color="grey")
@@ -47,6 +49,8 @@ def qm_plottings(dirname):
         plt.scatter(uncertainityarray[ii], energarray[ii], color="purple",
                     marker="+")# sigma x plots
     plt.show()
+    #plt.savefig("QmPy_plots")
+
 
 def _readplotsfiles(dirname):
     """Reads the files and exports the data needed to use the QM_Plottings
