@@ -7,7 +7,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-def qm_plottings(dirname):
+def qm_plottings(dirname, xmin, xmax, enmin, enmax, scale):
     """Plots the potential, the eigenvalues and the respective
     wave functions as well as the expected values for each eigenvalue
     from the files that contain the solution of the problem
@@ -17,6 +17,11 @@ def qm_plottings(dirname):
         the files are going to be ploted. The directory must have
         the four following files: potential.dat, energies.dat,
         wavefuncs.dat, and expvalues.dat.
+        xmin: Minimal value of the x-axis
+        xmax: Maximal value of the x-axis
+        enmin: Minimal value of the energy-axis
+        enmax: Maximal value of the energy-axis
+        scale: Factor to fit the wavefunctions
 
     Return:
         Plots of the potential, the eigenvalues and the respective
@@ -28,9 +33,10 @@ def qm_plottings(dirname):
     plt.xlabel("x [Bohr]")
     plt.ylabel("Energy [Hartree]")
     plt.title( r'Potential, eigenstates, $ \langle x \rangle $')
+    plt.axis(xmin, xmax, enmin, enmax)
     plt.plot(xcoordsarray, potsarray, color="black") # Potential
     for ii in range(0, len(wfuncsarray[0])): # Wave functions (eigenstates)
-        offsetwfunc = wfuncsarray[:, ii] + energarray[ii]
+        offsetwfunc = scale * wfuncsarray[:, ii] + energarray[ii]
         if ii % 2 == 0:
             plt.plot(xcoordsarray, offsetwfunc[:, ii], color="red")
         else:
@@ -45,7 +51,7 @@ def qm_plottings(dirname):
     plt.title(r'$\sigma_{x}$')
     for ii in range(0, len(energarray)): # Energies (Eigenvalues)
         plt.plot(xcoordsarray, energarray[ii], color="grey")
-    for ii in range(0, len(uncertainityarray)): # expected value plot
+    for ii in range(0, len(uncertainityarray)): # uncertainity plot
         plt.scatter(uncertainityarray[ii], energarray[ii], color="purple",
                     marker="+")# sigma x plots
     plt.show()
