@@ -30,7 +30,7 @@ def schroedinger(mass, xcords, potential):
 
     return energies, wfuncs
 
-def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax):
+def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     """
     Calculates the expected values for the x-coordinate
 
@@ -38,23 +38,25 @@ def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax):
         xcoordsarray (1darray): Array containing the x-coordinates
         wfuncsarray (ndarray): Array containing the wave functions that
         correspond to the x-coordinates
-        xmin: Minimal value of the x-axis
-        xmax: Maximal value of the x-axis
+        xmin (float): Minimal value of the x-axis
+        xmax (float): Maximal value of the x-axis
+        npoints (int): Number of points in the interval [xmin, xmax]
     Returns:
         expval (1darray): The expected values of the x-coordinate
     """
+    delta = np.abs(xmin-xmax)/npoints
     summation = 0
     expvalxlist = list()
     for rows in range(0, len(xcoordsarray)):
         for cols in range(0, len(wfuncsarray[0])):
             summation += (wfuncsarray[rows, cols] * xcoordsarray[cols]
             * wfuncsarray[rows, cols])
-        expvalx = (xmax-xmin) * summation
+        expvalx = delta * summation
         expvalxlist.append(expvalx)
     expval = np.array(expvalxlist)
     return expval
 
-def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax):
+def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     """
     Calculates the uncertainity (which is the square root of the expected
     value of x**2 minus the square of the expected value of x) for
@@ -64,11 +66,13 @@ def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax):
         xcoordsarray (1darray): Array containing the x-coordinates
         wfuncsarray (ndarray): Array containing the wave functions that
         correspond to the x-coordinates
-        xmin: Minimal value of the x-axis
-        xmax: Maximal value of the x-axis
+        xmin (float): Minimal value of the x-axis
+        xmax (float): Maximal value of the x-axis
+        npoints (int): Number of points in the interval [xmin, xmax]
     Returns:
         uncertainity (1darray): The expected values of the x-coordinate
     """
+    delta = np.abs(xmin-xmax)/npoints
     expvalarray = calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax)
     expvalsqlist = list()
     summation = 0
@@ -76,7 +80,7 @@ def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax):
         for cols in range(0, len(wfuncsarray[0])):
             summation += (wfuncsarray[rows, cols] * (xcoordsarray[cols]**2)
             * wfuncsarray[rows, cols])
-        expvalsq = (xmax-xmin) * summation
+        expvalsq = delta * summation
         expvalsqlist.append(expvalsq)
     expvalsqarray = np.array(expvalsqlist)
     uncertainlist = list()
