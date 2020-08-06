@@ -29,3 +29,63 @@ def schroedinger(mass, xcords, potential):
     energies, wfuncs = eigh_tridiagonal(diag, offdiag)
 
     return energies, wfuncs
+
+def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
+    """
+    Calculates the expected values for the x-coordinate
+
+    Args:
+        xcoordsarray (1darray): Array containing the x-coordinates
+        wfuncsarray (ndarray): Array containing the wave functions that
+        correspond to the x-coordinates
+        xmin (float): Minimal value of the x-axis
+        xmax (float): Maximal value of the x-axis
+        npoints (int): Number of points in the interval [xmin, xmax]
+    Returns:
+        expval (1darray): The expected values of the x-coordinate
+    """
+    delta = np.abs(xmin-xmax)/npoints
+    summation = 0
+    expvalxlist = list()
+    for rows in range(0, len(xcoordsarray)):
+        for cols in range(0, len(wfuncsarray[0])):
+            summation += (wfuncsarray[rows, cols] * xcoordsarray[cols]
+            * wfuncsarray[rows, cols])
+        expvalx = delta * summation
+        expvalxlist.append(expvalx)
+    expval = np.array(expvalxlist)
+    return expval
+
+def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
+    """
+    Calculates the uncertainity (which is the square root of the expected
+    value of x**2 minus the square of the expected value of x) for
+    the x-coordinate
+
+    Args:
+        xcoordsarray (1darray): Array containing the x-coordinates
+        wfuncsarray (ndarray): Array containing the wave functions that
+        correspond to the x-coordinates
+        xmin (float): Minimal value of the x-axis
+        xmax (float): Maximal value of the x-axis
+        npoints (int): Number of points in the interval [xmin, xmax]
+    Returns:
+        uncertainity (1darray): The expected values of the x-coordinate
+    """
+    delta = np.abs(xmin-xmax)/npoints
+    expvalarray = calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax)
+    expvalsqlist = list()
+    summation = 0
+    for rows in range(0, len(xcoordsarray)):
+        for cols in range(0, len(wfuncsarray[0])):
+            summation += (wfuncsarray[rows, cols] * (xcoordsarray[cols]**2)
+            * wfuncsarray[rows, cols])
+        expvalsq = delta * summation
+        expvalsqlist.append(expvalsq)
+    expvalsqarray = np.array(expvalsqlist)
+    uncertainlist = list()
+    for ii in range(len(expvalsqarray)):
+        element = np.sqrt(expvalsqarray[ii] - expvalarray[ii]**2)
+        uncertainlist.append(element)
+    uncertainity = np.array(uncertainlist)
+    return uncertainity
