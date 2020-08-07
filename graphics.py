@@ -57,7 +57,7 @@ def qm_plottings(dirname, xmin, xmax, enmin, enmax, scale):
         plt.scatter(uncertainityarray[ii], energarray[ii], color="purple",
                     marker="+")  # sigma x plots
     plt.show()
-    # plt.savefig("QmPy_plots")
+    # plt.savefig("qmpy_plots")
 
 
 def _readplotsfiles(dirname):
