@@ -31,4 +31,4 @@ to be incorporated in the main build issue a pull request.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+BSD 2-Clause "Simplified" License. See LICENSE.txt for further information.
