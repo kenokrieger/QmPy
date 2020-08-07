@@ -34,6 +34,7 @@ def schroedinger(mass, xcords, potential):
 
     return energies, wfuncs
 
+
 def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     """
     Calculates the expected values for the x-coordinate
@@ -54,11 +55,12 @@ def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     for rows in range(0, len(xcoordsarray)):
         for cols in range(0, len(wfuncsarray[0])):
             summation += (wfuncsarray[rows, cols] * xcoordsarray[cols]
-            * wfuncsarray[rows, cols])
+                          * wfuncsarray[rows, cols])
         expvalx = delta * summation
         expvalxlist.append(expvalx)
     expval = np.array(expvalxlist)
     return expval
+
 
 def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     """
@@ -83,7 +85,7 @@ def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     for rows in range(0, len(xcoordsarray)):
         for cols in range(0, len(wfuncsarray[0])):
             summation += (wfuncsarray[rows, cols] * (xcoordsarray[cols]**2)
-            * wfuncsarray[rows, cols])
+                          * wfuncsarray[rows, cols])
         expvalsq = delta * summation
         expvalsqlist.append(expvalsq)
     expvalsqarray = np.array(expvalsqlist)

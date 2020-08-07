@@ -50,6 +50,7 @@ def _read_schrodinger(inputfilepath):
     return (mass, xmin, xmax, npoint, xopt, first_ev, last_ev, interpoltype,
             interpolnum, interpolxydecs)
 
+
 def write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
     """Writes the potentials with the respective x coordinates, the energies,
     the eigestates with the respective x coordinates, and expected values with
