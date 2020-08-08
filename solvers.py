@@ -25,6 +25,9 @@ def schroedinger(mass, xcords, potential):
               value of a computed wavefunction. Each column corresponds to one
               x-coordinate of the input array.
 
+    Examples:
+
+
     """
     step = np.abs(xcords[0] - xcords[-1]) / len(xcords)
     diag = np.array([1 / (mass * step ** 2) + V for V in potential])
