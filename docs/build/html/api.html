@@ -70,6 +70,56 @@
 <span id="api-documentation"></span><h1>API-Documentation<a class="headerlink" href="#module-solvers" title="Permalink to this headline">¶</a></h1>
 <p>Contains numerical solvers for the schroedinger equation</p>
 <dl class="py function">
+<dt id="solvers.calculate_expval">
+<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_expval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoordsarray</span></em>, <em class="sig-param"><span class="n">wfuncsarray</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">npoints</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_expval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the expected values for the x-coordinate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xcoordsarray</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
+<li><p><strong>wfuncsarray</strong> (<em>ndarray</em>) – Array containing the wave functions that</p></li>
+<li><p><strong>to the x-coordinates</strong> (<em>correspond</em>) – </p></li>
+<li><p><strong>xmin</strong> (<em>float</em>) – Minimal value of the x-axis</p></li>
+<li><p><strong>xmax</strong> (<em>float</em>) – Maximal value of the x-axis</p></li>
+<li><p><strong>npoints</strong> (<em>int</em>) – Number of points in the interval [xmin, xmax]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The expected values of the x-coordinate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>expval (1darray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="solvers.calculate_uncertainity">
+<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_uncertainity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoordsarray</span></em>, <em class="sig-param"><span class="n">wfuncsarray</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">npoints</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_uncertainity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the uncertainity (which is the square root of the expected
+value of x**2 minus the square of the expected value of x) for
+the x-coordinate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xcoordsarray</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
+<li><p><strong>wfuncsarray</strong> (<em>ndarray</em>) – Array containing the wave functions that</p></li>
+<li><p><strong>to the x-coordinates</strong> (<em>correspond</em>) – </p></li>
+<li><p><strong>xmin</strong> (<em>float</em>) – Minimal value of the x-axis</p></li>
+<li><p><strong>xmax</strong> (<em>float</em>) – Maximal value of the x-axis</p></li>
+<li><p><strong>npoints</strong> (<em>int</em>) – Number of points in the interval [xmin, xmax]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The expected values of the x-coordinate</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>uncertainity (1darray)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="solvers.schroedinger">
 <code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">schroedinger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mass</span></em>, <em class="sig-param"><span class="n">xcords</span></em>, <em class="sig-param"><span class="n">potential</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.schroedinger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solves the 1-dimensional schroedinger equation for given numerical
@@ -90,8 +140,8 @@ values.</p></li>
 <li><p><strong>energies</strong> (<em>1darray</em>) - The energy levels of each wavefunctions.
 The entries correspond to the rows in wfuncs.</p></li>
 <li><p><strong>wfuncs</strong> (<em>ndarray</em>) - Array where each row contains the numerical
-value of a computed wavefunction. Each column corresponds to one
-x-coordinate of the input array.</p></li>
+value of a computed  normalized wavefunction. Each column corresponds
+to one x-coordinate of the input array.</p></li>
 </ul>
 </div></blockquote>
 </p>
@@ -100,6 +150,26 @@ x-coordinate of the input array.</p></li>
 <dd class="field-odd"><p>touple</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qmpy</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">mass</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">xcords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1999</span><span class="p">)</span>
+<span class="n">potential</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1999</span><span class="p">,</span> <span class="p">))</span>
+
+<span class="n">energies</span><span class="p">,</span> <span class="n">wfuncs</span> <span class="o">=</span> <span class="n">qmpy</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">schroedinger</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">xcords</span><span class="p">,</span> <span class="n">potential</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;First three wavefunctions of the infinite potential well&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Location in atomic units&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">wfunc</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">wfuncs</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">energies</span><span class="p">[:</span><span class="mi">3</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xcords</span><span class="p">,</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">wfunc</span> <span class="o">+</span> <span class="n">energy</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">energies</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

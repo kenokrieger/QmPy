@@ -260,7 +260,7 @@ div.topbar a.brand {
 
 #logotext2 {
     font-weight:200;
-    color: ##3c598e;
+    color: #ff5000;
 }
 #logotext3 {
     font-weight:200;
@@ -372,7 +372,7 @@ div.topbar ul li a.homelink {
   display: block;
   height: 20px;
   padding: 5px 0px;
-  background: transparent url("github_linkout_20.png") no-repeat 10px 5px;
+  background: transparent url("github_linkout.png") no-repeat 10px 5px;
   background-image: url("github_linkout.svg"), none;
   background-size: 91px 20px;
 }

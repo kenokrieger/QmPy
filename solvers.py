@@ -22,11 +22,29 @@ def schroedinger(mass, xcords, potential):
               The entries correspond to the rows in wfuncs.
 
             - **wfuncs** (*ndarray*) - Array where each row contains the numerical
-              value of a computed wavefunction. Each column corresponds to one
-              x-coordinate of the input array.
+              value of a computed  normalized wavefunction. Each column corresponds
+              to one x-coordinate of the input array.
 
     Examples:
+        .. code-block::
 
+            import qmpy
+            import matplotlib.pyplot as plt
+            import numpy as np
+
+            mass = 2.0
+            xcords = np.linspace(-2, 2, 1999)
+            potential = np.zeros((1999, ))
+
+            energies, wfuncs = qmpy.solvers.schroedinger(mass, xcords, potential)
+            fig = plt.figure(1)
+            ax = fig.add_subplot(111)
+            ax.set_title('First three wavefunctions of the infinite potential well')
+            ax.set_xlabel('Location in atomic units')
+            for wfunc, energy in zip(wfuncs[:3], energies[:3]):
+                ax.plot(xcords, 0.7 * wfunc + energy)
+            ax.hlines(energies[0:3], color='k', alpha=0.7)
+            plt.show()
 
     """
     step = np.abs(xcords[0] - xcords[-1]) / len(xcords)
@@ -34,6 +52,11 @@ def schroedinger(mass, xcords, potential):
     offdiag = np.array([-1 / (2 * mass * step ** 2)] * (len(potential) - 1))
 
     energies, wfuncs = eigh_tridiagonal(diag, offdiag)
+    wfuncs = wfuncs.copy().T
+
+    for index, wfunc in enumerate(wfuncs):
+        norm = 1 / np.sqrt(np.sum(wfunc ** 2) * step)
+        wfuncs[index, :] = wfunc * norm
 
     return energies, wfuncs
 

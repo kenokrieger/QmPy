@@ -10,10 +10,10 @@ def infwell(n, L, m):
     energy = n ** 2 * pi ** 2 / (2 * m * L ** 2)
     if n % 2:
         def wfunc(x):
-            return sqrt(2 / L) * sin(n * pi / L * x)
+            return sqrt(2 / L) * cos(n * pi / L * x)
     else:
         def wfunc(x):
-            return sqrt(2 / L) * cos(n * pi / L * x)
+            return sqrt(2 / L) * sin(n * pi / L * x)
     return energy, wfunc
 
 

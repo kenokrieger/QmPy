@@ -20,15 +20,15 @@ if __name__ == '__main__':
     mass = specs['mass']
     energies, wfuncs = solvers.schroedinger(mass, xint, yint)
 
-    en = energies[:11]
-    wfuncss = wfuncs[:11]
-
+    en = energies[:4]
+    wfuncss = wfuncs[:4]
+    """
     fig = plt.figure(1)
     ax = fig.add_subplot(111)
 
     for index in range(11):
-        ax.plot(xint, 10 * wfuncss[index] + en[index], color='blue')
-        ax.hlines(en[index], xint[0], xint[-1], color='k')
+        ax.plot(xint, wfuncss[index] + en[index] + 5 * index, color='blue')
+        ax.hlines(en[index] + 5 * index, xint[0], xint[-1], color='k')
 
     ref_energies = np.empty((10, ))
     ref_wfuncs = np.empty((10, 1999))
@@ -36,4 +36,9 @@ if __name__ == '__main__':
         ref_energy, ref_func = infwell(n, 4, 2)
         ref_energies[n - 1] = ref_energy
         ref_wfuncs[n - 1] = ref_func(xint)
-        ax.plot(xint, ref_func(xint + 2) + ref_energy, color='red')
+        ax.plot(xint, ref_func(xint) + ref_energy + 5 * (n - 1), color='red')
+    """
+    save_funcs = np.insert(wfuncss.T, 0, values=xint, axis=1)
+    np.savetxt('test_data/wfuncs_inf_potwell.ref', save_funcs)
+
+    np.savetxt('test_data/energies_inf_potwell.ref', en)
