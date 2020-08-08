@@ -31,4 +31,4 @@ to be incorporated in the main build issue a pull request.
 
 ## License
 
-BSD 2-Clause "Simplified" License. See LICENSE.txt for further information.
+[BSD 2-Clause License] (https://choosealicense.com/licenses/bsd-2-clause/) See LICENSE.txt for further information.
