@@ -14,6 +14,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/sidebar.js"></script>
     <script type="text/javascript" src="_static/copybutton.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -66,8 +67,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-solvers">
-<span id="api-documentation"></span><h1>API-Documentation<a class="headerlink" href="#module-solvers" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="api-documentation">
+<h1>API-Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-solvers">
+<span id="solvers"></span><h2>solvers<a class="headerlink" href="#module-solvers" title="Permalink to this headline">¶</a></h2>
 <p>Contains numerical solvers for the schroedinger equation</p>
 <dl class="py function">
 <dt id="solvers.calculate_expval">
@@ -88,7 +91,7 @@
 <dd class="field-even"><p>The expected values of the x-coordinate</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>expval (1darray)</p>
+<dd class="field-odd"><p>1darray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -96,9 +99,11 @@
 <dl class="py function">
 <dt id="solvers.calculate_uncertainity">
 <code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_uncertainity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoordsarray</span></em>, <em class="sig-param"><span class="n">wfuncsarray</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">npoints</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_uncertainity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the uncertainity (which is the square root of the expected
-value of x**2 minus the square of the expected value of x) for
-the x-coordinate</p>
+<dd><p>Calculates the uncertainity <span class="math notranslate nohighlight">\(\Delta x\)</span> defined as</p>
+<div class="math notranslate nohighlight">
+\[\Delta x = \sqrt{&lt;x^2&gt; - &lt;x&gt;^2}
+:align: left\]</div>
+<p>for each wavefunction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -111,10 +116,10 @@ the x-coordinate</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The expected values of the x-coordinate</p>
+<dd class="field-even"><p>The uncertainty of the x-coordinate.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>uncertainity (1darray)</p>
+<dd class="field-odd"><p>1darray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -134,14 +139,14 @@ values.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p><code class="docutils literal notranslate"><span class="pre">energies,</span> <span class="pre">wfuncs</span></code></p>
+<dd class="field-even"><p><p><code class="docutils literal notranslate"><span class="pre">(energies,</span> <span class="pre">wfuncs)</span></code></p>
 <blockquote>
 <div><ul class="simple">
-<li><p><strong>energies</strong> (<em>1darray</em>) - The energy levels of each wavefunctions.
-The entries correspond to the rows in wfuncs.</p></li>
-<li><p><strong>wfuncs</strong> (<em>ndarray</em>) - Array where each row contains the numerical
-value of a computed  normalized wavefunction. Each column corresponds
-to one x-coordinate of the input array.</p></li>
+<li><p><strong>energies</strong> (<em>1darray</em>) - The energy levels of each
+wavefunction. The entries correspond to the rows in wfuncs.</p></li>
+<li><p><strong>wfuncs</strong> (<em>ndarray</em>) - Array where each row contains the
+numerical value of a computed  normalized wavefunction. Each
+column corresponds to one x-coordinate of the input array.</p></li>
 </ul>
 </div></blockquote>
 </p>
@@ -157,21 +162,58 @@ to one x-coordinate of the input array.</p></li>
 
 <span class="n">mass</span> <span class="o">=</span> <span class="mf">2.0</span>
 <span class="n">xcords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1999</span><span class="p">)</span>
-<span class="n">potential</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1999</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">pot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1999</span><span class="p">,</span> <span class="p">))</span>
 
-<span class="n">energies</span><span class="p">,</span> <span class="n">wfuncs</span> <span class="o">=</span> <span class="n">qmpy</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">schroedinger</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">xcords</span><span class="p">,</span> <span class="n">potential</span><span class="p">)</span>
+<span class="n">energies</span><span class="p">,</span> <span class="n">wfuncs</span> <span class="o">=</span> <span class="n">qmpy</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">schroedinger</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">xcords</span><span class="p">,</span> <span class="n">pot</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;First three wavefunctions of the infinite potential well&#39;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;First four wavefunctions of the infinite potential well&#39;</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">fontweigt</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Location in atomic units&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">wfunc</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">wfuncs</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">energies</span><span class="p">[:</span><span class="mi">3</span><span class="p">]):</span>
+
+<span class="k">for</span> <span class="n">wfunc</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">wfuncs</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="n">energies</span><span class="p">[:</span><span class="mi">4</span><span class="p">]):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xcords</span><span class="p">,</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">wfunc</span> <span class="o">+</span> <span class="n">energy</span><span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">energies</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
 
+</div>
+<div class="section" id="module-graphics">
+<span id="graphics"></span><h2>graphics<a class="headerlink" href="#module-graphics" title="Permalink to this headline">¶</a></h2>
+<p>Contains functions for plotting the  potential, the eigenvalues and the
+respective wave functions as well as the expected values for each
+eigenvalue from the files that contain the solution of the problem.</p>
+<dl class="py function">
+<dt id="graphics.qm_plottings">
+<code class="sig-prename descclassname">graphics.</code><code class="sig-name descname">qm_plottings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dirname</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">enmin</span></em>, <em class="sig-param"><span class="n">enmax</span></em>, <em class="sig-param"><span class="n">scale</span></em><span class="sig-paren">)</span><a class="headerlink" href="#graphics.qm_plottings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the potential, the eigenvalues and the respective
+wave functions as well as the expected values for each eigenvalue
+from the files that contain the solution of the problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dirname</strong> – Name of the directory or path from which
+the files are going to be ploted. The directory must contain
+the four following files: potential.dat, energies.dat,
+wavefuncs.dat, and expvalues.dat.</p></li>
+<li><p><strong>xmin</strong> – Minimal value of the x-axis</p></li>
+<li><p><strong>xmax</strong> – Maximal value of the x-axis</p></li>
+<li><p><strong>enmin</strong> – Minimal value of the energy-axis</p></li>
+<li><p><strong>enmax</strong> – Maximal value of the energy-axis</p></li>
+<li><p><strong>scale</strong> – Factor to fit the wavefunctions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Plots of the potential, the eigenvalues and the respective
+wave functions</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -182,7 +224,11 @@ to one x-coordinate of the input array.</p></li>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
 <ul>
-<li><a class="reference internal" href="#">API-Documentation</a></li>
+<li><a class="reference internal" href="#">API-Documentation</a><ul>
+<li><a class="reference internal" href="#module-solvers">solvers</a></li>
+<li><a class="reference internal" href="#module-graphics">graphics</a></li>
+</ul>
+</li>
 </ul>
 
 

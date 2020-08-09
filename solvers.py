@@ -16,14 +16,14 @@ def schroedinger(mass, xcords, potential):
         potential (1darray): Numerical values of the potential.
 
     Returns:
-        touple: ``energies, wfuncs``
+        touple: ``(energies, wfuncs)``
 
-            - **energies** (*1darray*) - The energy levels of each wavefunctions.
-              The entries correspond to the rows in wfuncs.
+            - **energies** (*1darray*) - The energy levels of each
+              wavefunction. The entries correspond to the rows in wfuncs.
 
-            - **wfuncs** (*ndarray*) - Array where each row contains the numerical
-              value of a computed  normalized wavefunction. Each column corresponds
-              to one x-coordinate of the input array.
+            - **wfuncs** (*ndarray*) - Array where each row contains the
+              numerical value of a computed  normalized wavefunction. Each
+              column corresponds to one x-coordinate of the input array.
 
     Examples:
         .. code-block::
@@ -34,15 +34,18 @@ def schroedinger(mass, xcords, potential):
 
             mass = 2.0
             xcords = np.linspace(-2, 2, 1999)
-            potential = np.zeros((1999, ))
+            pot = np.zeros((1999, ))
 
-            energies, wfuncs = qmpy.solvers.schroedinger(mass, xcords, potential)
+            energies, wfuncs = qmpy.solvers.schroedinger(mass, xcords, pot)
             fig = plt.figure(1)
             ax = fig.add_subplot(111)
-            ax.set_title('First three wavefunctions of the infinite potential well')
+            title = 'First four wavefunctions of the infinite potential well'
+            ax.set_title(title, fontsize=20, fontweigt='bold')
             ax.set_xlabel('Location in atomic units')
-            for wfunc, energy in zip(wfuncs[:3], energies[:3]):
+
+            for wfunc, energy in zip(wfuncs[:4], energies[:4]):
                 ax.plot(xcords, 0.7 * wfunc + energy)
+
             ax.hlines(energies[0:3], color='k', alpha=0.7)
             plt.show()
 
@@ -72,8 +75,10 @@ def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
         xmin (float): Minimal value of the x-axis
         xmax (float): Maximal value of the x-axis
         npoints (int): Number of points in the interval [xmin, xmax]
+
     Returns:
-        expval (1darray): The expected values of the x-coordinate
+        1darray: The expected values of the x-coordinate
+
     """
     delta = np.abs(xmin-xmax)/npoints
     summation = 0
@@ -90,9 +95,13 @@ def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
 
 def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     """
-    Calculates the uncertainity (which is the square root of the expected
-    value of x**2 minus the square of the expected value of x) for
-    the x-coordinate
+    Calculates the uncertainity :math:`\\Delta x` defined as
+
+    .. math::
+
+       \\Delta x = \\sqrt{<x^2> - <x>^2}
+
+    for each wavefunction.
 
     Args:
         xcoordsarray (1darray): Array containing the x-coordinates
@@ -101,15 +110,17 @@ def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
         xmin (float): Minimal value of the x-axis
         xmax (float): Maximal value of the x-axis
         npoints (int): Number of points in the interval [xmin, xmax]
+
     Returns:
-        uncertainity (1darray): The expected values of the x-coordinate
+        1darray: The uncertainty of the x-coordinate.
+
     """
     delta = np.abs(xmin-xmax)/npoints
     expvalarray = calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax)
     expvalsqlist = list()
     summation = 0
-    for rows in range(0, len(xcoordsarray)):
-        for cols in range(0, len(wfuncsarray[0])):
+    for rows in range(len(xcoordsarray)):
+        for cols in range(len(wfuncsarray[0])):
             summation += (wfuncsarray[rows, cols] * (xcoordsarray[cols]**2)
                           * wfuncsarray[rows, cols])
         expvalsq = delta * summation
