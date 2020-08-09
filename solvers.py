@@ -6,7 +6,7 @@ from scipy.linalg import eigh_tridiagonal
 def schroedinger(mass, xcords, potential):
     """
     Solves the 1-dimensional schroedinger equation for given numerical
-    values of a potential.
+    values of x-coordinates and the corresponding value of the potential.
 
     Args:
 

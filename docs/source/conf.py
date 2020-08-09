@@ -20,6 +20,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 project = 'QmPy'
 copyright = '2020, Helmut Wecke, Keno Krieger'
 author = 'Helmut Wecke, Keno Krieger'
+website = 'https://github.com/kenokrieger/QmPy'
 
 
 # -- General configuration ---------------------------------------------------

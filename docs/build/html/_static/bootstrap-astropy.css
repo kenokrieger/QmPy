@@ -6,6 +6,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Heavily modified by Kyle Barbary for the AstroPy Project for use with Sphinx.
+ * Modified for use with qmpy by Keno Krieger
  */
 
 @import url("basic.css");
@@ -368,13 +369,13 @@ div.dropdown:hover {
 }
 
 div.topbar ul li a.homelink {
-  width: 112px;
+  width: 86px;
   display: block;
-  height: 20px;
-  padding: 5px 0px;
-  background: transparent url("github_linkout.png") no-repeat 10px 5px;
-  background-image: url("github_linkout.svg"), none;
-  background-size: 91px 20px;
+  height: 18px;
+  padding: 2px 3px;
+  background: transparent;
+  background-image: url("github_linkout20.png");
+  background-size: 91px 25px;
 }
 
 div.topbar form {

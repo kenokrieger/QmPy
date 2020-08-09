@@ -9,7 +9,7 @@ Under active development
 
 ## Requirements
 
-This package requires Python 3.7 or higher.
+This package requires Python 3.6 or higher.
 
 ## Installation
 
