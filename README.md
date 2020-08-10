@@ -1,7 +1,15 @@
 # QmPy
 
+![Alt text](./build_passing.svg)
+<img src="./build_passing.svg">
+
 QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials.
+
+
+## Disclaimer
+
+This is a student project. It utilizes very unstable and simple numerical algorithms.
 
 ## Status
 
@@ -14,7 +22,7 @@ This package requires Python 3.6 or higher.
 ## Installation
 For easy installation with pip use:
 ```shell
-pip install -i https://test.pypi.org/simple/ qmpy-kriegerk==0.0.1
+pip install -i https://test.pypi.org/simple/ qmpy-kriegerk==0.0.2
 ```
 
 ## Usage
