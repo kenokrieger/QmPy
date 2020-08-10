@@ -2,7 +2,7 @@
 """Tests for the fileio module"""
 import os.path
 import numpy as np
-from fileio import _read_schrodinger
+from ..qmpy.fileio import _read_schrodinger
 
 TESTDATADIR = "test_data"
 

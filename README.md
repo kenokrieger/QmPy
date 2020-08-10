@@ -12,6 +12,10 @@ Under active development
 This package requires Python 3.6 or higher.
 
 ## Installation
+For easy installation with pip use:
+```shell
+pip install -i https://test.pypi.org/simple/ qmpy-kriegerk==0.0.1
+```
 
 ## Usage
 

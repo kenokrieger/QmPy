@@ -1,15 +1,14 @@
 #!usr/bin/env python3
 
-import fileio
-import solvers
-import _interpolation
+from ..qmpy import fileio
+from ..qmpy import solvers
+from ..qmpy import _interpolation
 import matplotlib.pyplot as plt
-from maketestdata import infwell
-import numpy as np
+from numpy import insert, savetxt
 
 
 if __name__ == '__main__':
-    filename = 'test_data/inf_potwell.inp'
+    filename = 'test_data/harm_osci.inp'
     specs = fileio._read_schrodinger(filename)
     xy_decs = specs['interpolxydecs']
     xx = xy_decs[:, 0]
@@ -18,27 +17,19 @@ if __name__ == '__main__':
     interpolkind = specs['interpoltype']
     xint, yint = _interpolation._interpolate(xx, yy, xopt)
     mass = specs['mass']
-    energies, wfuncs = solvers.schroedinger(mass, xint, yint)
+    energies, wfuncs = solvers.schroedinger(mass, xint, yint,
+                                            select_range=(0, 4))
 
-    en = energies[:4]
-    wfuncss = wfuncs[:4]
-    """
     fig = plt.figure(1)
     ax = fig.add_subplot(111)
 
-    for index in range(11):
-        ax.plot(xint, wfuncss[index] + en[index] + 5 * index, color='blue')
-        ax.hlines(en[index] + 5 * index, xint[0], xint[-1], color='k')
+    for index in range(len(energies)):
+        ax.plot(xint, wfuncs[index] + energies[index] + 5 * index,
+                color='blue')
+        ax.hlines(energies[index] + 5 * index, xint[0], xint[-1], color='k')
 
-    ref_energies = np.empty((10, ))
-    ref_wfuncs = np.empty((10, 1999))
-    for n in range(1, 11):
-        ref_energy, ref_func = infwell(n, 4, 2)
-        ref_energies[n - 1] = ref_energy
-        ref_wfuncs[n - 1] = ref_func(xint)
-        ax.plot(xint, ref_func(xint) + ref_energy + 5 * (n - 1), color='red')
-    """
-    save_funcs = np.insert(wfuncss.T, 0, values=xint, axis=1)
-    np.savetxt('test_data/wfuncs_inf_potwell.ref', save_funcs)
+    if bool(input('Data correct? ',)):
+        save_funcs = insert(wfuncs.T, 0, values=xint, axis=1)
+        savetxt('test_data/wfuncs_inf_potwell.ref', save_funcs)
 
-    np.savetxt('test_data/energies_inf_potwell.ref', en)
+        savetxt('test_data/energies_inf_potwell.ref', energies)

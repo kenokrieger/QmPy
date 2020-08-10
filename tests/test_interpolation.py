@@ -3,7 +3,7 @@
 
 from numpy import array, arange, allclose
 import pytest
-from _interpolation import _interpolate
+from ..qmpy._interpolation import _interpolate
 
 POINTS = [5, 10, 100, 1000, 5000, 10000]
 XSHAPE = array([0, 7, 25, 100, 150])

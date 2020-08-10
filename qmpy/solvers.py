@@ -3,7 +3,7 @@ import numpy as np
 from scipy.linalg import eigh_tridiagonal
 
 
-def schroedinger(mass, xcords, potential):
+def schroedinger(mass, xcords, potential, select_range=None):
     """
     Solves the 1-dimensional schroedinger equation for given numerical
     values of x-coordinates and the corresponding value of the potential.
@@ -14,6 +14,8 @@ def schroedinger(mass, xcords, potential):
         xcords (1darray): X-coordinates corresponding to the potential
             values.
         potential (1darray): Numerical values of the potential.
+        select_range (touple): Indices of the desired eigenvalues. Default to
+            None meaning all eigenvalues are calculated.
 
     Returns:
         touple: ``(energies, wfuncs)``
@@ -50,15 +52,20 @@ def schroedinger(mass, xcords, potential):
             plt.show()
 
     """
-    step = np.abs(xcords[0] - xcords[-1]) / len(xcords)
-    diag = np.array([1 / (mass * step ** 2) + V for V in potential])
-    offdiag = np.array([-1 / (2 * mass * step ** 2)] * (len(potential) - 1))
+    delta = np.abs(xcords[0] - xcords[-1]) / len(xcords)
+    diag = np.array([1 / (mass * delta ** 2) + V for V in potential])
+    offdiag = np.array([-1 / (2 * mass * delta ** 2)] * (len(potential) - 1))
 
-    energies, wfuncs = eigh_tridiagonal(diag, offdiag)
+    if select_range:
+        energies, wfuncs = eigh_tridiagonal(diag, offdiag, select='i',
+                                            select_range=select_range)
+    else:
+        energies, wfuncs = eigh_tridiagonal(diag, offdiag)
+
     wfuncs = wfuncs.copy().T
 
     for index, wfunc in enumerate(wfuncs):
-        norm = 1 / np.sqrt(np.sum(wfunc ** 2) * step)
+        norm = 1 / np.sqrt(np.sum(wfunc ** 2) * delta)
         wfuncs[index, :] = wfunc * norm
 
     return energies, wfuncs
