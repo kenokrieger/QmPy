@@ -1,7 +1,6 @@
 # QmPy
 
-![Alt text](./build_passing.svg)
-<img src="./build_passing.svg">
+<img src="./badges/build_passing.svg">
 
 QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials.
@@ -40,6 +39,10 @@ The automated documentation via sphinx can be found in the /docs folder.
 Contributions are always welcome. To contribute fork the repository from
 github and develop your feature including unit tests. For your contribution
 to be incorporated in the main build issue a pull request.
+
+## Authors and Acknowledgement
+
+
 
 ## License
 

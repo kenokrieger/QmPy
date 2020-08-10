@@ -25,8 +25,8 @@ def _interpolate(xx, yy, xopt, kind='linear'):
     """
     legal_choices = ['linear', 'cspline', 'polynomial']
     if kind not in legal_choices:
-        msg = """Invalid option {} for  interpolation, using default.
-        Valid options are {}"""
+        msg = """OptionWARNING: Invalid option {} for  interpolation, using
+        default. Valid options are {}"""
         print(msg.format(kind, legal_choices))
         kind = 'linear'
 

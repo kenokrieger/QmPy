@@ -1,8 +1,8 @@
 #!usr/bin/env python3
 
-from ..qmpy import fileio
-from ..qmpy import solvers
-from ..qmpy import _interpolation
+from qmpy import fileio
+from qmpy import solvers
+from qmpy import _interpolation
 import matplotlib.pyplot as plt
 from numpy import insert, savetxt
 
