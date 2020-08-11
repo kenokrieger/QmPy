@@ -2,7 +2,7 @@
 from qmpy.solvers import schroedinger
 from qmpy.fileio import _read_schrodinger
 from qmpy._interpolation import _interpolate
-from numpy import loadtxt, allclose
+from numpy import insert, loadtxt, allclose
 import pytest
 
 PROBLEMS = ['inf_potwell', 'double_well', 'asym_potwell', 'harm_osci']
@@ -24,11 +24,12 @@ def test_computing(problem):
     evs = (specs['first_ev'] - 1, specs['last_ev'] - 1)
 
     xint, yint = _interpolate(xx, yy, xopt, kind=kind)
-    energies, wfuncs = schroedinger(mass, xint, yint, select_range=evs)
+    comp_energies, wfuncs = schroedinger(mass, xint, yint, select_range=evs)
     wfuncs.T
+    comp_funcs = insert(wfuncs.T, 0, values=xint, axis=1)
 
     ref_energies = loadtxt('test_data/energies_{}.ref'.format(problem))
     ref_wfuncs = loadtxt('test_data/wfuncs_{}.ref'.format(problem))
 
-    assert allclose(ref_energies, energies)
-    assert allclose(ref_wfuncs, wfuncs)
+    assert allclose(ref_energies, comp_energies)
+    assert allclose(ref_wfuncs, comp_funcs)
