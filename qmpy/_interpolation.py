@@ -54,7 +54,7 @@ def _linear(xx, yy):
         intfunc (function object): The interpolated function.
 
     """
-    intfunc = interp1d(xx, yy)
+    intfunc = interp1d(xx, yy, fill_value="extrapolate")
     return intfunc
 
 

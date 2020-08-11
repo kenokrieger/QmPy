@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """ Contains functions for plotting the  potential, the eigenvalues and the
     respective wave functions as well as the expected values for each
     eigenvalue from the files that contain the solution of the problem.

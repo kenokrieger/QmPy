@@ -1,2 +1,2 @@
-import graphics
-import solvers
+from qmpy import graphics
+from qmpy import solvers

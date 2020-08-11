@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="qmpy-kriegerk", # Replace with your own username
+    name="qmpy-kriegerk",  # Name for PyPI
     version="0.0.2",
     author="Keno Krieger, Helmut Wecke",
     author_email="kriegerk@uni-bremen.de",
