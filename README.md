@@ -1,6 +1,6 @@
 # QmPy
 
-<img src="./badges/build_passing.svg">
+<img src="./badges/build_passing.svg"> <img src="./badges/coverage.svg">
 
 QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials.
@@ -20,7 +20,7 @@ This package requires Python 3.6 or higher.
 For easy installation with pip use:
 
 ```shell
-pip install -i https://test.pypi.org/simple/ qmpy-kriegerk==0.0.2
+pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ import qmpy
 ## Documentation
 
 The documentation can be found at [qmpy.org/docs](http://qmpy.org/docs/) or
-in the docs/ folder on [github](https://github.com/kenokrieger/QmPy/docs) .
+in the docs/ folder on [github](https://github.com/kenokrieger/QmPy/tree/master/docs) .
 
 ## Contributing
 
@@ -42,4 +42,5 @@ to be incorporated in the main build issue a pull request.
 
 ## License
 
-[BSD 2-Clause License](https://choosealicense.com/licenses/bsd-2-clause/) See LICENSE.txt for further information.
+[BSD 2-Clause License](https://choosealicense.com/licenses/bsd-2-clause/) <br/>
+See LICENSE.txt for further information.
