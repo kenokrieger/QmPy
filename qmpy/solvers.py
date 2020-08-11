@@ -14,7 +14,7 @@ def schroedinger(mass, xcords, potential, select_range=None):
         xcords (1darray): X-coordinates corresponding to the potential
             values.
         potential (1darray): Numerical values of the potential.
-        select_range (touple): Indices of the desired eigenvalues. Default to
+        select_range (touple): Indices of the desired eigenvalues. Defaults to
             None meaning all eigenvalues are calculated.
 
     Returns:
@@ -38,17 +38,18 @@ def schroedinger(mass, xcords, potential, select_range=None):
             xcords = np.linspace(-2, 2, 1999)
             pot = np.zeros((1999, ))
 
-            energies, wfuncs = qmpy.solvers.schroedinger(mass, xcords, pot)
+            energies, wfuncs = qmpy.solvers.schroedinger(mass, xcords, pot,
+                                                         select_range=(0, 3))
             fig = plt.figure(1)
             ax = fig.add_subplot(111)
             title = 'First four wavefunctions of the infinite potential well'
             ax.set_title(title, fontsize=20, fontweigt='bold')
             ax.set_xlabel('Location in atomic units')
 
-            for wfunc, energy in zip(wfuncs[:4], energies[:4]):
+            for wfunc, energy in zip(wfuncs, energies):
                 ax.plot(xcords, 0.7 * wfunc + energy)
 
-            ax.hlines(energies[0:3], color='k', alpha=0.7)
+            ax.hlines(energies, color='k', alpha=0.7)
             plt.show()
 
     """
