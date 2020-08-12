@@ -74,17 +74,17 @@
 <p>Contains numerical solvers for the schroedinger equation</p>
 <dl class="py function">
 <dt id="solvers.calculate_expval">
-<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_expval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoordsarray</span></em>, <em class="sig-param"><span class="n">wfuncsarray</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">npoints</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_expval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the expected values for the x-coordinate</p>
+<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_expval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoords</span></em>, <em class="sig-param"><span class="n">wfuncs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_expval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the expected values <span class="math notranslate nohighlight">\(&lt;x&gt;\)</span> for the x-coordinate by
+numerically calculating the integral</p>
+<div class="math notranslate nohighlight">
+\[\int_{x_{min}}^{x_{max}} | \psi (x) |^2 x dx\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>xcoordsarray</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
-<li><p><strong>wfuncsarray</strong> (<em>ndarray</em>) – Array containing the wave functions that</p></li>
-<li><p><strong>to the x-coordinates</strong> (<em>correspond</em>) – </p></li>
-<li><p><strong>xmin</strong> (<em>float</em>) – Minimal value of the x-axis</p></li>
-<li><p><strong>xmax</strong> (<em>float</em>) – Maximal value of the x-axis</p></li>
-<li><p><strong>npoints</strong> (<em>int</em>) – Number of points in the interval [xmin, xmax]</p></li>
+<li><p><strong>wfuncsarray</strong> (<em>ndarray</em>) – Array containing the wave functions that
+correspond to the x-coordinates</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -97,8 +97,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="solvers.calculate_uncertainity">
-<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_uncertainity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoordsarray</span></em>, <em class="sig-param"><span class="n">wfuncsarray</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">npoints</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_uncertainity" title="Permalink to this definition">¶</a></dt>
+<dt id="solvers.calculate_uncertainty">
+<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_uncertainty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoords</span></em>, <em class="sig-param"><span class="n">wfuncs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_uncertainty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the uncertainity <span class="math notranslate nohighlight">\(\Delta x\)</span> defined as</p>
 <div class="math notranslate nohighlight">
 \[\Delta x = \sqrt{&lt;x^2&gt; - &lt;x&gt;^2}\]</div>
@@ -106,12 +106,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>xcoordsarray</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
-<li><p><strong>wfuncsarray</strong> (<em>ndarray</em>) – Array containing the wave functions that</p></li>
-<li><p><strong>to the x-coordinates</strong> (<em>correspond</em>) – </p></li>
-<li><p><strong>xmin</strong> (<em>float</em>) – Minimal value of the x-axis</p></li>
-<li><p><strong>xmax</strong> (<em>float</em>) – Maximal value of the x-axis</p></li>
-<li><p><strong>npoints</strong> (<em>int</em>) – Number of points in the interval [xmin, xmax]</p></li>
+<li><p><strong>xcoords</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
+<li><p><strong>wfuncs</strong> (<em>ndarray</em>) – Array containing the wave functions that
+correspond to the x-coordinates</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -183,38 +180,8 @@ column corresponds to one x-coordinate of the input array.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="module-graphics">
-<span id="graphics"></span><h2>graphics<a class="headerlink" href="#module-graphics" title="Permalink to this headline">¶</a></h2>
-<p>Contains functions for plotting the  potential, the eigenvalues and the
-respective wave functions as well as the expected values for each
-eigenvalue from the files that contain the solution of the problem.</p>
-<dl class="py function">
-<dt id="graphics.qm_plottings">
-<code class="sig-prename descclassname">graphics.</code><code class="sig-name descname">qm_plottings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dirname</span></em>, <em class="sig-param"><span class="n">xmin</span></em>, <em class="sig-param"><span class="n">xmax</span></em>, <em class="sig-param"><span class="n">enmin</span></em>, <em class="sig-param"><span class="n">enmax</span></em>, <em class="sig-param"><span class="n">scale</span></em><span class="sig-paren">)</span><a class="headerlink" href="#graphics.qm_plottings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots the potential, the eigenvalues and the respective
-wave functions as well as the expected values for each eigenvalue
-from the files that contain the solution of the problem</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dirname</strong> – Name of the directory or path from which</p></li>
-<li><p><strong>files are going to be ploted. The directory must have</strong> (<em>the</em>) – </p></li>
-<li><p><strong>four following files</strong> (<em>the</em>) – potential.dat, energies.dat,</p></li>
-<li><p><strong>and expvalues.dat.</strong> (<em>wavefuncs.dat</em><em>,</em>) – </p></li>
-<li><p><strong>xmin</strong> – Minimal value of the x-axis</p></li>
-<li><p><strong>xmax</strong> – Maximal value of the x-axis</p></li>
-<li><p><strong>enmin</strong> – Minimal value of the energy-axis</p></li>
-<li><p><strong>enmax</strong> – Maximal value of the energy-axis</p></li>
-<li><p><strong>scale</strong> – Factor to fit the wavefunctions</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Plots of the potential, the eigenvalues and the respective
-wave functions</p>
-</dd>
-</dl>
-</dd></dl>
-
+<div class="section" id="graphics">
+<h2>graphics<a class="headerlink" href="#graphics" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -228,7 +195,7 @@ wave functions</p>
 <ul>
 <li><a class="reference internal" href="#">API-Documentation</a><ul>
 <li><a class="reference internal" href="#module-solvers">solvers</a></li>
-<li><a class="reference internal" href="#module-graphics">graphics</a></li>
+<li><a class="reference internal" href="#graphics">graphics</a></li>
 </ul>
 </li>
 </ul>
