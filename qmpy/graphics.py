@@ -40,8 +40,10 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
         if auto_scale:
             scale = _compscale(plot_data)
 
+    xlim, ylim = _findlims(plot_data, scale)
     _plot_wfuncs(ax1, plot_data, scale)
     _plot_expvals(ax1, plot_data)
+    ax1.set(xlim=xlim, ylim=ylim)
 
     title = r'$\sigma_{x}$'
     ax2 = _make_subplot(fig, 122, title)
@@ -204,12 +206,41 @@ def _compscale(data):
     """
     wfuncs = data['wfuncs'].T
     energies = data['energies']
-    scale = 1e6
+    scale = 1e6  # choose an arbitray large number
 
     for index in range(len(wfuncs) - 1):
-        new_scale = (energies[index + 1] - energies[index]) / abs(
-            (abs(min(wfuncs[index + 1])) - max(wfuncs[index])))
+        new_scale = (energies[index + 1] - energies[index]) / (
+            abs(min(wfuncs[index + 1])) + max(wfuncs[index]))
         if new_scale < scale:
             scale = new_scale
 
     return scale
+
+
+def _findlims(data, scale):
+    """
+    Analyses the energy levels and wavefunctions to calculate axis-limits
+    for the plot.
+
+    Args:
+        data (dict): The data containing x-coordinates, wavefunctions and
+            energy levels. Needs to have keys 'xcoords', 'wfuncs', 'energies'.
+        scale (float): The scale that will be applied to the wavefunctions.
+
+    Returns:
+        touple: The limits for the x- and y-axis.
+
+    """
+    energies, wfuncs = data['energies'], data['wfuncs']
+    xlim = (data['xcoords'][0], data['xcoords'][-1])
+    ylim = (min(scale * wfuncs[0] + energies[0] - 0.5),
+            max(scale * wfuncs[-1] + energies[-1]) + 0.5)
+
+    return xlim, ylim
+
+
+
+
+
+
+
