@@ -4,18 +4,22 @@ This is an executable script that uses the modules fileio,
 _interpolation, graphics, and solvers to solve the Schrodingers
 equation and graphicate the results
 """
-import qmpy
-import numpy as np
+
 import argparse
 import os
+import numpy as np
+import qmpy
 
 _DESCRIPTON = 'Solves the Schrodinger equation and graphicates its results'
-parser = argparse.ArgumentParser(description=_DESCRIPTON)
-msg = "Input directory"
-parser.add_argument('-i', '--idirectory', default='.', help=msg)
-msg = "Output directory"
-parser.add_argument('-o', '--odirectory', default='.', help=msg)
-args = parser.parse_args()
+PARSER = argparse.ArgumentParser(description=_DESCRIPTON)
+MSG = "Input directory"
+PARSER.add_argument('-i', '--idirectory', default='.', help=MSG)
+MSG = "Output directory"
+PARSER.add_argument('-o', '--odirectory', default='.', help=MSG)
+MSG = "Scale factor for the wave functions"
+PARSER.add_argument('-s', '--sfactor', default=None, help=MSG)
+ARGS = PARSER.parse_args()
+# Also necessary to add parsers for the range of the plots, this also needs to be added to the graphics module
 
 def schrodingers_solver():
     """Solves the 1D Schrodinger's time-independent equation
@@ -43,12 +47,12 @@ def schrodingers_solver():
         2.0 0.0
 
     """
-    ipath = args.idirectory
-    opath = args.odirectory
+    ipath = ARGS.idirectory
+    opath = ARGS.odirectory
     schrodingers_path = os.path.join(ipath, "schrodinger.inp")
-    specs = qmpy._read_schrodinger(schrodingers_path)
-    xx = qmpy._interpolation.genx(specs['xopt'])
-    yy = qmpy._interpolation.geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
+    specs = qmpy.fileio._read_schrodinger(schrodingers_path)
+    xx = qmpy._interpolation._genx(specs['xopt'])
+    yy = qmpy._interpolation._geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
     xint, pots = qmpy._interpolation._interpolate(xx, yy, specs['xopt'],
                                                   specs['interpoltype'])
     energies, wfuncs = qmpy.solvers.schroedinger(specs['mass'], xint, pots)
@@ -63,8 +67,8 @@ def schrodingers_solver():
     qmpy.fileio.write_data(opath, pots, energies, wfuncs,
                            expvaldata)
     qmpy.graphics.qm_plottings(opath, specs['xmin'],
-                               specs['xmax'], specs['npoint'], energies[0],
-                               energies[-1], scale) # Scale factor still needs Command Line Parsing
+                               specs['xmax'], energies[0], energies[-1],
+                               ARGS.sfactor) # Scale factor still needs Command Line Parsing
 
 if __name__ == "_main_":
     schrodingers_solver()

@@ -8,7 +8,7 @@ from fileio import _readplotsfiles
 import matplotlib.pyplot as plt
 
 
-def qm_plottings(dirname, xmin, xmax, enmin, enmax, scale):
+def qm_plottings(dirname, xmin, xmax, enmin, enmax, scale=None):
     """Plots the potential, the eigenvalues and the respective
     wave functions as well as the expected values for each eigenvalue
     from the files that contain the solution of the problem
@@ -29,6 +29,10 @@ def qm_plottings(dirname, xmin, xmax, enmin, enmax, scale):
         wave functions
 
     """
+    if scale is None:
+        scale = 1
+    else:
+        scale = scale
     (xcoordsarray, potsarray, energarray, wfuncsarray,
      expvalsarray, uncertainityarray) = _isolate_plot_data(dirname)
     fig = plt.figure(1)
