@@ -20,12 +20,13 @@ This package requires Python 3.6 or higher.
 For easy installation with pip use:
 
 ```shell
-pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
+pip install -i https://test.pypi.org/simple/ qmpy-schrodinger==0.0.2
 ```
 
 ## Usage
 
 ```python
+from numpy import array
 from qmpy._fileio import _read_schrodinger, _write_data
 from qmpy._interpolation import _interpolate
 from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
@@ -75,7 +76,7 @@ def schrodingers_solver():
     uncertainties = calculate_uncertainty(xint, wfuncs)
 
     expvallist = (expvals, uncertainties)
-    expvaldata = np.array(expvallist)
+    expvaldata = array(expvallist)
     _write_data('.', pots, energies, wfuncs, expvaldata)
     qm_plottings('.')
 
