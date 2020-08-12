@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qmpy-schrodinger
-Version: 0.0.1
+Version: 0.0.2
 Summary: Package for numerical solving of the schroedinger equation
 Home-page: https://github.com/kenokrieger/QmPy
 Author: Keno Krieger, Helmut Wecke
@@ -8,7 +8,7 @@ Author-email: kriegerk@uni-bremen.de
 License: UNKNOWN
 Description: # QmPy
         
-        <img src="./badges/build_passing.svg">
+        <img src="./badges/build_passing.svg"> <img src="./badges/coverage.svg">
         
         QmPy is a python package containing routines to numerically solve and visualize
         the schroedinger equation for different potentials.
@@ -28,7 +28,7 @@ Description: # QmPy
         For easy installation with pip use:
         
         ```shell
-        pip install -i https://test.pypi.org/simple/ qmpy-kriegerk==0.0.2
+        pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
         ```
         
         ## Usage
@@ -50,7 +50,8 @@ Description: # QmPy
         
         ## License
         
-        [BSD 2-Clause License](https://choosealicense.com/licenses/bsd-2-clause/) See LICENSE.txt for further information.
+        [BSD 2-Clause License](https://choosealicense.com/licenses/bsd-2-clause/) <br/>
+        See LICENSE.txt for further information.
         
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
