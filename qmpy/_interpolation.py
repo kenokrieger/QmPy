@@ -121,7 +121,7 @@ def _geny(xx, func):
         func (callable object): The function used to generate the data.
 
     Returns:
-        y (1darray): Array containing y-values matching the supplied
+        yy (1darray): Array containing y-values matching the supplied
             x-coordinates.
 
     """
