@@ -51,7 +51,7 @@ def _read_schrodinger(inputfilepath):
     return specs
 
 
-def write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
+def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
     """Writes the potentials with the respective x coordinates, the energies,
     the eigestates with the respective x coordinates, and expected values with
     the respective uncertainities on files named respectively: potentials.dat,
