@@ -36,30 +36,22 @@ def schrodingers_solver(schrodingers_path):
         2.0 0.0
 
     """
-    # Read Schrodinger.inp
     specs = qmpy._read_schrodinger(schrodingers_path)
-    # Generate xx and yy arrays
     xx = qmpy._interpolation.genx(specs['xopt'])
     yy = qmpy._interpolation.geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
-    # Interpolate to get the x coords and the potential
     xint, pots = qmpy._interpolation._interpolate(xx, yy, specs['xopt'],
                                                   specs['interpoltype'])
-    # Calculate the energies and wave functions
     energies, wfuncs = qmpy.solvers.schroedinger(specs['mass'], xint, pots)
-    # Calculate the expected values for x and the uncertainities
     expvals = qmpy.solvers.calculate_expval(xint, wfuncs, specs['xmin'],
                                            specs['xmax'], specs['npoint'])
     uncertainities = qmpy.solvers.calculate_uncertainity(xint, wfuncs,
                                                        specs['xmin'],
                                                        specs['xmax'],
                                                        specs['npoint'])
-    # Make an array out of expvals and uncertainities
     expvallist = (expvals, uncertainities)
     expvaldata = np.array(expvallist)
-    # Write the calculated data in an output file
     qmpy.fileio.write_data(schrodingers_path, pots, energies, wfuncs,
                            expvaldata)
-    # Graphicate the results of the equation
     qmpy.graphics.qm_plottings(schrodingers_path, specs['xmin'],
                                specs['xmax'], specs['npoint'], energies[0],
                                energies[-1], scale) # Scale factor still needs Command Line Parsing
