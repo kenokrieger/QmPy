@@ -25,7 +25,4 @@ def test_plotting(problem):
     write_data('test_data', potdata, energies, wfuncsdata, expvaldata)
 
     qm_plottings('test_data')
-
-
-if __name__ == '__main__':
-    test_plotting(PROBLEM)
+    assert True
