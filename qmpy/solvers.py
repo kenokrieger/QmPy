@@ -74,7 +74,7 @@ def schroedinger(mass, xcords, potential, select_range=None):
 
 def calculate_expval(xcoords, wfuncs):
     """
-    Calculates the expected values :math: `<x>` for the x-coordinate by
+    Calculates the expected values :math:`<x>` for the x-coordinate by
     numerically calculating the integral
 
     .. math::
@@ -123,7 +123,7 @@ def calculate_uncertainty(xcoords, wfuncs):
     uncertainty = np.array([])
 
     for wfunc, expv in zip(wfuncs, expval):
-        expvalsq = np.sum((wfuncs ** 2) * (xcoords ** 2)) * delta
+        expvalsq = np.sum((wfunc ** 2) * (xcoords ** 2)) * delta
         uncertainty = np.append(uncertainty, [np.sqrt(expvalsq - expv ** 2)],
                                 axis=0)
 

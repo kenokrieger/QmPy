@@ -48,7 +48,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
     title = r'$\sigma_{x}$'
     ax2 = _make_subplot(fig, 122, title)
     _plot_unc(ax2, plot_data)
-
+    ax2.set(ylim=ylim)
+    plt.subplots_adjust(wspace=0.3)
     plt.savefig(sname)
     return fig, ax1, ax2
 
@@ -131,7 +132,7 @@ def _plot_expvals(ax, data):
 
     """
     xrange = (data['xcoords'][0], data['xcoords'][-1])
-    ax.hlines(data['energies'], xrange[0], xrange[-1], color='grey')
+    ax.hlines(data['energies'], xrange[0], xrange[-1], color='grey', alpha=.5)
     ax.scatter(data['expvals'], data['energies'], color="green", marker="x")
 
 
@@ -162,10 +163,12 @@ def _plot_unc(ax, data):
         None.
 
     """
-    xrange = (data['xcoords'][0], data['xcoords'][-1])
-    ax.hlines(data['energies'], xrange[0], xrange[-1], color='grey')
+    uncs = data['uncertainties']
+    xrange = (min(uncs) - 0.5, max(uncs) + 0.5)
+    ax.hlines(data['energies'], xrange[0], xrange[-1], color='grey', alpha=.5)
     ax.scatter(data['uncertainties'], data['energies'],
                color="purple", marker="+")
+    ax.set(xlim=xrange)
 
 
 def _plot_wfuncs(ax, data, scale):
@@ -182,14 +185,14 @@ def _plot_wfuncs(ax, data, scale):
         None.
 
     """
-    ii = 0
+    _ii = 0
     for wfunc, energy in zip(data['wfuncs'].T, data['energies']):
         offsetwfunc = scale * wfunc + energy
-        if ii % 2 == 0:
+        if _ii % 2 == 0:
             ax.plot(data['xcoords'], offsetwfunc, color="red")
         else:
             ax.plot(data['xcoords'], offsetwfunc, color="blue")
-        ii += 1
+        _ii += 1
 
 
 def _compscale(data):
@@ -237,10 +240,3 @@ def _findlims(data, scale):
             max(scale * wfuncs[-1] + energies[-1]) + 0.5)
 
     return xlim, ylim
-
-
-
-
-
-
-
