@@ -1,7 +1,6 @@
 .spyproject/
 .pytest_cache/
 __pycache__/
-Thumbs.db
-.cache/
-docs/build
-
+dist/
+qmpy_schrodinger.egg-info/
+build/

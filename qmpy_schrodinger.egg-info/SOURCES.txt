@@ -1,0 +1,11 @@
+README.md
+setup.py
+qmpy/__init__.py
+qmpy/_interpolation.py
+qmpy/fileio.py
+qmpy/graphics.py
+qmpy/solvers.py
+qmpy_schrodinger.egg-info/PKG-INFO
+qmpy_schrodinger.egg-info/SOURCES.txt
+qmpy_schrodinger.egg-info/dependency_links.txt
+qmpy_schrodinger.egg-info/top_level.txt
