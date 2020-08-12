@@ -3,7 +3,7 @@
     eigenvalue from the files that contain the solution of the problem.
 """
 import matplotlib.pyplot as plt
-from qmpy.fileio import _readplotsfiles
+from qmpy._fileio import _readplotsfiles
 
 
 def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):

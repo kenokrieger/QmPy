@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: qmpy-schrodinger
-Version: 0.0.2
+Version: 0.0.3
 Summary: Package for numerical solving of the schroedinger equation
 Home-page: https://github.com/kenokrieger/QmPy
 Author: Keno Krieger, Helmut Wecke

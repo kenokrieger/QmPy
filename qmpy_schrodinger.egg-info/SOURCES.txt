@@ -1,8 +1,8 @@
 README.md
 setup.py
 qmpy/__init__.py
+qmpy/_fileio.py
 qmpy/_interpolation.py
-qmpy/fileio.py
 qmpy/graphics.py
 qmpy/solvers.py
 qmpy_schrodinger.egg-info/PKG-INFO
