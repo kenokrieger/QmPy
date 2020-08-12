@@ -11,8 +11,10 @@ import os
 
 _DESCRIPTON = 'Solves the Schrodinger equation and graphicates its results'
 parser = argparse.ArgumentParser(description=_DESCRIPTON)
-msg = "Input and Output directory"
+msg = "Input directory"
 parser.add_argument('-i', '--idirectory', default='.', help=msg)
+msg = "Output directory"
+parser.add_argument('-o', '--odirectory', default='.', help=msg)
 args = parser.parse_args()
 
 def schrodingers_solver():
@@ -41,8 +43,9 @@ def schrodingers_solver():
         2.0 0.0
 
     """
-    path = args.idirectory
-    schrodingers_path = os.path.join(path, "schrodinger.inp")
+    ipath = args.idirectory
+    opath = args.odirectory
+    schrodingers_path = os.path.join(ipath, "schrodinger.inp")
     specs = qmpy._read_schrodinger(schrodingers_path)
     xx = qmpy._interpolation.genx(specs['xopt'])
     yy = qmpy._interpolation.geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
@@ -57,9 +60,9 @@ def schrodingers_solver():
                                                        specs['npoint'])
     expvallist = (expvals, uncertainities)
     expvaldata = np.array(expvallist)
-    qmpy.fileio.write_data(path, pots, energies, wfuncs,
+    qmpy.fileio.write_data(opath, pots, energies, wfuncs,
                            expvaldata)
-    qmpy.graphics.qm_plottings(path, specs['xmin'],
+    qmpy.graphics.qm_plottings(opath, specs['xmin'],
                                specs['xmax'], specs['npoint'], energies[0],
                                energies[-1], scale) # Scale factor still needs Command Line Parsing
 
