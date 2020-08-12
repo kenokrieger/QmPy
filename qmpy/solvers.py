@@ -72,7 +72,7 @@ def schroedinger(mass, xcords, potential, select_range=None):
     return energies, wfuncs
 
 
-def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
+def calculate_expval(xcoordsarray, wfuncsarray):
     """
     Calculates the expected values for the x-coordinate
 
@@ -80,15 +80,12 @@ def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
         xcoordsarray (1darray): Array containing the x-coordinates
         wfuncsarray (ndarray): Array containing the wave functions that
         correspond to the x-coordinates
-        xmin (float): Minimal value of the x-axis
-        xmax (float): Maximal value of the x-axis
-        npoints (int): Number of points in the interval [xmin, xmax]
 
     Returns:
         1darray: The expected values of the x-coordinate
 
     """
-    delta = np.abs(xmin-xmax)/npoints
+    delta = np.abs(xcoordsarray[0] - xcoordsarray[-1]) / len(xcoordsarray)
     summation = 0
     expvalxlist = list()
     for rows in range(0, len(xcoordsarray)):
@@ -101,7 +98,7 @@ def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     return expval
 
 
-def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
+def calculate_uncertainity(xcoordsarray, wfuncsarray):
     """
     Calculates the uncertainity :math:`\\Delta x` defined as
 
@@ -115,16 +112,13 @@ def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
         xcoordsarray (1darray): Array containing the x-coordinates
         wfuncsarray (ndarray): Array containing the wave functions that
         correspond to the x-coordinates
-        xmin (float): Minimal value of the x-axis
-        xmax (float): Maximal value of the x-axis
-        npoints (int): Number of points in the interval [xmin, xmax]
 
     Returns:
         1darray: The uncertainty of the x-coordinate.
 
     """
-    delta = np.abs(xmin-xmax)/npoints
-    expvalarray = calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax)
+    delta = np.abs(xcoordsarray[0] - xcoordsarray[-1]) / len(xcoordsarray)
+    expvalarray = calculate_expval(xcoordsarray, wfuncsarray)
     expvalsqlist = list()
     summation = 0
     for rows in range(len(xcoordsarray)):

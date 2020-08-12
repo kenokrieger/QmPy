@@ -180,9 +180,8 @@ def _plot_wfuncs(ax, data, scale):
         None.
 
     """
-    data['wfuncs'].T
     ii = 0
-    for wfunc, energy in zip(data['wfuncs'], data['energies']):
+    for wfunc, energy in zip(data['wfuncs'].T, data['energies']):
         offsetwfunc = scale * wfunc + energy
         if ii % 2 == 0:
             ax.plot(data['xcoords'], offsetwfunc, color="red")
