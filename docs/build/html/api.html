@@ -180,8 +180,39 @@ column corresponds to one x-coordinate of the input array.</p></li>
 </dd></dl>
 
 </div>
-<div class="section" id="graphics">
-<h2>graphics<a class="headerlink" href="#graphics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-graphics">
+<span id="graphics"></span><h2>graphics<a class="headerlink" href="#module-graphics" title="Permalink to this headline">¶</a></h2>
+<p>Contains functions for plotting the  potential, the eigenvalues and the
+respective wave functions as well as the expected values for each
+eigenvalue from the files that contain the solution of the problem.</p>
+<dl class="py function">
+<dt id="graphics.qm_plottings">
+<code class="sig-prename descclassname">graphics.</code><code class="sig-name descname">qm_plottings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dirname</span></em>, <em class="sig-param"><span class="n">auto_scale</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">scale</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sname</span><span class="o">=</span><span class="default_value">'qmpy_plot.pdf'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#graphics.qm_plottings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the potential, the eigenvalues and the respective
+wave functions as well as the expected values for each eigenvalue
+from the files that contain the solution of the problem</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dirname</strong> – Name of the directory or path from which
+the files are going to be ploted. The directory must have
+the four following files: potential.dat, energies.dat,
+wavefuncs.dat, and expvalues.dat.</p></li>
+<li><p><strong>auto_scale</strong> (<em>bool</em>) – Automatically scale the wavefunctions. Defaults to
+True.</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – Manually set a value for the scale factor. Defaults to
+None.</p></li>
+<li><p><strong>sname</strong> (<em>str</em>) – The name for the file to save the plot to. Defaults to
+‘qmpy_plot.pdf’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The figure and axes of the plot. Where ax1 is the left and ax2 is the
+right subplot.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
@@ -195,7 +226,7 @@ column corresponds to one x-coordinate of the input array.</p></li>
 <ul>
 <li><a class="reference internal" href="#">API-Documentation</a><ul>
 <li><a class="reference internal" href="#module-solvers">solvers</a></li>
-<li><a class="reference internal" href="#graphics">graphics</a></li>
+<li><a class="reference internal" href="#module-graphics">graphics</a></li>
 </ul>
 </li>
 </ul>
