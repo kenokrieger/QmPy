@@ -25,8 +25,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
             'qmpy_plot.pdf'.
 
     Return:
-        The figure and axes of the plot. Where ax1 is the left and ax2 is the
-        right subplot.
+        touple: The figure and axes of the plot. Where ax1 is the left and
+        ax2 is the right subplot.
 
     """
     plot_data = _isolate_plot_data(dirname)
