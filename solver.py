@@ -45,7 +45,6 @@ def schrodingers_solver():
         2 # nr. of interpolation points and xy declarations
         -2.0 0.0
         2.0 0.0
-
     """
     ipath = ARGS.idirectory
     opath = ARGS.odirectory
