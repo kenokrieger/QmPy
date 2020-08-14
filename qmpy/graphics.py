@@ -14,7 +14,7 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
 
     Args:
         dirname: Name of the directory or path from which
-            the files are going to be ploted. The directory must have
+            the files are going to be plotted. The directory must have
             the four following files: potential.dat, energies.dat,
             wavefuncs.dat, and expvalues.dat.
         auto_scale (bool): Automatically scale the wavefunctions. Defaults to
@@ -50,6 +50,7 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
     _plot_unc(ax2, plot_data)
     ax2.set(ylim=ylim)
     plt.subplots_adjust(wspace=0.3)
+    plt.show()
     plt.savefig(sname)
     return fig, ax1, ax2
 

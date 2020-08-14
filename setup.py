@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="qmpy-schrodinger",  # Name for PyPI
-    version="0.0.3",
+    version="1.0.0",
     author="Keno Krieger, Helmut Wecke",
     author_email="kriegerk@uni-bremen.de",
     description="Package for numerical solving of the schroedinger equation",

@@ -56,7 +56,7 @@ def schrodingers_solver():
     uncertainties = calculate_uncertainty(xint, wfuncs)
 
     expvallist = (expvals, uncertainties)
-    expvaldata = np.array(expvallist)
+    expvaldata = np.array(expvallist).T
     _write_data(opath, pots, energies, wfuncs, expvaldata)
     qm_plottings(opath, scale=scale)
 
