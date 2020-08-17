@@ -1,7 +1,7 @@
-# <img src="./badges/qmpy_logotext.png" height=60>
+# <img src="http://qmpy.org/badges/qmpy_logotext.png" height=60>
 
-<img src="./badges/build_passing.svg"> <img src="./badges/coverage.svg">
-<img src="./badges/license.svg"> <img src="./badges/release.svg">
+<img src="http://qmpy.org/badges/build_passing.svg"> <img src="http://qmpy.org/badges/coverage.svg">
+<img src="http://qmpy.org/badges/license.svg"> <img src="http://qmpy.org/badges/release.svg">
 <img src="https://img.shields.io/github/commit-activity/m/kenokrieger/QmPy">
 
 
