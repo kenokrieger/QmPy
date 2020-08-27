@@ -1,9 +1,9 @@
 # <img src="http://qmpy.org/badges/qmpy_logotext.png" height=60>
 
 <img src="http://qmpy.org/badges/build_passing.svg"> <img src="http://qmpy.org/badges/coverage.svg">
-<img src="http://qmpy.org/badges/license.svg"> <img src="http://qmpy.org/badges/release.svg">
-<img src="https://img.shields.io/github/commit-activity/m/kenokrieger/QmPy">
+<img src="https://img.shields.io/github/issues/kenokrieger/QmPy"> <img src="https://img.shields.io/github/commit-activity/m/kenokrieger/QmPy">
 
+<img src="http://qmpy.org/badges/release.svg"> <img src="http://qmpy.org/badges/license.svg"> 
 
 QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials.
