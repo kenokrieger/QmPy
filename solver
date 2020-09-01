@@ -1,38 +1,17 @@
-# QmPy
+#!/usr/bin/env python3
+"""
+This is an executable script that uses the modules fileio,
+_interpolation, graphics, and solvers to solve the Schrodingers
+equation and graphicate the results
+"""
 
-<img src="./badges/build_passing.svg"> <img src="./badges/coverage.svg">
-
-QmPy is a python package containing routines to numerically solve and visualize
-the schroedinger equation for different potentials.
-
-
-## Disclaimer
-
-This is a student project. It utilizes very unstable and simple numerical
-algorithms.
-
-## Requirements
-
-This package requires Python 3.6 or higher.
-
-## Installation
-
-For easy installation with pip use:
-
-```shell
-pip install -i https://test.pypi.org/simple/ qmpy-schrodinger==0.0.2
-```
-
-## Usage
-
-```python
-from numpy import array
+import argparse
+import os
+import numpy as np
 from qmpy._fileio import _read_schrodinger, _write_data
 from qmpy._interpolation import _interpolate
 from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
 from qmpy.graphics import qm_plottings
-
-SCHRODINGERS_PATH = "schrodinger.inp"
 
 
 def schrodingers_solver():
@@ -64,8 +43,9 @@ def schrodingers_solver():
         2.0 0.0
 
     """
-
-    specs = _read_schrodinger(SCHRODINGERS_PATH)
+    ipath, opath, scale = _parsecmd()
+    schrodingers_path = os.path.join(ipath, "schrodinger.inp")
+    specs = _read_schrodinger(schrodingers_path)
     xx = specs['interpolxydecs'][:, 0]
     yy = specs['interpolxydecs'][:, 1]
     xint, pots = _interpolate(xx, yy, specs['xopt'], specs['interpoltype'])
@@ -76,27 +56,37 @@ def schrodingers_solver():
     uncertainties = calculate_uncertainty(xint, wfuncs)
 
     expvallist = (expvals, uncertainties)
-    expvaldata = array(expvallist)
-    _write_data('.', pots, energies, wfuncs, expvaldata)
-    qm_plottings('.')
+    expvaldata = np.array(expvallist)
+    _write_data(opath, pots, energies, wfuncs, expvaldata)
+    qm_plottings(opath, scale=scale)
 
 
-    if __name__ == "_main_":
-        schrodingers_solver()
-```
+def _parsecmd():
+    """
+    Parses the input from the command line to the program.
 
-## Documentation
+    Returns:
+        ipath (path): The input directory.
+        opath (path): The output directory.
+        scale (float): Optional. A scale to apply to the wavefunctions.
 
-The documentation can be found at [qmpy.org/docs](http://qmpy.org/docs/) or
-in the docs/ folder on [github](https://github.com/kenokrieger/QmPy/tree/master/docs) .
+    """
+    description = 'Solves the Schrodinger equation and graphicates its results'
+    parser = argparse.ArgumentParser(description=description)
+    msg = "Input directory"
+    parser.add_argument('-i', '--idirectory', default='.', help=msg)
+    msg = "Output directory"
+    parser.add_argument('-o', '--odirectory', default='.', help=msg)
+    msg = "Scale factor for the wave functions"
+    parser.add_argument('-s', '--sfactor', default=None, help=msg)
+    args = parser.parse_asrgs()
 
-## Contributing
+    ipath = args.idirectory
+    opath = args.odirectory
+    scale = float(args.sfactor)
 
-Contributions are always welcome. To contribute fork the repository from
-github and develop your feature including unit tests. For your contribution
-to be incorporated in the main build issue a pull request.
+    return ipath, opath, scale
 
-## License
 
-[BSD 2-Clause License](https://choosealicense.com/licenses/bsd-2-clause/) <br/>
-See LICENSE.txt for further information.
+if __name__ == "_main_":
+    schrodingers_solver()

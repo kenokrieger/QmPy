@@ -1,6 +1,6 @@
 """Contains tests for the solvers module"""
 from qmpy.solvers import schroedinger
-from qmpy.fileio import _read_schrodinger
+from qmpy._fileio import _read_schrodinger
 from qmpy._interpolation import _interpolate
 from numpy import insert, loadtxt, allclose
 import pytest

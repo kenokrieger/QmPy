@@ -72,36 +72,34 @@ def schroedinger(mass, xcords, potential, select_range=None):
     return energies, wfuncs
 
 
-def calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
+def calculate_expval(xcoords, wfuncs):
     """
-    Calculates the expected values for the x-coordinate
+    Calculates the expected values :math:`<x>` for the x-coordinate by
+    numerically calculating the integral
+
+    .. math::
+
+       \\int_{x_{min}}^{x_{max}} | \\psi (x) |^2 x dx
 
     Args:
         xcoordsarray (1darray): Array containing the x-coordinates
         wfuncsarray (ndarray): Array containing the wave functions that
-        correspond to the x-coordinates
-        xmin (float): Minimal value of the x-axis
-        xmax (float): Maximal value of the x-axis
-        npoints (int): Number of points in the interval [xmin, xmax]
+            correspond to the x-coordinates
 
     Returns:
         1darray: The expected values of the x-coordinate
 
     """
-    delta = np.abs(xmin-xmax)/npoints
-    summation = 0
-    expvalxlist = list()
-    for rows in range(0, len(xcoordsarray)):
-        for cols in range(0, len(wfuncsarray[0])):
-            summation += (wfuncsarray[rows, cols] * xcoordsarray[cols]
-                          * wfuncsarray[rows, cols])
-        expvalx = delta * summation
-        expvalxlist.append(expvalx)
-    expval = np.array(expvalxlist)
+    delta = np.abs(xcoords[0] - xcoords[-1]) / len(xcoords)
+    expval = np.array([])
+    for wfunc in wfuncs:
+        expval = np.append(expval, [np.sum((wfunc ** 2) * xcoords) * delta],
+                           axis=0)
+
     return expval
 
 
-def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
+def calculate_uncertainty(xcoords, wfuncs):
     """
     Calculates the uncertainity :math:`\\Delta x` defined as
 
@@ -112,31 +110,21 @@ def calculate_uncertainity(xcoordsarray, wfuncsarray, xmin, xmax, npoints):
     for each wavefunction.
 
     Args:
-        xcoordsarray (1darray): Array containing the x-coordinates
-        wfuncsarray (ndarray): Array containing the wave functions that
-        correspond to the x-coordinates
-        xmin (float): Minimal value of the x-axis
-        xmax (float): Maximal value of the x-axis
-        npoints (int): Number of points in the interval [xmin, xmax]
+        xcoords (1darray): Array containing the x-coordinates
+        wfuncs (ndarray): Array containing the wave functions that
+            correspond to the x-coordinates
 
     Returns:
         1darray: The uncertainty of the x-coordinate.
 
     """
-    delta = np.abs(xmin-xmax)/npoints
-    expvalarray = calculate_expval(xcoordsarray, wfuncsarray, xmin, xmax)
-    expvalsqlist = list()
-    summation = 0
-    for rows in range(len(xcoordsarray)):
-        for cols in range(len(wfuncsarray[0])):
-            summation += (wfuncsarray[rows, cols] * (xcoordsarray[cols]**2)
-                          * wfuncsarray[rows, cols])
-        expvalsq = delta * summation
-        expvalsqlist.append(expvalsq)
-    expvalsqarray = np.array(expvalsqlist)
-    uncertainlist = list()
-    for ii in range(len(expvalsqarray)):
-        element = np.sqrt(expvalsqarray[ii] - expvalarray[ii]**2)
-        uncertainlist.append(element)
-    uncertainity = np.array(uncertainlist)
-    return uncertainity
+    delta = np.abs(xcoords[0] - xcoords[-1]) / len(xcoords)
+    expval = calculate_expval(xcoords, wfuncs)
+    uncertainty = np.array([])
+
+    for wfunc, expv in zip(wfuncs, expval):
+        expvalsq = np.sum((wfunc ** 2) * (xcoords ** 2)) * delta
+        uncertainty = np.append(uncertainty, [np.sqrt(expvalsq - expv ** 2)],
+                                axis=0)
+
+    return uncertainty
