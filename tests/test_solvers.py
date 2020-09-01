@@ -5,7 +5,8 @@ from qmpy._interpolation import _interpolate
 from numpy import insert, loadtxt, allclose
 import pytest
 
-PROBLEMS = ['inf_potwell', 'double_well', 'asym_potwell', 'harm_osci']
+PROBLEMS = ['inf_potwell', 'fin_potwell', 'double_well', 'asym_potwell',
+            'harm_osci']
 
 
 @pytest.mark.parametrize('problem', PROBLEMS)
@@ -25,9 +26,8 @@ def test_computing(problem):
 
     xint, yint = _interpolate(xx, yy, xopt, kind=kind)
     comp_energies, wfuncs = schroedinger(mass, xint, yint, select_range=evs)
-    wfuncs.T
-    comp_funcs = insert(wfuncs.T, 0, values=xint, axis=1)
 
+    comp_funcs = insert(wfuncs.T, 0, values=xint, axis=1)
     ref_energies = loadtxt('test_data/energies_{}.ref'.format(problem))
     ref_wfuncs = loadtxt('test_data/wfuncs_{}.ref'.format(problem))
 

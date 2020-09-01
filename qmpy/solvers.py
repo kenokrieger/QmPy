@@ -27,31 +27,6 @@ def schroedinger(mass, xcords, potential, select_range=None):
               numerical value of a computed  normalized wavefunction. Each
               column corresponds to one x-coordinate of the input array.
 
-    Examples:
-        .. code-block::
-
-            import qmpy
-            import matplotlib.pyplot as plt
-            import numpy as np
-
-            mass = 2.0
-            xcords = np.linspace(-2, 2, 1999)
-            pot = np.zeros((1999, ))
-
-            energies, wfuncs = qmpy.solvers.schroedinger(mass, xcords, pot,
-                                                         select_range=(0, 3))
-            fig = plt.figure(1)
-            ax = fig.add_subplot(111)
-            title = 'First four wavefunctions of the infinite potential well'
-            ax.set_title(title, fontsize=20, fontweigt='bold')
-            ax.set_xlabel('Location in atomic units')
-
-            for wfunc, energy in zip(wfuncs, energies):
-                ax.plot(xcords, 0.7 * wfunc + energy)
-
-            ax.hlines(energies, color='k', alpha=0.7)
-            plt.show()
-
     """
     delta = np.abs(xcords[0] - xcords[-1]) / len(xcords)
     diag = np.array([1 / (mass * delta ** 2) + V for V in potential])
