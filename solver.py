@@ -50,7 +50,7 @@ def schrodingers_solver():
     ipath = ARGS.idirectory
     opath = ARGS.odirectory
     schrodingers_path = os.path.join(ipath, "schrodinger.inp")
-    specs = qmpy._fileio._read_schrodinger(schrodingers_path)
+    specs = qmpy._fileio._read_schrodinger(schrodingers_path) #pylint : disable=W0212
     xx = qmpy._interpolation._genx(specs['xopt'])
     yy = qmpy._interpolation._geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
     xint, pots = qmpy._interpolation._interpolate(xx, yy, specs['xopt'],
@@ -62,9 +62,7 @@ def schrodingers_solver():
     expvaldata = np.array(expvallist)
     qmpy._fileio._write_data(opath, pots, energies, wfuncs,
                              expvaldata)
-    qmpy.graphics.qm_plottings(opath, specs['xmin'],
-                               specs['xmax'], energies[0], energies[-1],
-                               ARGS.sfactor)
+    qmpy.graphics.qm_plottings(opath, auto_scale, ARGS.sfactor, sname)
 
 if __name__ == "_main_":
     schrodingers_solver()
