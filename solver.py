@@ -18,6 +18,11 @@ MSG = "Output directory"
 PARSER.add_argument('-o', '--odirectory', default='.', help=MSG)
 MSG = "Scale factor for the wave functions"
 PARSER.add_argument('-s', '--sfactor', default=None, help=MSG)
+MSG = "Auto-scalation function for the plots. (Only bool values allowed)"
+PARSER.add_argument('-a', '--autoscale', default=True, help=MSG)
+MSG = "Name of the file which includes the plots "
+PARSER.add_argument('-n', '--namefile', default='qmpy_plot.pdf', help=MSG)
+
 ARGS = PARSER.parse_args()
 # Also necessary to add parsers for the range of the plots, this also needs to
 # be added to the graphics module
@@ -50,7 +55,7 @@ def schrodingers_solver():
     ipath = ARGS.idirectory
     opath = ARGS.odirectory
     schrodingers_path = os.path.join(ipath, "schrodinger.inp")
-    specs = qmpy._fileio._read_schrodinger(schrodingers_path) #pylint : disable=W0212
+    specs = qmpy._fileio._read_schrodinger(schrodingers_path)
     xx = qmpy._interpolation._genx(specs['xopt'])
     yy = qmpy._interpolation._geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
     xint, pots = qmpy._interpolation._interpolate(xx, yy, specs['xopt'],
@@ -62,7 +67,8 @@ def schrodingers_solver():
     expvaldata = np.array(expvallist)
     qmpy._fileio._write_data(opath, pots, energies, wfuncs,
                              expvaldata)
-    qmpy.graphics.qm_plottings(opath, auto_scale, ARGS.sfactor, sname)
+    qmpy.graphics.qm_plottings(opath, ARGS.autoscale, ARGS.sfactor,
+                               ARGS.namefile)
 
 if __name__ == "_main_":
     schrodingers_solver()
