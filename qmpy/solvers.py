@@ -60,6 +60,9 @@ def calculate_expval(xcoords, wfuncs):
         xcoordsarray (1darray): Array containing the x-coordinates
         wfuncsarray (ndarray): Array containing the wave functions that
             correspond to the x-coordinates
+        xmin: Minimum Value for x
+        xmax: Maximum Value for x
+        npoints: Number of x values in range (xmin, xmax)
 
     Returns:
         1darray: The expected values of the x-coordinate
@@ -74,7 +77,7 @@ def calculate_expval(xcoords, wfuncs):
     return expval
 
 
-def calculate_uncertainty(xcoords, wfuncs):
+def calculate_uncertainity(xcoords, wfuncs):
     """
     Calculates the uncertainity :math:`\\Delta x` defined as
 
@@ -88,7 +91,9 @@ def calculate_uncertainty(xcoords, wfuncs):
         xcoords (1darray): Array containing the x-coordinates
         wfuncs (ndarray): Array containing the wave functions that
             correspond to the x-coordinates
-
+        xmin: Minimum Value for x
+        xmax: Maximum Value for x
+        npoints: Number of x values in range (xmin, xmax)
     Returns:
         1darray: The uncertainty of the x-coordinate.
 

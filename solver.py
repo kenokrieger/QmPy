@@ -19,7 +19,8 @@ PARSER.add_argument('-o', '--odirectory', default='.', help=MSG)
 MSG = "Scale factor for the wave functions"
 PARSER.add_argument('-s', '--sfactor', default=None, help=MSG)
 ARGS = PARSER.parse_args()
-# Also necessary to add parsers for the range of the plots, this also needs to be added to the graphics module
+# Also necessary to add parsers for the range of the plots, this also needs to
+# be added to the graphics module
 
 def schrodingers_solver():
     """Solves the 1D Schrodinger's time-independent equation
@@ -49,25 +50,21 @@ def schrodingers_solver():
     ipath = ARGS.idirectory
     opath = ARGS.odirectory
     schrodingers_path = os.path.join(ipath, "schrodinger.inp")
-    specs = qmpy.fileio._read_schrodinger(schrodingers_path)
+    specs = qmpy._fileio._read_schrodinger(schrodingers_path)
     xx = qmpy._interpolation._genx(specs['xopt'])
     yy = qmpy._interpolation._geny(xx, specs['interpoltype']) # Not sure if funcs is specs['interpoltype']
     xint, pots = qmpy._interpolation._interpolate(xx, yy, specs['xopt'],
                                                   specs['interpoltype'])
     energies, wfuncs = qmpy.solvers.schroedinger(specs['mass'], xint, pots)
-    expvals = qmpy.solvers.calculate_expval(xint, wfuncs, specs['xmin'],
-                                           specs['xmax'], specs['npoint'])
-    uncertainities = qmpy.solvers.calculate_uncertainity(xint, wfuncs,
-                                                       specs['xmin'],
-                                                       specs['xmax'],
-                                                       specs['npoint'])
+    expvals = qmpy.solvers.calculate_expval(xint, wfuncs)
+    uncertainities = qmpy.solvers.calculate_uncertainity(xint, wfuncs)
     expvallist = (expvals, uncertainities)
     expvaldata = np.array(expvallist)
-    qmpy.fileio.write_data(opath, pots, energies, wfuncs,
-                           expvaldata)
+    qmpy._fileio._write_data(opath, pots, energies, wfuncs,
+                             expvaldata)
     qmpy.graphics.qm_plottings(opath, specs['xmin'],
                                specs['xmax'], energies[0], energies[-1],
-                               ARGS.sfactor) # Scale factor still needs Command Line Parsing
+                               ARGS.sfactor)
 
 if __name__ == "_main_":
     schrodingers_solver()
