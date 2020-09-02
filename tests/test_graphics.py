@@ -1,9 +1,9 @@
 """Tests for the graphics module"""
+import numpy as np
 from qmpy.graphics import qm_plottings
 from qmpy._fileio import _read_schrodinger, _write_data
 from qmpy.solvers import calculate_expval, calculate_uncertainty
 from qmpy._interpolation import _interpolate
-import numpy as np
 
 PROBLEM = 'asym_potwell'
 

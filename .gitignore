@@ -6,3 +6,4 @@ qmpy_schrodinger.egg-info/
 build/
 docs/build
 badges/
+.cache

@@ -1,9 +1,10 @@
 """Contains tests for the solvers module"""
+from numpy import insert, loadtxt, allclose
+import pytest
 from qmpy.solvers import schroedinger
 from qmpy._fileio import _read_schrodinger
 from qmpy._interpolation import _interpolate
-from numpy import insert, loadtxt, allclose
-import pytest
+
 
 PROBLEMS = ['inf_potwell', 'fin_potwell', 'double_well', 'asym_potwell',
             'harm_osci']
