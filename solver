@@ -99,7 +99,6 @@ def _parsecmd():
     argsopts["xrange"] = args.xrange
     argsopts["yrange"] = args.yrange
 
-
     return argsopts
 
 
