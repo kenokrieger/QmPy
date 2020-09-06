@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 from qmpy._fileio import _readplotsfiles
 
 
-def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
+def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
+                 sname='qmpy_plot.pdf'):
     """
     Plots the potential, the eigenvalues and the respective
     wave functions as well as the expected values for each eigenvalue
@@ -21,6 +22,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
             True.
         scale (float): Manually set a value for the scale factor. Defaults to
             None.
+        xlim (tuple): The limits for the x-axis as a tuple ```(xmin, xmamx)```.
+        ylim (tuple): The limits for the y-axis as a tuple ```(ymin, ymax)```.
         sname (str): The name for the file to save the plot to. Defaults to
             'qmpy_plot.pdf'.
 
@@ -40,7 +43,13 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
         if auto_scale:
             scale = _compscale(plot_data)
 
-    xlim, ylim = _findlims(plot_data, scale)
+    auto_xlim, auto_ylim = _findlims(plot_data, scale)
+
+    if xlim is None:
+        xlim = auto_xlim
+    if ylim is None:
+        ylim = auto_ylim
+
     _plot_wfuncs(ax1, plot_data, scale)
     _plot_expvals(ax1, plot_data)
     ax1.set(xlim=xlim, ylim=ylim)
