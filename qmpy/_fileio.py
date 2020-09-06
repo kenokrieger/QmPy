@@ -14,10 +14,6 @@ def _read_schrodinger(inputfilepath):
     Args:
         inputfilepath: Path of the file which is going to be read
 
-    Raises:
-        FileNotFoundError: If input file could not be found
-        PermissionError: If input file could not be read
-
     Returns:
         The different parameters in a dictionary: mass, x_min, x_max, nPoint,
         first_EV, last_EV, interpol_type, interpol_num, and interpol_xy_decs
