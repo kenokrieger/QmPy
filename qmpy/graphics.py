@@ -4,6 +4,7 @@
 """
 import matplotlib.pyplot as plt
 from qmpy._fileio import _readplotsfiles
+import os
 
 
 def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
@@ -59,7 +60,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
     _plot_unc(ax2, plot_data)
     ax2.set(ylim=ylim)
     plt.subplots_adjust(wspace=0.3)
-    plt.savefig(sname)
+    filename = os.path.join(dirname, sname)
+    plt.savefig(filename)
     plt.show()
 
     return fig, ax1, ax2

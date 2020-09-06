@@ -10,7 +10,7 @@ import os
 import numpy as np
 from qmpy._fileio import _read_schrodinger, _write_data
 from qmpy._interpolation import _interpolate
-from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainity
+from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
 from qmpy.graphics import qm_plottings
 
 
@@ -55,7 +55,7 @@ def schrodingers_solver():
                                     select_range=ev_range)
     savefuncs = np.insert(wfuncs.T, 0, xint, axis=1)
     expvals = calculate_expval(xint, wfuncs)
-    uncertainties = calculate_uncertainity(xint, wfuncs)
+    uncertainties = calculate_uncertainty(xint, wfuncs)
 
     expvallist = (expvals, uncertainties)
     expvaldata = np.array(expvallist).T
