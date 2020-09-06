@@ -17,7 +17,7 @@ def test_computing(problem):
     reference data.
 
     """
-    path = 'test_data/{}.inp'.format(problem)
+    path = 'tests/test_data/{}.inp'.format(problem)
     specs = _read_schrodinger(path)
 
     xx, yy = (specs['interpolxydecs'][:, 0], specs['interpolxydecs'][:, 1])
@@ -29,8 +29,8 @@ def test_computing(problem):
     comp_energies, wfuncs = schroedinger(mass, xint, yint, select_range=evs)
 
     comp_funcs = insert(wfuncs.T, 0, values=xint, axis=1)
-    ref_energies = loadtxt('test_data/energies_{}.ref'.format(problem))
-    ref_wfuncs = loadtxt('test_data/wfuncs_{}.ref'.format(problem))
+    ref_energies = loadtxt('tests/test_data/energies_{}.ref'.format(problem))
+    ref_wfuncs = loadtxt('tests/test_data/wfuncs_{}.ref'.format(problem))
 
     assert allclose(ref_energies, comp_energies)
     assert allclose(ref_wfuncs, comp_funcs)

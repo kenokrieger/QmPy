@@ -4,7 +4,7 @@ import os.path
 import numpy as np
 from qmpy._fileio import _read_schrodinger
 
-TESTDATADIR = "test_data"
+TESTDATADIR = "tests/test_data"
 
 
 def test_inf_potwell():
