@@ -1,4 +1,3 @@
-"""This module contains the setup configuration of the QmPy project """
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -6,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="qmpy-schrodinger",  # Name for PyPI
-    version="1.0.1",
+    version="2.0.0",
     author="Keno Krieger, Helmut Wecke",
     author_email="kriegerk@uni-bremen.de",
     description="Package for numerical solving of the schroedinger equation",
