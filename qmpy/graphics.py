@@ -50,8 +50,9 @@ def qm_plottings(dirname, auto_scale=True, scale=None, sname='qmpy_plot.pdf'):
     _plot_unc(ax2, plot_data)
     ax2.set(ylim=ylim)
     plt.subplots_adjust(wspace=0.3)
-    plt.show()
     plt.savefig(sname)
+    plt.show()
+
     return fig, ax1, ax2
 
 
@@ -212,7 +213,7 @@ def _compscale(data):
     energies = data['energies']
     scale = 1e6  # choose an arbitray large number
 
-    for index in range(len(wfuncs) - 1):
+    for index in range(len(energies) - 1):
         new_scale = (energies[index + 1] - energies[index]) / (
             abs(min(wfuncs[index + 1])) + max(wfuncs[index]))
         if new_scale < scale:
