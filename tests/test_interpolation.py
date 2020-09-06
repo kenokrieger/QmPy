@@ -13,7 +13,7 @@ KINDS = ['linear', 'cspline', 'polynomial']
 
 @pytest.mark.parametrize('nn', POINTS)
 def test_shape_lin(nn):
-    """Tests whether computed arrays have the correct shape"""
+    """Tests whether computed arrays have the correct shape (linear)"""
     xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt)
 
@@ -25,7 +25,8 @@ def test_shape_lin(nn):
 
 @pytest.mark.parametrize('nn', POINTS)
 def test_shape_cspline(nn):
-    """Tests whether computed arrays have the correct shape"""
+    """Tests whether computed arrays have the correct shape (natural cubical
+    spline)"""
     xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='cspline')
 
@@ -37,7 +38,7 @@ def test_shape_cspline(nn):
 
 @pytest.mark.parametrize('nn', POINTS)
 def test_shape_poly(nn):
-    """Tests whether computed arrays have the correct shape"""
+    """Tests whether computed arrays have the correct shape (polynomial)"""
     xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='polynomial')
 

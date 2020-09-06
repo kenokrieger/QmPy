@@ -1,4 +1,4 @@
-"""Contains tests for the solvers module"""
+"""Contains tests for the private _solvers module"""
 from numpy import insert, loadtxt, allclose
 import pytest
 from qmpy.solvers import schroedinger
@@ -13,7 +13,7 @@ PROBLEMS = ['inf_potwell', 'fin_potwell', 'double_well', 'asym_potwell',
 @pytest.mark.parametrize('problem', PROBLEMS)
 def test_computing(problem):
     """
-    Tests whether the computed wavefunctions and energies match
+    Tests whether the computed wavefunctions and energies match the
     reference data.
 
     """

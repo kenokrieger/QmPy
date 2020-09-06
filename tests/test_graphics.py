@@ -1,4 +1,4 @@
-"""Tests for the graphics module"""
+"""Tests for the private _graphics module"""
 import numpy as np
 from qmpy.graphics import qm_plottings
 from qmpy._fileio import _read_schrodinger, _write_data
@@ -9,7 +9,7 @@ PROBLEM = 'fin_potwell'
 
 
 def test_plotting():
-    """Visualize quantum mechanical problems"""
+    """Tests the visualization of quantum mechanical problems"""
     specs = _read_schrodinger('tests/test_data/{}.inp'.format(PROBLEM))
     xint, yint = _interpolate(specs['interpolxydecs'][:, 0],
                               specs['interpolxydecs'][:, 1], specs['xopt'])

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for the fileio module"""
+"""Tests for the private _fileio module"""
 import os.path
 import numpy as np
 from qmpy._fileio import _read_schrodinger
@@ -46,7 +46,8 @@ def test_asym_potwell():
 
 
 def test_harm_osci():
-    """Tests the _read_schrodinger function for the asymetric potential well"""
+    """Tests the _read_schrodinger function for the harmonic oscillator's
+    potential"""
     datapath = os.path.join(TESTDATADIR, "harm_osci.inp")
     specs = _read_schrodinger(datapath)
     expected_interpolxydecs = np.array([[-1.0, 0.5], [0.0, 0.0], [1.0, 0.5]],
