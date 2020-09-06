@@ -22,6 +22,10 @@ MSG = "Auto-scalation function for the plots. (Only bool values allowed)"
 PARSER.add_argument('-a', '--autoscale', default=True, help=MSG)
 MSG = "Name of the file which includes the plots "
 PARSER.add_argument('-n', '--namefile', default='qmpy_plot.pdf', help=MSG)
+MSG = "x-coordinates plotting range"
+PARSER.add_argument('-x', '--xcoordsrange', help=MSG)
+MSG = "y-coordinates plotting range"
+PARSER.add_argument('-y', '--ycoordsrange', help=MSG)
 
 ARGS = PARSER.parse_args()
 # Also necessary to add parsers for the range of the plots, this also needs to
