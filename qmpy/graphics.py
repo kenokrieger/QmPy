@@ -1,6 +1,7 @@
-""" Contains functions for plotting the  potential, the eigenvalues and the
-    respective wave functions as well as the expected values for each
-    eigenvalue from the files that contain the solution of the problem.
+""" Contains functions for plotting the potential, the eigenvalues and the
+    respective wave functions as well as the expected values of the
+    x-coordinate for each eigenvalue, using the data from the files that
+    contain the solution of the problem.
 """
 import os
 import matplotlib.pyplot as plt
@@ -10,11 +11,11 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
                  sname='qmpy_plot.pdf'):
     """
     Plots the potential, the eigenvalues and the respective
-    wave functions as well as the expected values for each eigenvalue
-    from the files that contain the solution of the problem
+    wave functions as well as the expected values for each eigenvalue,
+    using the data from the files that contain the solution of the problem.
 
     Args:
-        dirname: Name of the directory or path from which
+        dirname(str): Name of the directory or path from which
             the files are going to be plotted. The directory must have
             the four following files: potential.dat, energies.dat,
             wavefuncs.dat, and expvalues.dat.
@@ -72,15 +73,15 @@ def _isolate_plot_data(dirname):
     for each eigenvalue
 
     Args:
-        dirname: Name of the directory or path from which
+        dirname (str): Name of the directory or path from which
         the files are going to be plotted. The directory must contain
         the four following files: potential.dat, energies.dat,
         wavefuncs.dat, and expvalues.dat.
 
     Return:
-        dict: The extracted  data.
+        plot_data: Dictionary that contains the extracted  data.
 
-            - **xcoords** (*1darray*) - The x-coordinates,
+            - **xcoords** (*1darray*) - The x-coordinates
 
             - **pots** (*1darray*) - The numerical values of the potential
 
@@ -165,7 +166,7 @@ def _plot_pot(ax, data):
 
 def _plot_unc(ax, data):
     """
-    Plots the uncertainty of the x-coordinate to a given subplot.
+    Plots the uncertainity of the x-coordinate to a given subplot.
 
     Args:
         ax (matplotlib.Axes): The subplot to plot to.

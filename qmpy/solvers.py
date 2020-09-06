@@ -1,4 +1,4 @@
-"""Contains numerical solvers for the schroedinger equation"""
+"""Contains numerical solver routines for the schroedinger equation"""
 import numpy as np
 from scipy.linalg import eigh_tridiagonal
 
@@ -9,7 +9,6 @@ def schroedinger(mass, xcords, potential, select_range=None):
     values of x-coordinates and the corresponding value of the potential.
 
     Args:
-
         mass (float): The mass of the system in atomic units.
         xcords (1darray): X-coordinates corresponding to the potential
             values.
@@ -65,7 +64,7 @@ def calculate_expval(xcoords, wfuncs):
         npoints: Number of x values in range (xmin, xmax)
 
     Returns:
-        1darray: The expected values of the x-coordinate
+        expval (1darray): The expected values of the x-coordinate
 
     """
     delta = np.abs(xcoords[0] - xcoords[-1]) / len(xcoords)
@@ -95,7 +94,7 @@ def calculate_uncertainty(xcoords, wfuncs):
         xmax: Maximum Value for x
         npoints: Number of x values in range (xmin, xmax)
     Returns:
-        1darray: The uncertainty of the x-coordinate.
+        uncertainty (1darray): The uncertainity of the x-coordinate.
 
     """
     delta = np.abs(xcoords[0] - xcoords[-1]) / len(xcoords)

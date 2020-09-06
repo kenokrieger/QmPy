@@ -1,5 +1,5 @@
 """
-Contains routines for file I/O such as reading the data
+Contains routines for the file I/O such as reading the data
 from an input file and writing the results of the
 Schrodinger's equation into an output file.
 """
@@ -12,11 +12,12 @@ def _read_schrodinger(inputfilepath):
     defined data which describes the problem
 
     Args:
-        inputfilepath: Path of the file which is going to be read
+        inputfilepath (str): Path of the file which is going to be read
 
     Returns:
-        The different parameters in a dictionary: mass, x_min, x_max, nPoint,
-        first_EV, last_EV, interpol_type, interpol_num, and interpol_xy_decs
+        specs (dict): A dictionary that contains the different parameters :
+        mass, x_min, x_max, nPoint, first_EV, last_EV, interpol_type,
+        interpol_num, and interpol_xy_decs
     """
     schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath, 'r')]
 
@@ -40,17 +41,17 @@ def _read_schrodinger(inputfilepath):
 
 
 def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
-    """Writes the potentials with the respective x coordinates, the energies,
-    the eigestates with the respective x coordinates, and expected values with
-    the respective uncertainities on files named respectively: potentials.dat,
-    energies.dat, wavefuncs.dat, and expvalues.dat.
+    """Writes the potentials(with the respective x coordinates), the energies,
+    the eigestates(with the respective x coordinates), and the expected values
+    with the respective uncertainities on files named respectively:
+    potentials.dat, energies.dat, wavefuncs.dat, and expvalues.dat.
 
     Args:
-        dirname: Path of the file in which data should be written
-        potdata: The data to be written on potentials.dat
-        energdata: The data to be written on energies.dat
-        wfuncsdata: The data to be written on wavefuncs.dat
-        expvaldata: The data to be written on expvalues.dat
+        dirname (str): Path of the file in which data should be written
+        potdata (array): The data to be written on potentials.dat
+        energdata (array): The data to be written on energies.dat
+        wfuncsdata (array): The data to be written on wavefuncs.dat
+        expvaldata (array): The data to be written on expvalues.dat
     """
     potpath = os.path.join(dirname, "potential.dat")
     energiespath = os.path.join(dirname, "energies.dat")
@@ -63,19 +64,22 @@ def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
 
 
 def _readplotsfiles(dirname):
-    """Reads the files and exports the data needed to use the QM_Plottings
-    function
+    """Reads the files in the given directory and exports the data needed
+    to use the QM_Plottings function on the _graphics module
 
     Args:
-        dirname: Name of the directory or path from which
+        dirname (str): Name of the directory or path from which
         the files are going to be ploted. The directory must have
         the four following files: potential.dat, energies.dat,
         wavefuncs.dat, and expvalues.dat.
     Returns:
-        potdata
-        energiesdata
-        wavefuncsdata
-        expvaluesdata
+        potdata (array): Contains the potentials and its respective
+        x-coordinates
+        energiesdata (array): Contains the energies of the eigenstates
+        wavefuncsdata (array): Contains the eigestates and its respective
+        x-coordinates
+        expvaluesdata (array): the expected values with the respective
+        uncertainities
     """
     potpath = os.path.join(dirname, "potential.dat")
     energiespath = os.path.join(dirname, "energies.dat")

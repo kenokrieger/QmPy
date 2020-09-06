@@ -10,17 +10,18 @@ def _interpolate(xx, yy, xopt, kind='linear'):
     y-values according to the specified intervall.
 
     Args:
-        xx (1darray): X-coordinates sorted in increasing order.
+        xx (1darray): x-coordinates sorted in increasing order.
         yy (1darray): Corresponding y-coordinates.
-        xopt (touple): Options for the generated x-coordinates. Has to be of
-            form (xmin, xmax, points).
+        xopt (touple): Options for the generated x-coordinates. Has to have
+            the form (xmin, xmax, npoints).
         kind (str): The kind of interpolation to use. Accepted options are
             'linear', 'cspline' or 'polynomial'. Defaults to 'linear'.
 
     Returns:
         xint (array): The x-coordinates corresponding the computed
             y-values.
-        yint (array): The interpolated y-coordinates.
+        yint (array): The interpolated y-coordinates (they are equal to the
+        potential values)
 
     """
     legal_choices = ['linear', 'cspline', 'polynomial']
@@ -98,11 +99,11 @@ def _genx(xopt):
     value.
 
     Args:
-        xopt (touple): Touple of form (xmin, xmax, points) where xmax is
+        xopt (touple): Touple of form (xmin, xmax, npoints) where xmax is
             always excluded.
 
     Returns:
-        xx (array): Array ranging from xmin to xmax of shape (points,)
+        xx (array): Array ranging from xmin to xmax of shape (npoints,)
 
     """
     xmin, xmax, points = xopt
