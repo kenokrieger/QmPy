@@ -23,9 +23,9 @@ PARSER.add_argument('-a', '--autoscale', default=True, help=MSG)
 MSG = "Name of the file which includes the plots "
 PARSER.add_argument('-n', '--namefile', default='qmpy_plot.pdf', help=MSG)
 MSG = "x-coordinates plotting range"
-PARSER.add_argument('-x', '--xcoordsrange', help=MSG)
+PARSER.add_argument('-x', '--xrange', default=None, help=MSG)
 MSG = "y-coordinates plotting range"
-PARSER.add_argument('-y', '--ycoordsrange', help=MSG)
+PARSER.add_argument('-y', '--yrange', default=None, help=MSG)
 
 ARGS = PARSER.parse_args()
 # Also necessary to add parsers for the range of the plots, this also needs to
@@ -72,7 +72,7 @@ def schrodingers_solver():
     qmpy._fileio._write_data(opath, pots, energies, wfuncs,
                              expvaldata)
     qmpy.graphics.qm_plottings(opath, ARGS.autoscale, ARGS.sfactor,
-                               ARGS.namefile)
+                               ARGS.xrange, ARGS.yrange, ARGS.namefile)
 
 if __name__ == "_main_":
     schrodingers_solver()
