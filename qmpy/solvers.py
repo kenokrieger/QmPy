@@ -77,7 +77,7 @@ def calculate_expval(xcoords, wfuncs):
     return expval
 
 
-def calculate_uncertainity(xcoords, wfuncs):
+def calculate_uncertainty(xcoords, wfuncs):
     """
     Calculates the uncertainity :math:`\\Delta x` defined as
 

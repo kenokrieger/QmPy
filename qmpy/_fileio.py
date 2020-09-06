@@ -23,7 +23,7 @@ def _read_schrodinger(inputfilepath):
         first_EV, last_EV, interpol_type, interpol_num, and interpol_xy_decs
     """
     try:
-        schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath)]
+        schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath, 'r')]
     except FileNotFoundError:
         msg = "Input file or path was not found"
         print(msg)

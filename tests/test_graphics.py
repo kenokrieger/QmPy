@@ -5,7 +5,7 @@ from qmpy._fileio import _read_schrodinger, _write_data
 from qmpy.solvers import calculate_expval, calculate_uncertainity
 from qmpy._interpolation import _interpolate
 
-PROBLEM = 'asym_potwell'
+PROBLEM = 'fin_potwell'
 
 
 def test_plotting():
