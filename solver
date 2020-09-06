@@ -43,8 +43,8 @@ def schrodingers_solver():
         2.0 0.0
 
     """
-    ipath, opath, scale = _parsecmd()
-    schrodingers_path = os.path.join(ipath, "schrodinger.inp")
+    argsopts = _parsecmd()
+    schrodingers_path = os.path.join(argsopts["ipath"], "schrodinger.inp")
     specs = _read_schrodinger(schrodingers_path)
     xx = specs['interpolxydecs'][:, 0]
     yy = specs['interpolxydecs'][:, 1]
@@ -57,8 +57,10 @@ def schrodingers_solver():
 
     expvallist = (expvals, uncertainties)
     expvaldata = np.array(expvallist).T
-    _write_data(opath, pots, energies, wfuncs, expvaldata)
-    qm_plottings(opath, scale=scale)
+    _write_data(argsopts["opath"], pots, energies, wfuncs, expvaldata)
+    qm_plottings(argsopts["opath"], argsopts["autoscale"],
+                 argsopts["scale"], argsopts["xrange"],
+                 argsopts["yrange"], argsopts["namefile"])
 
 
 def _parsecmd():
@@ -66,11 +68,11 @@ def _parsecmd():
     Parses the input from the command line to the program.
 
     Returns:
-        ipath (path): The input directory.
-        opath (path): The output directory.
-        scale (float): Optional. A scale to apply to the wavefunctions.
+        argsopts: Dictionary that contains various options for the command
+        line parsing
 
     """
+    argsopts = dict()
     description = 'Solves the Schrodinger equation and graphicates its results'
     parser = argparse.ArgumentParser(description=description)
     msg = "Input directory"
@@ -79,13 +81,26 @@ def _parsecmd():
     parser.add_argument('-o', '--odirectory', default='.', help=msg)
     msg = "Scale factor for the wave functions"
     parser.add_argument('-s', '--sfactor', default=None, help=msg)
+    msg = "Auto-scalation function for the plots. (Only bool values allowed)"
+    parser.add_argument('-a', '--autoscale', default=True, help=msg)
+    msg = "Name of the file which includes the plots "
+    parser.add_argument('-n', '--namefile', default='qmpy_plot.pdf', help=msg)
+    msg = "x-coordinates plotting range"
+    parser.add_argument('-x', '--xrange', default=None, help=msg)
+    msg = "y-coordinates plotting range"
+    parser.add_argument('-y', '--yrange', default=None, help=msg)
     args = parser.parse_asrgs()
 
-    ipath = args.idirectory
-    opath = args.odirectory
-    scale = float(args.sfactor)
+    argsopts["ipath"] = args.idirectory
+    argsopts["opath"] = args.odirectory
+    argsopts["scale"] = float(args.sfactor)
+    argsopts["autoscale"] = args.autoscale
+    argsopts["namefile"] = args.namefile
+    argsopts["xrange"] = args.xrange
+    argsopts["yrange"] = args.yrange
 
-    return ipath, opath, scale
+
+    return argsopts
 
 
 if __name__ == "_main_":
