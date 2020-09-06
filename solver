@@ -45,25 +45,33 @@ def schrodingers_solver():
     """
     argsopts = _parsecmd()
     schrodingers_path = os.path.join(argsopts["ipath"], "schrodinger.inp")
-    specs = _read_schrodinger(schrodingers_path)
-    xx = specs['interpolxydecs'][:, 0]
-    yy = specs['interpolxydecs'][:, 1]
-    xint, pots = _interpolate(xx, yy, specs['xopt'], specs['interpoltype'])
-    pot = np.vstack((xint, pots)).T
-    ev_range = (specs['first_ev'] - 1, specs['last_ev'] - 1)
-    energies, wfuncs = schroedinger(specs['mass'], xint, pots,
-                                    select_range=ev_range)
-    savefuncs = np.insert(wfuncs.T, 0, xint, axis=1)
-    expvals = calculate_expval(xint, wfuncs)
-    uncertainties = calculate_uncertainty(xint, wfuncs)
+    try:
+        specs = _read_schrodinger(schrodingers_path)
+    except FileNotFoundError:
+        msg = "Input file or path was not found"
+        print(msg)
+    except PermissionError:
+        msg = "Input file could not be read, please check the file permissions"
+        print(msg)
+    else:
+        xx = specs['interpolxydecs'][:, 0]
+        yy = specs['interpolxydecs'][:, 1]
+        xint, pots = _interpolate(xx, yy, specs['xopt'], specs['interpoltype'])
+        pot = np.vstack((xint, pots)).T
+        ev_range = (specs['first_ev'] - 1, specs['last_ev'] - 1)
+        energies, wfuncs = schroedinger(specs['mass'], xint, pots,
+                                        select_range=ev_range)
+        savefuncs = np.insert(wfuncs.T, 0, xint, axis=1)
+        expvals = calculate_expval(xint, wfuncs)
+        uncertainties = calculate_uncertainty(xint, wfuncs)
 
-    expvallist = (expvals, uncertainties)
-    expvaldata = np.array(expvallist).T
+        expvallist = (expvals, uncertainties)
+        expvaldata = np.array(expvallist).T
 
-    _write_data(argsopts["opath"], pot, energies, savefuncs, expvaldata)
-    qm_plottings(argsopts["opath"], argsopts["autoscale"],
-                 argsopts["scale"], argsopts["xrange"],
-                 argsopts["yrange"], argsopts["namefile"])
+        _write_data(argsopts["opath"], pot, energies, savefuncs, expvaldata)
+        qm_plottings(argsopts["opath"], argsopts["autoscale"],
+                     argsopts["scale"], argsopts["xrange"],
+                     argsopts["yrange"], argsopts["namefile"])
 
 
 def _parsecmd():

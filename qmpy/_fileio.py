@@ -22,17 +22,7 @@ def _read_schrodinger(inputfilepath):
         The different parameters in a dictionary: mass, x_min, x_max, nPoint,
         first_EV, last_EV, interpol_type, interpol_num, and interpol_xy_decs
     """
-    try:
-        schrodingerslist = [line.rstrip('\n') for line in
-                            open(inputfilepath, 'r')]
-    except FileNotFoundError:
-        msg = "Input file or path was not found"
-        print(msg)
-        raise FileNotFoundError
-    except PermissionError:
-        msg = "Input file could not be read, please check the file permissions"
-        print(msg)
-        raise PermissionError
+    schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath, 'r')]
 
     specs = dict()
     specs['mass'] = float(list(schrodingerslist[0].split(" "))[0])
@@ -49,6 +39,7 @@ def _read_schrodinger(inputfilepath):
         xy_dec.append(list(schrodingerslist[ii].split(" ")))
     new_xy_dec = np.array(xy_dec)
     specs['interpolxydecs'] = new_xy_dec.astype(np.float)
+
     return specs
 
 
