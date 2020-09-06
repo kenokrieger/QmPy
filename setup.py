@@ -1,3 +1,4 @@
+"""This module contains the setup configuration of the QmPy project """
 import setuptools
 
 with open("README.md", "r") as fh:

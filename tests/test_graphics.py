@@ -2,7 +2,7 @@
 import numpy as np
 from qmpy.graphics import qm_plottings
 from qmpy._fileio import _read_schrodinger, _write_data
-from qmpy.solvers import calculate_expval, calculate_uncertainity
+from qmpy.solvers import calculate_expval, calculate_uncertainty
 from qmpy._interpolation import _interpolate
 
 PROBLEM = 'fin_potwell'
@@ -19,7 +19,7 @@ def test_plotting():
     potdata = np.vstack((xint, yint)).T
 
     expval = calculate_expval(xint, wfuncsdata[:, 1:].T)
-    uncval = calculate_uncertainity(xint, wfuncsdata[:, 1:].T)
+    uncval = calculate_uncertainty(xint, wfuncsdata[:, 1:].T)
 
     expvaldata = np.vstack((expval, uncval)).T
     _write_data('tests/test_data', potdata, energies, wfuncsdata, expvaldata)

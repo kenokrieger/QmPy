@@ -2,10 +2,9 @@
     respective wave functions as well as the expected values for each
     eigenvalue from the files that contain the solution of the problem.
 """
+import os
 import matplotlib.pyplot as plt
 from qmpy._fileio import _readplotsfiles
-import os
-
 
 def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
                  sname='qmpy_plot.pdf'):
