@@ -15,12 +15,9 @@ KINDS = ['linear', 'cspline', 'polynomial']
 def test_shape_lin(nn):
     """Tests whether computed arrays have the correct shape (linear)"""
     xopt = (0, 150, nn)
-    xint, yint = _interpolate(XSHAPE, YSHAPE, xopt)
+    xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='invalid')
 
-    if xint.shape != yint.shape:
-        assert xint.shape != yint.shape
-    else:
-        assert xint.shape[0] == nn and yint.shape[0] == nn
+    assert xint.shape[0] == nn and yint.shape[0] == nn
 
 
 @pytest.mark.parametrize('nn', POINTS)
@@ -30,10 +27,7 @@ def test_shape_cspline(nn):
     xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='cspline')
 
-    if xint.shape != yint.shape:
-        assert xint.shape != yint.shape
-    else:
-        assert xint.shape[0] == nn and yint.shape[0] == nn
+    assert xint.shape[0] == nn and yint.shape[0] == nn
 
 
 @pytest.mark.parametrize('nn', POINTS)
@@ -42,10 +36,7 @@ def test_shape_poly(nn):
     xopt = (0, 150, nn)
     xint, yint = _interpolate(XSHAPE, YSHAPE, xopt, kind='polynomial')
 
-    if xint.shape != yint.shape:
-        assert xint.shape != yint.shape
-    else:
-        assert xint.shape[0] == nn and yint.shape[0] == nn
+    assert xint.shape[0] == nn and yint.shape[0] == nn
 
 
 @pytest.mark.parametrize('kind', KINDS)

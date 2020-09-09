@@ -7,6 +7,7 @@ import os
 import matplotlib.pyplot as plt
 from qmpy._fileio import _readplotsfiles
 
+
 def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
                  sname='qmpy_plot.pdf'):
     """
@@ -247,9 +248,11 @@ def _findlims(data, scale):
         touple: The limits for the x- and y-axis.
 
     """
-    energies, wfuncs = data['energies'], data['wfuncs']
+    energies, wfuncs = data['energies'], data['wfuncs'].T
+    minval = min(scale * wfuncs[0] + energies[0])
+    maxval = max(scale * wfuncs[-1] + energies[-1])
+    extraspace = (maxval - minval) / 10
     xlim = (data['xcoords'][0], data['xcoords'][-1])
-    ylim = (min(scale * wfuncs[0] + energies[0] - 0.5),
-            max(scale * wfuncs[-1] + energies[-1]) + 0.5)
+    ylim = (minval - extraspace, maxval + extraspace)
 
     return xlim, ylim

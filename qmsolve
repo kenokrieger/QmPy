@@ -43,12 +43,12 @@ def schrodingers_solver():
         2.0 0.0
 
     """
-    argsopts = _parsecmd()
+    argsopts = _validate_input(_parsecmd())
     schrodingers_path = os.path.join(argsopts["ipath"], "schrodinger.inp")
     try:
         specs = _read_schrodinger(schrodingers_path)
     except FileNotFoundError:
-        msg = "Input file or path was not found"
+        msg = "Input file or path was not found."
         print(msg)
     except PermissionError:
         msg = "Input file could not be read, please check the file permissions"
@@ -65,8 +65,7 @@ def schrodingers_solver():
         expvals = calculate_expval(xint, wfuncs)
         uncertainties = calculate_uncertainty(xint, wfuncs)
 
-        expvallist = (expvals, uncertainties)
-        expvaldata = np.array(expvallist).T
+        expvaldata = np.vstack((expvals, uncertainties)).T
 
         _write_data(argsopts["opath"], pot, energies, savefuncs, expvaldata)
         qm_plottings(argsopts["opath"], argsopts["autoscale"],
@@ -83,7 +82,6 @@ def _parsecmd():
         line parsing
 
     """
-    argsopts = dict()
     description = 'Solves the Schrodinger equation and graphicates its results'
     parser = argparse.ArgumentParser(description=description)
     msg = "Input directory"
@@ -92,28 +90,86 @@ def _parsecmd():
     parser.add_argument('-o', '--odirectory', default='.', help=msg)
     msg = "Scale factor for the wave functions"
     parser.add_argument('-s', '--sfactor', default=None, help=msg)
-    msg = "Auto-scalation function for the plots. (Only bool values allowed)"
+    msg = "Auto-scalation function for the plots. True or False."
     parser.add_argument('-a', '--autoscale', default=True, help=msg)
-    msg = "Name of the file which includes the plots "
+    msg = "Name of the file the plot is saved to"
     parser.add_argument('-n', '--namefile', default='qmpy_plot.pdf', help=msg)
-    msg = "x-coordinates plotting range"
+    msg = "Plotting range separated by \':\'. e.g: 0.5:3.95"
     parser.add_argument('-x', '--xrange', default=None, help=msg)
-    msg = "y-coordinates plotting range"
     parser.add_argument('-y', '--yrange', default=None, help=msg)
     args = parser.parse_args()
+    return args
 
+
+def _validate_input(args):
+    """
+    Converts all string input from the command line to its respective types
+    needed for further processing. In case of invalid input the default value
+    will be used and the user will be notified.
+
+    Args:
+        args (argparse-object): Parser containing all the information supplied
+            through the command line.
+
+    Returns:
+        dict: A dictionary containing the arguments from the command line
+            where invalid inputs where set to their default values.
+
+    """
+    argsopts = dict()
     argsopts["ipath"] = args.idirectory
     argsopts["opath"] = args.odirectory
 
     if args.sfactor is not None:
-        argsopts["scale"] = float(args.sfactor)
+        try:
+            argsopts["scale"] = float(args.sfactor)
+        except ValueError:
+            print('Could not convert input to float: {}'.format(args.sfactor))
+            print('Using default...')
+            argsopts['scale'] = None
     else:
         argsopts['scale'] = None
 
-    argsopts["autoscale"] = args.autoscale
+    if args.autoscale == 'False':
+        argsopts["autoscale"] = False
+    elif args.autoscale == 'True':
+        argsopts['autoscale'] = True
+    else:
+        print('Invalid option for \'--autoscale\': {}'.format(args.autoscale))
+        print('Using default')
+        argsopts['autoscale'] = True
+
     argsopts["namefile"] = args.namefile
-    argsopts["xrange"] = args.xrange
-    argsopts["yrange"] = args.yrange
+
+    if args.xrange is not None:
+        try:
+            # conversion of map object to tuple here is necessary so
+            # that the ValueError does not occur later in the code
+            rangeasint = tuple(map(float, tuple(args.xrange.split(':'))))
+        except ValueError:
+            print('Could not convert input to float: {}'.format(
+                tuple(args.xrange.split(':'))))
+            print('Using default...')
+            argsopts["xrange"] = None
+        else:
+            argsopts["xrange"] = rangeasint
+    else:
+        argsopts["xrange"] = args.xrange
+
+    if args.yrange is not None:
+        try:
+            # conversion of map object to tuple here is necessary so
+            # that the ValueError does not occur later in the code
+            rangeasint = tuple(map(float, tuple(args.yrange.split(':'))))
+        except ValueError:
+            print('Could not convert input to float: {}'.format(
+                tuple(args.yrange.split(':'))))
+            print('Using default...')
+            argsopts['yrange'] = None
+        else:
+            argsopts["yrange"] = rangeasint
+    else:
+        argsopts["yrange"] = args.yrange
 
     return argsopts
 
