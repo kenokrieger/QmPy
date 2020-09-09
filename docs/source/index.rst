@@ -34,6 +34,12 @@ For easy installation with pip use:
    pip install -i https://test.pypi.org/simple/ qmpy-schrodinger==2.0.0
 
 
+Code Example
+************
+.. toctree::
+   :maxdepth: 1
+
+   qmsolve
 
 Indices and tables
 ******************
