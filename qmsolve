@@ -94,7 +94,10 @@ def _parsecmd():
     parser.add_argument('-a', '--autoscale', default=True, help=msg)
     msg = "Name of the file the plot is saved to"
     parser.add_argument('-n', '--namefile', default='qmpy_plot.pdf', help=msg)
-    msg = "Plotting range separated by \':\'. e.g: 0.5:3.95"
+    msg = """
+    Plotting range separated by \':\'. For negative values use a \'n\' instead
+    of a \'-\' e.g: n5.0:5.0 will return a plot ranging from -5 to 5
+    """
     parser.add_argument('-x', '--xrange', default=None, help=msg)
     parser.add_argument('-y', '--yrange', default=None, help=msg)
     args = parser.parse_args()
@@ -119,6 +122,7 @@ def _validate_input(args):
     argsopts = dict()
     argsopts["ipath"] = args.idirectory
     argsopts["opath"] = args.odirectory
+    argsopts["namefile"] = args.namefile
 
     if args.sfactor is not None:
         try:
@@ -132,21 +136,20 @@ def _validate_input(args):
 
     if args.autoscale == 'False':
         argsopts["autoscale"] = False
-    elif args.autoscale == 'True':
+    elif args.autoscale in ['True', True]:
         argsopts['autoscale'] = True
     else:
         print('Invalid option for \'--autoscale\': {}'.format(args.autoscale))
         print('Using default')
         argsopts['autoscale'] = True
 
-    argsopts["namefile"] = args.namefile
-
     for arg, key in zip((args.xrange, args.yrange), ('xrange', 'yrange')):
         if arg is not None:
             try:
+                axrange = map(lambda s: s.replace('n', '-'), arg.split(':'))
                 # conversion of map object to tuple here is necessary so
                 # that the ValueError does not occur later in the code
-                rangeasint = tuple(map(float, tuple(arg.split(':'))))
+                rangeasint = tuple(map(float, axrange))
             except ValueError:
                 print('Could not convert input to float: {}'.format(
                     tuple(arg.split(':'))))
