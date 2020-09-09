@@ -141,35 +141,21 @@ def _validate_input(args):
 
     argsopts["namefile"] = args.namefile
 
-    if args.xrange is not None:
-        try:
-            # conversion of map object to tuple here is necessary so
-            # that the ValueError does not occur later in the code
-            rangeasint = tuple(map(float, tuple(args.xrange.split(':'))))
-        except ValueError:
-            print('Could not convert input to float: {}'.format(
-                tuple(args.xrange.split(':'))))
-            print('Using default...')
-            argsopts["xrange"] = None
+    for arg, key in zip((args.xrange, args.yrange), ('xrange', 'yrange')):
+        if arg is not None:
+            try:
+                # conversion of map object to tuple here is necessary so
+                # that the ValueError does not occur later in the code
+                rangeasint = tuple(map(float, tuple(arg.split(':'))))
+            except ValueError:
+                print('Could not convert input to float: {}'.format(
+                    tuple(arg.split(':'))))
+                print('Using default...')
+                argsopts[key] = None
+            else:
+                argsopts[key] = rangeasint
         else:
-            argsopts["xrange"] = rangeasint
-    else:
-        argsopts["xrange"] = args.xrange
-
-    if args.yrange is not None:
-        try:
-            # conversion of map object to tuple here is necessary so
-            # that the ValueError does not occur later in the code
-            rangeasint = tuple(map(float, tuple(args.yrange.split(':'))))
-        except ValueError:
-            print('Could not convert input to float: {}'.format(
-                tuple(args.yrange.split(':'))))
-            print('Using default...')
-            argsopts['yrange'] = None
-        else:
-            argsopts["yrange"] = rangeasint
-    else:
-        argsopts["yrange"] = args.yrange
+            argsopts[key] = arg
 
     return argsopts
 
