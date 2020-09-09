@@ -58,6 +58,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
 
     title = r'$\sigma_{x}$'
     ax2 = _make_subplot(fig, 122, title)
+    # set a custom label for the x-axis
+    ax2.set_xlabel(r'$\sigma_x$ [Bohr]')
     _plot_unc(ax2, plot_data)
     ax2.set(ylim=ylim)
     plt.subplots_adjust(wspace=0.3)

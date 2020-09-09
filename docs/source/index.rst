@@ -36,6 +36,7 @@ For easy installation with pip use:
 
 Code Example
 ************
+
 .. toctree::
    :maxdepth: 1
 
