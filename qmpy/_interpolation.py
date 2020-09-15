@@ -72,7 +72,7 @@ def _cspline(xx, yy):
         intfunc (PPoly): The interpolated function.
 
     """
-    intfunc = CubicSpline(xx, yy)
+    intfunc = CubicSpline(xx, yy, bc_type='natural')
     return intfunc
 
 

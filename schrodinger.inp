@@ -1,7 +1,10 @@
-2.0 # mass
--2.0 2.0 1999 # xMin xMax nPoint
-1 5 # first and last eigenvalue to print
-linear # interpolation type
-2 # nr. of interpolation points and xy declarations
--2.0 0.0
-2.0 0.0
+4.0 # mass
+-20.0 20.0 1999 # xMin xMax nPoint
+1 10 # first and last eigenvalue to include in the output
+cspline # interpolation type
+5 # nr. of interpolation points and xy declarations
+-20.0 35.0
+-10.0 0.0
+0.0 2.0
+10.0 0.0
+20.0 35.0
