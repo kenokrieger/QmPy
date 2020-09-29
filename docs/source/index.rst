@@ -31,7 +31,7 @@ For easy installation with pip use:
 
 .. code-block:: shell
 
-   pip install -i https://test.pypi.org/simple/ qmpy-schrodinger==2.0.0
+   pip install -i https://test.pypi.org/simple/ qmpy-schrodinger==2.0.2
 
 
 Code Example
