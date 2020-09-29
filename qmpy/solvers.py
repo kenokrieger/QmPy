@@ -56,12 +56,9 @@ def calculate_expval(xcoords, wfuncs):
        \\int_{x_{min}}^{x_{max}} | \\psi (x) |^2 x dx
 
     Args:
-        xcoordsarray (1darray): Array containing the x-coordinates
-        wfuncsarray (ndarray): Array containing the wave functions that
+        xcoords (1darray): Array containing the x-coordinates
+        wfuncs (ndarray): Array containing the wave functions that
             correspond to the x-coordinates
-        xmin: Minimum Value for x
-        xmax: Maximum Value for x
-        npoints: Number of x values in range (xmin, xmax)
 
     Returns:
         expval (1darray): The expected values of the x-coordinate
@@ -90,9 +87,7 @@ def calculate_uncertainty(xcoords, wfuncs):
         xcoords (1darray): Array containing the x-coordinates
         wfuncs (ndarray): Array containing the wave functions that
             correspond to the x-coordinates
-        xmin: Minimum Value for x
-        xmax: Maximum Value for x
-        npoints: Number of x values in range (xmin, xmax)
+
     Returns:
         uncertainty (1darray): The uncertainity of the x-coordinate.
 

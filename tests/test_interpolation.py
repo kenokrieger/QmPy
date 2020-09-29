@@ -43,6 +43,7 @@ def test_shape_poly(nn):
 def test_ifpivots(kind):
     """Tests whether the interpolation goes through all pivots"""
     pivots = array([-10., -7.5, -5., -2.5, 0., 2.5, 5., 7.5, 10.])
+    # indices where the ycords should be located
     comparisons = arange(0, 2249, 250)
 
     ycords = array([1, -10, 23, 5, 100, -5, 10, 20, 9])
