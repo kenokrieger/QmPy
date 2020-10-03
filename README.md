@@ -34,8 +34,14 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 The script can be run via the command line
 
+- where the file is stored
 ```shell
 ./qmsolve -C -V
+```
+
+- if the package was installed using pip
+```shell
+qmsolve -C -V
 ```
 
 It supports computing energies, wavefunction and expected values for
