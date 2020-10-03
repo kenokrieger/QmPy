@@ -87,9 +87,11 @@ def compute(argsopts):
     except FileNotFoundError:
         msg = "Input file or path was not found."
         print(msg)
+        exit()
     except OSError:
         msg = "Input file could not be read."
         print(msg)
+        exit()
     else:
         vals = dict()
         vals['mass'] = specs['mass']
