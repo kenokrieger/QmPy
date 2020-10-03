@@ -3,7 +3,7 @@
     x-coordinate for each eigenvalue, using the data from the files that
     contain the solution of the problem.
 """
-import os
+
 import matplotlib.pyplot as plt
 from qmpy._fileio import _readplotsfiles
 

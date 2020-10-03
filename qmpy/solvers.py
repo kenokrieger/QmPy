@@ -55,8 +55,8 @@ def schroedinger(vals, select_range=None, interpol=False,
         if 'xopt' in vals.keys():
             xopt = vals['xopt']
         else:
-            with vals['xcords'] as x:
-                xopt = (x[0], x[-1], 1999)
+            with vals['xcords'] as xx:
+                xopt = (xx[0], xx[-1], 1999)
 
         xint, yint = _interpolate(vals['xcords'], vals['potential'],
                                   xopt, kind=interpoltype)

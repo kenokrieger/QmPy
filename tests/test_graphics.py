@@ -5,7 +5,7 @@ from qmpy._fileio import _read_schrodinger, _write_data
 from qmpy.solvers import calculate_expval, calculate_uncertainty
 from qmpy._interpolation import _interpolate
 
-PROBLEM = 'fin_potwell'
+PROBLEM = 'double_potwell'
 
 
 def test_plotting():
@@ -24,5 +24,6 @@ def test_plotting():
     expvaldata = np.vstack((expval, uncval)).T
     _write_data('tests/test_data', potdata, energies, wfuncsdata, expvaldata)
 
-    # qm_plottings('tests/test_data')
+    # qm_plottings('tests/test_data', scale=0.5)
     # assert True
+

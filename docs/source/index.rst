@@ -31,11 +31,11 @@ For easy installation with pip use:
 
 .. code-block:: shell
 
-   pip install -i https://test.pypi.org/simple/ qmpy-schrodinger==2.0.2
+   pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 
-Code Example
-************
+Executable Script
+*****************
 
 .. toctree::
    :maxdepth: 1
