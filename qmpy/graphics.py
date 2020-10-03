@@ -63,8 +63,7 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
     _plot_unc(ax2, plot_data)
     ax2.set(ylim=ylim)
     plt.subplots_adjust(wspace=0.3)
-    filename = os.path.join(dirname, sname)
-    plt.savefig(filename)
+    plt.savefig(sname)
     plt.show()
 
     return fig, ax1, ax2

@@ -9,7 +9,6 @@ import argparse
 import os
 import numpy as np
 from qmpy._fileio import _read_schrodinger, _write_data
-from qmpy._interpolation import _interpolate
 from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
 from qmpy.graphics import qm_plottings
 
@@ -44,34 +43,74 @@ def schrodingers_solver():
 
     """
     argsopts = _validate_input(_parsecmd())
+
+    if argsopts['compute']:
+        compute(argsopts)
+        # depending on which option for computing was selected, qm_plottings
+        # will either look for the .dat files in the input or output directory
+        dirname = argsopts['opath']
+        print('Computation was successful.')
+    else:
+        dirname = argsopts['ipath']
+
+    if argsopts['visualize']:
+        sname = os.path.join(argsopts['opath'], argsopts['namefile'])
+        try:
+            qm_plottings(dirname, argsopts["autoscale"],
+                         argsopts["scale"], argsopts["xrange"],
+                         argsopts["yrange"], sname)
+        except FileNotFoundError:
+            msg = 'Input file(s) could not be found.'
+            print(msg)
+        except OSError:
+            msg = 'Input file(s) could not be read.'
+            print(msg)
+        else:
+            print('Visualization was successful.')
+
+
+def compute(argsopts):
+    """
+    Computes energies, wavefunctions and expected values for a
+    quantum-mechanical problem and stores its solution in various .dat files.
+
+    Args:
+        argsopts (dict): Dictionary containing the input from the command line.
+
+    Returns:
+        None.
+
+    """
     schrodingers_path = os.path.join(argsopts["ipath"], "schrodinger.inp")
     try:
         specs = _read_schrodinger(schrodingers_path)
     except FileNotFoundError:
         msg = "Input file or path was not found."
         print(msg)
-    except PermissionError:
-        msg = "Input file could not be read, please check the file permissions"
+    except OSError:
+        msg = "Input file could not be read."
         print(msg)
     else:
-        xx = specs['interpolxydecs'][:, 0]
-        yy = specs['interpolxydecs'][:, 1]
-        xint, pots = _interpolate(xx, yy, specs['xopt'], specs['interpoltype'])
-        pot = np.vstack((xint, pots)).T
+        vals = dict()
+        vals['mass'] = specs['mass']
+        vals['xcords'] = specs['interpolxydecs'][:, 0]
+        vals['potential'] = specs['interpolxydecs'][:, 1]
+        vals['xopt'] = specs['xopt']
+
         # translate range into python range starting with 0
         ev_range = (specs['first_ev'] - 1, specs['last_ev'] - 1)
-        energies, wfuncs = schroedinger(specs['mass'], xint, pots,
-                                        select_range=ev_range)
-        savefuncs = np.insert(wfuncs.T, 0, xint, axis=1)
-        expvals = calculate_expval(xint, wfuncs)
-        uncertainties = calculate_uncertainty(xint, wfuncs)
+        sol = schroedinger(vals, select_range=ev_range, interpol=True,
+                           interpoltype=specs['interpoltype'])
+        energies, wfuncs, pot = sol[0], sol[1], sol[2]
+        xcords = pot[:, 0].T
+        savefuncs = np.insert(wfuncs.T, 0, xcords, axis=1)
+        expvals = calculate_expval(xcords, wfuncs)
+        uncertainties = calculate_uncertainty(xcords, wfuncs)
 
         expvaldata = np.vstack((expvals, uncertainties)).T
 
-        _write_data(argsopts["opath"], pot, energies, savefuncs, expvaldata)
-        qm_plottings(argsopts["opath"], argsopts["autoscale"],
-                     argsopts["scale"], argsopts["xrange"],
-                     argsopts["yrange"], argsopts["namefile"])
+        _write_data(argsopts["opath"], pot, energies, savefuncs,
+                    expvaldata)
 
 
 def _parsecmd():
@@ -85,12 +124,16 @@ def _parsecmd():
     """
     description = 'Solves the Schrodinger equation and graphicates its results'
     parser = argparse.ArgumentParser(description=description)
+    msg = 'Compute wavefunctions, energies and expected values'
+    parser.add_argument('-C', '--compute', action='store_true', help=msg)
+    msg = 'Visualize the result and save it'
+    parser.add_argument('-V', '--visualize', action='store_true', help=msg)
     msg = "Input directory"
     parser.add_argument('-i', '--idirectory', default='.', help=msg)
     msg = "Output directory"
     parser.add_argument('-o', '--odirectory', default='.', help=msg)
     msg = "Scale factor for the wave functions"
-    parser.add_argument('-s', '--sfactor', default=None, help=msg)
+    parser.add_argument('-s', '--sfactor', default=None, help=msg, type=float)
     msg = "Auto-scalation function for the plots. True or False."
     parser.add_argument('-a', '--autoscale', default=True, help=msg)
     msg = "Name of the file the plot is saved to"
@@ -120,20 +163,19 @@ def _validate_input(args):
             where invalid inputs where set to their default values.
 
     """
+    if not (args.compute or args.visualize):
+        msg = """No option for computation or visualization was selected.
+Use -C for computation and/or -V for visualization."""
+        print(msg)
+        exit()
+
     argsopts = dict()
+    argsopts['compute'] = args.compute
+    argsopts['visualize'] = args.visualize
     argsopts["ipath"] = args.idirectory
     argsopts["opath"] = args.odirectory
     argsopts["namefile"] = args.namefile
-
-    if args.sfactor is not None:
-        try:
-            argsopts["scale"] = float(args.sfactor)
-        except ValueError:
-            print('Could not convert input to float: {}'.format(args.sfactor))
-            print('Using default...')
-            argsopts['scale'] = None
-    else:
-        argsopts['scale'] = None
+    argsopts['scale'] = args.sfactor
 
     if args.autoscale == 'False':
         argsopts["autoscale"] = False
@@ -141,23 +183,19 @@ def _validate_input(args):
         argsopts['autoscale'] = True
     else:
         print('Invalid option for \'--autoscale\': {}'.format(args.autoscale))
-        print('Using default')
-        argsopts['autoscale'] = True
+        exit()
 
     for arg, key in zip((args.xrange, args.yrange), ('xrange', 'yrange')):
         if arg is not None:
             try:
-                axrange = map(lambda s: s.replace('n', '-'), arg.split(':'))
-                # conversion of map object to tuple here is necessary so
-                # that the ValueError does not occur later in the code
-                rangeasfloat = tuple(map(float, axrange))
+                axrange = tuple([float(s.replace('n', '-')) for s in
+                                 arg.split(':')])
             except ValueError:
                 print('Could not convert input to float: {}'.format(
-                    tuple(arg.split(':'))))
-                print('Using default...')
-                argsopts[key] = None
+                        tuple(arg.split(':'))))
+                exit()
             else:
-                argsopts[key] = rangeasfloat
+                argsopts[key] = axrange
         else:
             argsopts[key] = arg
 

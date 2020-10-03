@@ -22,20 +22,16 @@ def _read_schrodinger(inputfilepath):
     schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath, 'r')]
 
     specs = dict()
-    specs['mass'] = float(list(schrodingerslist[0].split(" "))[0])
-    specs['xmin'] = float(list(schrodingerslist[1].split(" "))[0])
-    specs['xmax'] = float(list(schrodingerslist[1].split(" "))[1])
-    specs['npoint'] = int(list(schrodingerslist[1].split(" "))[2])
+    specs['mass'] = float(schrodingerslist[0].split()[0])
+    specs['xmin'] = float(schrodingerslist[1].split()[0])
+    specs['xmax'] = float(schrodingerslist[1].split()[1])
+    specs['npoint'] = int(schrodingerslist[1].split()[2])
     specs['xopt'] = (specs['xmin'], specs['xmax'], specs['npoint'])
-    specs['first_ev'] = int(list(schrodingerslist[2].split(" "))[0])
-    specs['last_ev'] = int(list(schrodingerslist[2].split(" "))[1])
-    specs['interpoltype'] = list(schrodingerslist[3].split(" "))[0]
-    specs['interpolnum'] = int(list(schrodingerslist[4].split(" "))[0])
-    xy_dec = list()
-    for ii in range(5, len(schrodingerslist)):
-        xy_dec.append(list(schrodingerslist[ii].split(" ")))
-    new_xy_dec = np.array(xy_dec)
-    specs['interpolxydecs'] = new_xy_dec.astype(np.float)
+    specs['first_ev'] = int(schrodingerslist[2].split()[0])
+    specs['last_ev'] = int(schrodingerslist[2].split()[1])
+    specs['interpoltype'] = schrodingerslist[3].split()[0]
+    specs['interpolnum'] = int(list(schrodingerslist[4].split())[0])
+    specs['interpolxydecs'] = np.loadtxt(inputfilepath, skiprows=5)
 
     return specs
 
