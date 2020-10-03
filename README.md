@@ -39,7 +39,7 @@ The script can be run via the command line
 ./qmsolve -C -V
 ```
 
-- if the package was installed using pip
+- anywhere (if the package was installed using pip)
 ```shell
 qmsolve -C -V
 ```
