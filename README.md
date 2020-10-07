@@ -91,8 +91,8 @@ qm_plottings(datadir, sname='my_plot.png')
 
 ## Documentation
 
-The documentation can be found at [qmpy.org/docs](http://qmpy.org/docs/). If
-you want to create the documentation yourself using sphinx you may do so by
+The documentation can be found at [kenokrieger.github.io/qmpy](http://kenokrieger.github.io/qmpy).
+If you want to create the documentation yourself using sphinx you may do so by
 changing in the docs/ directory and executing the command `make html`.
 
 ## Tests
