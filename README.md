@@ -32,17 +32,15 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 ### Using the script
 
-The script can be run via the command line
-
-- where the file is stored
+The script can be run via the command line by either using
 ```shell
 ./qmsolve -C -V
 ```
-
-- anywhere (if the package was installed using pip)
+where the file is stored, or
 ```shell
 qmsolve -C -V
 ```
+anywhere if the package was installed using pip.
 
 It supports computing energies, wavefunction and expected values for
 the x-coordinate, which is done by selecting the option `-C`. The results may
@@ -91,17 +89,15 @@ qm_plottings(datadir, sname='my_plot.png')
 
 ```
 
-
 ## Documentation
 
 The documentation can be found at [qmpy.org/docs](http://qmpy.org/docs/). If
 you want to create the documentation yourself using sphinx you may do so by
 changing in the docs/ directory and executing the command `make html`.
 
-
 ## Tests
 
-Tests for the module are located in the tests/ directory. The tests can all
+Tests for the package are located in the tests/ directory. The tests can all
 be run via pytest through the command line (`python3 -m pytest` in the
 highest directory).
 
