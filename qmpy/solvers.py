@@ -153,10 +153,8 @@ def _basic_schroedinger(mass, xcords, potential, select_range=None):
 
     """
     delta = np.abs(xcords[0] - xcords[-1]) / (len(xcords) + 1)
-    diag = np.empty((len(potential), ))
-    diag[:] = 1 / (mass * delta ** 2)
-    diag += potential
-    offdiag = np.array([-1 / (2 * mass * delta ** 2)] * (len(potential) - 1))
+    diag = potential + 1 / (mass * delta ** 2)
+    offdiag = -1 / (2 * mass * delta ** 2) * np.ones((len(potential) - 1))
 
     if select_range:
         energies, wfuncs = eigh_tridiagonal(diag, offdiag, select='i',

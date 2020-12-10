@@ -32,17 +32,33 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 ### Using the script
 
+The script requires a configuration file which contains all the necessary
+information about the quantum mechanical system. This file needs to be named
+'schrodinger.inp' and must have the following structure: <\br>
+```
+float # mass
+flaot float float/int # xMin xMax nPoint
+int int # first and last eigenvalue to include in the output
+str # interpolation type
+int # nr. of interpolation points and xy declarations
+float float
+float float
+... ...
+```
+By default qmsolve will look for the 'schrodinger.inp' file in the directory
+where it is run. You can, however, specify the path to the file with the `-i`
+option. <\br>
 The script can be run via the command line by either using
 ```shell
 ./qmsolve -C -V
 ```
-where the file is stored, or
+where the script file is stored, or
 ```shell
 qmsolve -C -V
 ```
 anywhere if the package was installed using pip.
 
-It supports computing energies, wavefunction and expected values for
+It supports computing energies, wavefunctions and expected values for
 the x-coordinate, which is done by selecting the option `-C`. The results may
 also be visualized by selecting `-V`. It also takes numerous optional arguments
 which will be listed when using the `-h` option.
@@ -62,9 +78,12 @@ mass = 2.0
 xcords = linspace(-2, 2, 1999)
 pot = zeros((1999, ))
 
-xcoords = linspace(-2, 2, 1999)
+vals = {'mass': mass,
+        'xcords': xcords,
+        'potential': pot}
+
 # returns the first four energies and wavefunctions
-energies, wfuncs = schroedinger(mass, xcoords, pot, select_range=(0, 3))
+energies, wfuncs = schroedinger(vals, select_range=(0, 3))
 
 # calculate the expected value for the x-coordinate for each state
 expvals = calculate_expval(xcoords, wfuncs)
@@ -82,7 +101,7 @@ from qmpy.graphics import qm_plottings
 
 # directory containing the files potential.dat, energies.dat,
 # wavefuncs.dat, and expvalues.dat.
-datadir = 'myqmdata'
+datadir = 'myqmdata/'
 
 # plot the data and save the plot as 'my_plot.png'
 qm_plottings(datadir, sname='my_plot.png')
