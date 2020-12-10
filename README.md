@@ -110,7 +110,7 @@ qm_plottings(datadir, sname='my_plot.png')
 
 ## Documentation
 
-The documentation can be found at [kenokrieger.github.io/qmpy](http://kenokrieger.github.io/qmpy).
+The documentation can be found at [kenokrieger.github.io/qmpy](http://kenokrieger.github.io/QmPy).
 If you want to create the documentation yourself using sphinx you may do so by
 changing in the docs/ directory and executing the command `make html`.
 
