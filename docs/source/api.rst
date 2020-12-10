@@ -14,25 +14,25 @@ Examples
 
     .. code-block:: python
 
-    from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
-    from numpy import linspace, zeros
+       from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
+       from numpy import linspace, zeros
 
-    mass = 2.0
-    xcords = linspace(-2, 2, 1999)
-    pot = zeros((1999, ))
+       mass = 2.0
+       xcords = linspace(-2, 2, 1999)
+       pot = zeros((1999, ))
 
-    vals = {'mass': mass,
-            'xcords': xcords,
-            'potential': pot}
+       vals = {'mass': mass,
+               'xcords': xcords,
+               'potential': pot}
 
-    # returns the first four energies and wavefunctions
-    energies, wfuncs = schroedinger(vals, select_range=(0, 3))
+       # returns the first four energies and wavefunctions
+       energies, wfuncs = schroedinger(vals, select_range=(0, 3))
 
-    # calculate the expected value for the x-coordinate for each state
-    expvals = calculate_expval(xcoords, wfuncs)
+       # calculate the expected value for the x-coordinate for each state
+       expvals = calculate_expval(xcoords, wfuncs)
 
-    # calculate the uncertainty of the x-coordinate for each state
-    uncs = calculate_uncertainty(xcoords, wfuncs)
+       # calculate the uncertainty of the x-coordinate for each state
+       uncs = calculate_uncertainty(xcoords, wfuncs)
 
 ********
 graphics

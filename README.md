@@ -34,7 +34,7 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 The script requires a configuration file which contains all the necessary
 information about the quantum mechanical system. This file needs to be named
-'schrodinger.inp' and must have the following structure: <\br>
+'schrodinger.inp' and must have the following structure: <br/>
 ```
 float # mass
 flaot float float/int # xMin xMax nPoint
@@ -47,7 +47,7 @@ float float
 ```
 By default qmsolve will look for the 'schrodinger.inp' file in the directory
 where it is run. You can, however, specify the path to the file with the `-i`
-option. <\br>
+option. <br/>
 The script can be run via the command line by either using
 ```shell
 ./qmsolve -C -V
