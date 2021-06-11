@@ -1,4 +1,4 @@
-from qmpy import graphics
-from qmpy import solvers
-from qmpy import _interpolation
-from qmpy import _fileio
+import qmpy.graphics
+import qmpy.solvers
+import qmpy._interpolation
+import qmpy._fileio

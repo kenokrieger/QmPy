@@ -9,7 +9,7 @@ from qmpy._fileio import _readplotsfiles
 
 
 def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
-                 sname='qmpy_plot.pdf'):
+                 sname='qmpy_plot.pdf', show=False):
     """
     Plots the potential, the eigenvalues and the respective
     wave functions as well as the expected values for each eigenvalue,
@@ -64,7 +64,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
     ax2.set(ylim=ylim)
     plt.subplots_adjust(wspace=0.3)
     plt.savefig(sname)
-    plt.show()
+    if show:
+        plt.show()
 
     return fig, ax1, ax2
 
