@@ -60,7 +60,8 @@ class qmSolve():
     """
 
     def __init__(self):
-        description = "Solves the Schrodinger equation and graphicates its results"
+        description = "Solves the Schrodinger equation and graphicates its results.\n" \
+                      "For more information see the README at https://github.com/kenokrieger/QmPy".
         parser = argparse.ArgumentParser(description=description)
         msg = \
 """The script support computing and visualising the results of solving the
