@@ -1,8 +1,8 @@
 # <img src="http://qmpy.org/badges/qmpy_logotext.png" height=60>
 
-<img src="http://qmpy.org/badges/build_passing.svg"> <img src="http://qmpy.org/badges/coverage98.svg">
+<img src="https://github.com/kenokrieger/QmPy/tree/master/_imgs/build_passing.svg"> <img src="https://github.com/kenokrieger/QmPy/tree/master/_imgs/coverage98.svg">
 <img src="https://img.shields.io/github/issues/kenokrieger/QmPy"> <img src="https://img.shields.io/github/commit-activity/m/kenokrieger/QmPy">
-<img src="http://qmpy.org/badges/release.svg"> <img src="http://qmpy.org/badges/license.svg">
+<img src="https://github.com/kenokrieger/QmPy/tree/master/_imgs/release.svg"> <img src="https://github.com/kenokrieger/QmPy/tree/master/_imgs/license.svg">
 
 QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials. Its main purpose is to
@@ -34,34 +34,31 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 The script requires a configuration file which contains all the necessary
 information about the quantum mechanical system. This file needs to be named
-'schrodinger.inp' and must have the following structure: <\br>
+'schrodinger.inp' and must have the following structure: <br/>
 ```
-float # mass
-flaot float float/int # xMin xMax nPoint
-int int # first and last eigenvalue to include in the output
-str # interpolation type
-int # nr. of interpolation points and xy declarations
+mass = float
+xrange = float, float, int
+evrange = int, int
+interpolation = str (can be 'linear', 'polynomial', or 'cspline'))
+/pivots
+(float) (float)
 float float
 float float
 ... ...
+pivots/
 ```
 By default qmsolve will look for the 'schrodinger.inp' file in the directory
 where it is run. You can, however, specify the path to the file with the `-i`
-option. <\br>
-The script can be run via the command line by either using
+option. <br/>
+The script can be run via the command line by using
 ```shell
-./qmsolve -C -V
+./qmsolve
 ```
-where the script file is stored, or
-```shell
-qmsolve -C -V
-```
-anywhere if the package was installed using pip.
 
 It supports computing energies, wavefunctions and expected values for
-the x-coordinate, which is done by selecting the option `-C`. The results may
-also be visualized by selecting `-V`. It also takes numerous optional arguments
-which will be listed when using the `-h` option.
+the x-coordinate, which is invoked with the command `./qmsolve compute`. The results may
+also be visualized by using `./qmsolve visualise`. It also takes numerous optional arguments
+which will be listed when using the `-h` option with one of the commands.
 
 ### Using the modules
 
@@ -110,7 +107,7 @@ qm_plottings(datadir, sname='my_plot.png')
 
 ## Documentation
 
-The documentation can be found at [kenokrieger.github.io/qmpy](http://kenokrieger.github.io/qmpy).
+The documentation can be found at [kenokrieger.github.io/qmpy](http://kenokrieger.github.io/QmPy).
 If you want to create the documentation yourself using sphinx you may do so by
 changing in the docs/ directory and executing the command `make html`.
 

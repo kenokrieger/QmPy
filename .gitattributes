@@ -1,2 +1,4 @@
-tests/* linguist-vendored
+tests/test_data/* linguist-vendored
+tests/coverage/* linguist-vendored
 docs/* linguist-vendored
+_imgs/* linguist-vendored

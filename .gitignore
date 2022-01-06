@@ -4,7 +4,8 @@
 __pycache__/
 dist/
 qmpy_schrodinger.egg-info/
-/build/
+docs/build/
+build/
 badges/
 .cache
 qmpy_plot.pdf

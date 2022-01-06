@@ -6,14 +6,15 @@ equation and graphicate the results
 """
 
 import argparse
+import sys
 import os
 import numpy as np
-from qmpy._fileio import _read_schrodinger, _write_data
+from qmpy._fileio import _read_config, _write_data
 from qmpy.solvers import schroedinger, calculate_expval, calculate_uncertainty
 from qmpy.graphics import qm_plottings
 
 
-def schrodingers_solver():
+class qmSolve():
     """
     Solves the 1D Schrodinger's time-independent equation
     for any type of potential and graphicates its solution. The
@@ -24,41 +25,128 @@ def schrodingers_solver():
     the data needed to solve the equation. The schrodinger.inp file needs to
     have following format:
 
-        (float) # mass
-        (float) (float) (int) # xMin xMax nPoint
-        (int) (int) # first and last eigenvalue to print
-        (str(can be linear, polynomial, or cspline)) # interpolation type
-        (int) # nr. of interpolation points and xy declarations
+        mass = float
+        xrange = float, float, int
+        evrange = int, int
+        interpolation = str (can be 'linear', 'polynomial', or 'cspline'))
+        /pivots
         (float) (float)
+        float float
+        float float
         ...
+        pivots/
 
     Example:
-        2.0 # mass
-        -2.0 2.0 1999 # xMin xMax nPoint
-        1 5 # first and last eigenvalue to print
-        linear # interpolation type
-        2 # nr. of interpolation points and xy declarations
-        -2.0 0.0
-        2.0 0.0
+        # This is an example input file
+        # lines beginning with a # are ignored in the readout.
+
+        # Mass of the system
+        mass = 4.0
+        # xMin xMax nPoint
+        xrange = -20.0, 20.0, 1999
+        # first and last eigenvalue to include in the output
+        evrange = 1, 10
+        # interpolation type
+        interpolation = cspline
+        # declaration of pivots for interpolation
+        /pivots
+        -20.0 35.0
+        -10.0 0.0
+        0.0 2.0
+        10.0 0.0
+        20.0 35.0
+        pivots/
 
     """
-    argsopts = _validate_input(_parsecmd())
 
-    if argsopts['compute']:
-        compute(argsopts)
-        # depending on which option for computing was selected, qm_plottings
-        # will either look for the .dat files in the input or output directory
-        dirname = argsopts['opath']
-        print('Computation was successful.')
-    else:
-        dirname = argsopts['ipath']
+    def __init__(self):
+        description = "Solves the Schrodinger equation and graphicates its results.\n" \
+                      "For more information see the README at https://github.com/kenokrieger/QmPy".
+        parser = argparse.ArgumentParser(description=description)
+        msg = \
+"""The script support computing and visualising the results of solving the
+1 dimensional schrodinger equation for a given set of potential values. Use
+"qmsolve compute" to compute the wavefunctions and energies and "qmsolve visualise"
+to visualise them.
+"""
+        parser.add_argument("command", help=msg)
+        # parse_args defaults to [1:] for args, but you need to
+        # exclude the rest of the args too, or validation will fail
+        args = parser.parse_args(sys.argv[1:2])
+        if not hasattr(self, args.command):
+            print("Unrecognized command")
+            parser.print_help()
+            exit(1)
+        else:
+            argsopts = _validate_input(_parsecmd())
+            # use dispatch pattern to invoke method with same name
+            getattr(self, args.command)(argsopts)
 
-    if argsopts['visualize']:
-        sname = os.path.join(argsopts['opath'], argsopts['namefile'])
+    def compute(self, argsopts):
+        """
+        Computes energies, wavefunctions and expected values for a
+        quantum-mechanical problem and stores its solution in various .dat files.
+
+        Args:
+            argsopts (dict): Dictionary containing the input from the command line.
+
+        Returns:
+            None.
+
+        """
+        schrodingers_path = os.path.join(argsopts["ipath"], "schrodinger.inp")
         try:
-            qm_plottings(dirname, argsopts["autoscale"],
+            specs = _read_config(schrodingers_path)
+            print("Running with configuration")
+            for key, value in specs.items():
+                print("\t{0}: {1}".format(key, value))
+        except FileNotFoundError:
+            msg = "Input file or path was not found."
+            print(msg)
+            exit()
+        except OSError:
+            msg = "Input file could not be read."
+            print(msg)
+            exit()
+        except ValueError as exc:
+            print(exc)
+            exit()
+        else:
+            print("Computing wavefunctions and energies...")
+            vals = dict()
+            vals["mass"] = specs["mass"]
+            vals["xcords"] = specs["pivots"][:, 0]
+            vals['potential'] = specs["pivots"][:, 1]
+            vals['xopt'] = specs["xrange"]
+
+            # translate range into python range starting with 0
+            ev_range = tuple(evidx - 1 for evidx in specs["evrange"])
+            sol = schroedinger(vals, select_range=ev_range, interpol=True,
+                               interpoltype=specs["interpolation"])
+            energies, wfuncs, pot = sol[0], sol[1], sol[2]
+            xcords = pot[:, 0].T
+            savefuncs = np.insert(wfuncs.T, 0, xcords, axis=1)
+            expvals = calculate_expval(xcords, wfuncs)
+            uncertainties = calculate_uncertainty(xcords, wfuncs)
+
+            expvaldata = np.vstack((expvals, uncertainties)).T
+
+            print("Writing output to {0}".format(argsopts["opath"]))
+            _write_data(argsopts["opath"], pot, energies, savefuncs,
+                        expvaldata)
+            print("Done.")
+
+
+    def visualise(self, argsopts):
+        """
+        Visualises the solution of the 1 dimensional schrodinger equation.
+        """
+        sname = os.path.join(argsopts["opath"], argsopts["namefile"])
+        try:
+            print("Starting visualisation...")
+            qm_plottings(argsopts["ipath"], argsopts["autoscale"],
                          argsopts["scale"], argsopts["xrange"],
-                         argsopts["yrange"], sname)
+                         argsopts["yrange"], sname, argsopts["show"])
         except FileNotFoundError:
             msg = 'Input file(s) could not be found.'
             print(msg)
@@ -66,53 +154,8 @@ def schrodingers_solver():
             msg = 'Input file(s) could not be read.'
             print(msg)
         else:
-            print('Visualization was successful.')
-
-
-def compute(argsopts):
-    """
-    Computes energies, wavefunctions and expected values for a
-    quantum-mechanical problem and stores its solution in various .dat files.
-
-    Args:
-        argsopts (dict): Dictionary containing the input from the command line.
-
-    Returns:
-        None.
-
-    """
-    schrodingers_path = os.path.join(argsopts["ipath"], "schrodinger.inp")
-    try:
-        specs = _read_schrodinger(schrodingers_path)
-    except FileNotFoundError:
-        msg = "Input file or path was not found."
-        print(msg)
-        exit()
-    except OSError:
-        msg = "Input file could not be read."
-        print(msg)
-        exit()
-    else:
-        vals = dict()
-        vals['mass'] = specs['mass']
-        vals['xcords'] = specs['interpolxydecs'][:, 0]
-        vals['potential'] = specs['interpolxydecs'][:, 1]
-        vals['xopt'] = specs['xopt']
-
-        # translate range into python range starting with 0
-        ev_range = (specs['first_ev'] - 1, specs['last_ev'] - 1)
-        sol = schroedinger(vals, select_range=ev_range, interpol=True,
-                           interpoltype=specs['interpoltype'])
-        energies, wfuncs, pot = sol[0], sol[1], sol[2]
-        xcords = pot[:, 0].T
-        savefuncs = np.insert(wfuncs.T, 0, xcords, axis=1)
-        expvals = calculate_expval(xcords, wfuncs)
-        uncertainties = calculate_uncertainty(xcords, wfuncs)
-
-        expvaldata = np.vstack((expvals, uncertainties)).T
-
-        _write_data(argsopts["opath"], pot, energies, savefuncs,
-                    expvaldata)
+            print("Done.")
+            print("Generated output file at '{}'".format(sname))
 
 
 def _parsecmd():
@@ -121,15 +164,11 @@ def _parsecmd():
 
     Returns:
         argsopts: Dictionary that contains various options for the command
-        line parsing
+            line parsing.
 
     """
     description = 'Solves the Schrodinger equation and graphicates its results'
     parser = argparse.ArgumentParser(description=description)
-    msg = 'Compute wavefunctions, energies and expected values'
-    parser.add_argument('-C', '--compute', action='store_true', help=msg)
-    msg = 'Visualize the result and save it'
-    parser.add_argument('-V', '--visualize', action='store_true', help=msg)
     msg = "Input directory"
     parser.add_argument('-i', '--idirectory', default='.', help=msg)
     msg = "Output directory"
@@ -146,7 +185,9 @@ def _parsecmd():
     """
     parser.add_argument('-x', '--xrange', default=None, help=msg)
     parser.add_argument('-y', '--yrange', default=None, help=msg)
-    args = parser.parse_args()
+    msg = "Show plot window"
+    parser.add_argument("-v", "--show", default=False, action="store_true", help=msg)
+    args = parser.parse_args(sys.argv[2:])
     return args
 
 
@@ -165,19 +206,12 @@ def _validate_input(args):
             where invalid inputs where set to their default values.
 
     """
-    if not (args.compute or args.visualize):
-        msg = """No option for computation or visualization was selected.
-Use -C for computation and/or -V for visualization."""
-        print(msg)
-        exit()
-
     argsopts = dict()
-    argsopts['compute'] = args.compute
-    argsopts['visualize'] = args.visualize
-    argsopts["ipath"] = args.idirectory
-    argsopts["opath"] = args.odirectory
+    argsopts["ipath"] = os.path.expanduser(args.idirectory)
+    argsopts["opath"] = os.path.expanduser(args.odirectory)
     argsopts["namefile"] = args.namefile
     argsopts['scale'] = args.sfactor
+    argsopts["show"] = args.show
 
     if args.autoscale == 'False':
         argsopts["autoscale"] = False
@@ -205,4 +239,4 @@ Use -C for computation and/or -V for visualization."""
 
 
 if __name__ == "__main__":
-    schrodingers_solver()
+    qmSolve()

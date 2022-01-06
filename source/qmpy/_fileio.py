@@ -7,7 +7,7 @@ import os
 import numpy as np
 
 
-def _read_schrodinger(inputfilepath):
+def _read_config(inputfilepath):
     """Reads the input file "schrodinger.inp" that has the user
     defined data which describes the problem
 
@@ -19,21 +19,90 @@ def _read_schrodinger(inputfilepath):
         mass, x_min, x_max, nPoint, first_EV, last_EV, interpol_type,
         interpol_num, and interpol_xy_decs
     """
-    schrodingerslist = [line.rstrip('\n') for line in open(inputfilepath, 'r')]
-
+    required_keys = ["mass", "xrange", "evrange", "interpolation", "pivots"]
+    pivotlines = [-1, -1]
     specs = dict()
-    specs['mass'] = float(schrodingerslist[0].split()[0])
-    specs['xmin'] = float(schrodingerslist[1].split()[0])
-    specs['xmax'] = float(schrodingerslist[1].split()[1])
-    specs['npoint'] = int(schrodingerslist[1].split()[2])
-    specs['xopt'] = (specs['xmin'], specs['xmax'], specs['npoint'])
-    specs['first_ev'] = int(schrodingerslist[2].split()[0])
-    specs['last_ev'] = int(schrodingerslist[2].split()[1])
-    specs['interpoltype'] = schrodingerslist[3].split()[0]
-    specs['interpolnum'] = int(list(schrodingerslist[4].split())[0])
-    specs['interpolxydecs'] = np.loadtxt(inputfilepath, skiprows=5)
+    transforms = {
+        "mass": float,
+        "xrange": (float, float, int),
+        "evrange": (int, int),
+        "interpolation": str
+    }
+    with open(inputfilepath, 'r') as file:
+        lines = file.readlines()
+        for idx, line in enumerate(lines):
+            # if line is a comment
+            if line[0] == '#':
+                continue
+            else:
+                if "/pivots" in line:
+                    pivotlines[0] = idx + 1
+                elif "pivots/" in line:
+                    pivotlines[1] = idx - pivotlines[0]
+                elif '=' in line:
+                    _add_configuration(line, specs, transforms)
 
-    return specs
+    if any([pivotline < 0 for pivotline in pivotlines]):
+        errmsg = "Missing declaration for start or end of pivots in file '{}'\n" \
+                 "Start of pivot declaration is indicated by '/pivots' and end " \
+                 "by 'pivots/'".format(inputfilepath)
+        raise ValueError(errmsg)
+    else:
+        specs["pivots"] = np.loadtxt(inputfilepath, skiprows=pivotlines[0],
+                                     max_rows=pivotlines[1])
+    missing_keys = _find_missing_keys(specs, required_keys)
+    if missing_keys:
+
+        errmsg = "Missing input value(s): {0} in file '{1}'".format(
+            ", ".join(missing_keys), inputfilepath)
+        raise ValueError(errmsg)
+    else:
+        return specs
+
+
+def _add_configuration(line, specs, transforms):
+    """
+    Takes a line from a configuration file containing a '=' as input. And
+    extracts the name for the key and its value from it. Key and value will be
+    added to the given dictionary and values will be transformed according to
+    the dictionary 'transforms'.
+
+    Args:
+        line(str): The line from the configuration file.
+        specs(dict): The dictionary to add the extracted information to.
+        transforms(dict): Types the the input values shall be casted to.
+            The values of the dict are either cast functions or tuples of
+            cast functions depending on the type of the input value.
+
+    Returns:
+        None.
+
+    """
+    key, value = (arg.strip() for arg in line.split('='))
+    castings = transforms[key]
+
+    if not isinstance(castings, tuple):
+        specs[key] = castings(value)
+    else:
+        specs[key] = tuple(cast(val.strip())
+            for val, cast in zip(value.split(','), castings))
+
+
+def _find_missing_keys(specs, required_keys):
+    """
+    Checks whether all keys in a dictionary exist and have the right values.
+
+    Args:
+        specs(dict): The dictionary to check.
+        required_keys(list): All required keys.
+
+    Returns:
+        A list of missing keys.
+
+    """
+    missing_keys = [item for item in required_keys if item not in specs.keys()]
+    return missing_keys
+
 
 
 def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
