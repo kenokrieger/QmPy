@@ -40,6 +40,9 @@ configuration files to the new syntax. <br/>
 ```shell
 ./parse_legacy_config old_config_filename.inp
 ```
+
+#### Usage
+
 The script requires a configuration file which contains all the necessary
 information about the quantum mechanical system. The data is provided in
 json format. By default the script will search for a file 'qmsolve_config.json'.
