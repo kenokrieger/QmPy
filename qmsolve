@@ -60,8 +60,10 @@ class qmSolve():
     """
 
     def __init__(self):
-        description = "Solves the Schrodinger equation and graphicates its results.\n" \
-                      "For more information see the README at https://github.com/kenokrieger/QmPy".
+        description = "".join((
+            "Solves the Schrodinger equation and graphicates its results.\n",
+            "For more information see the README at https://github.com/kenokrieger/QmPy."
+            ))
         parser = argparse.ArgumentParser(description=description)
         msg = \
 """The script support computing and visualising the results of solving the
@@ -85,10 +87,12 @@ to visualise them.
     def compute(self, argsopts):
         """
         Computes energies, wavefunctions and expected values for a
-        quantum-mechanical problem and stores its solution in various .dat files.
+        quantum-mechanical problem and stores its solution in various .dat
+        files.
 
         Args:
-            argsopts (dict): Dictionary containing the input from the command line.
+            argsopts (dict): Dictionary containing the input from the command
+                line.
 
         Returns:
             None.
@@ -238,5 +242,12 @@ def _validate_input(args):
     return argsopts
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Main function of the script.
+    """
     qmSolve()
+
+
+if __name__ == "__main__":
+    main()
