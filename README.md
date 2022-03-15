@@ -1,8 +1,8 @@
-# <img src="http://qmpy.org/badges/qmpy_logotext.png" height=60>
+# <img src="https://kenokrieger.com/wp-content/uploads/2022/03/qmpy_logotext.png" height=60>
 
-<img src="https://github.com/kenokrieger/QmPy/blob/master/_imgs/build%20passing.svg"> <img src="https://github.com/kenokrieger/QmPy/blob/master/_imgs/coverage98.svg">
-<img src="https://img.shields.io/github/issues/kenokrieger/QmPy"> <img src="https://img.shields.io/github/commit-activity/m/kenokrieger/QmPy">
-<img src="https://github.com/kenokrieger/QmPy/blob/master/_imgs/release.svg"> <img src="https://github.com/kenokrieger/QmPy/blob/master/_imgs/license.svg">
+<img src="https://kenokrieger.com/wp-content/uploads/2022/03/build-passing.png"> <img src="https://img.shields.io/github/issues/kenokrieger/QmPy">
+<img src="https://img.shields.io/github/commit-activity/m/kenokrieger/QmPy"> <img src="https://kenokrieger.com/wp-content/uploads/2022/03/release.png">
+<img src="https://kenokrieger.com/wp-content/uploads/2022/03/license.png">
 
 QmPy is a python package containing routines to numerically solve and visualize
 the schroedinger equation for different potentials. Its main purpose is to
@@ -32,6 +32,14 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 ### Using the script
 
+#### Information for legacy users
+
+In terms of the restructuring in release 3.0.0, the configuration file format
+was changed to json. An additional script is included to convert legacy
+configuration files to the new syntax. <br/>
+```shell
+./parse_legacy_config old_config_filename.inp
+```
 The script requires a configuration file which contains all the necessary
 information about the quantum mechanical system. The data is provided in
 json format. By default the script will search for a file 'qmsolve_config.json'.
@@ -125,7 +133,7 @@ The documentation can be found at
 
 Tests for the package are located in the tests/ directory. The tests can all
 be run via pytest through the command line (`python3 -m pytest` in the
-highest directory).
+highest directory; you may need to update your PYTHONPATH accordingly).
 
 ## Contributing
 
