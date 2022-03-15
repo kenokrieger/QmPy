@@ -1,0 +1,33 @@
+{
+  "computation": {
+    "mass": 2.0,
+    "xrange": {
+      "xmin": -2.0,
+      "xmax": 2.0,
+      "npoint": 1999
+    },
+    "evrange": [
+      1,
+      3
+    ],
+    "interpolation.type": "linear",
+    "potential": {
+      "x.values": [
+        -2.0,
+        -0.5,
+        -0.5,
+        0.5,
+        0.5,
+        2.0
+      ],
+      "y.values": [
+        0.0,
+        0.0,
+        -10.0,
+        -10.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

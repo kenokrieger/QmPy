@@ -1,8 +1,8 @@
 """Contains tests for the private _solvers module"""
-from numpy import insert, loadtxt, allclose
+from numpy import insert, loadtxt, allclose, array
 import pytest
 from qmpy.solvers import schroedinger
-from qmpy._fileio import _read_schrodinger
+from qmpy._fileio import _read_config
 
 
 PROBLEMS = ['inf_potwell', 'fin_potwell', 'double_well', 'asym_potwell',
@@ -16,23 +16,22 @@ def test_computing(problem):
     reference data.
 
     """
-    path = 'tests/test_data/{}.inp'.format(problem)
-    specs = _read_schrodinger(path)
+    path = 'tests/test_data/{}_parsed.inp'.format(problem)
+    specs = _read_config(path)["computation"]
     vals = dict()
-    vals['mass'] = specs['mass']
-    vals['xcords'] = specs['interpolxydecs'][:, 0]
-    vals['potential'] = specs['interpolxydecs'][:, 1]
-    vals['xopt'], kind = (specs['xopt'], specs['interpoltype'])
-
-    evs = (specs['first_ev'] - 1, specs['last_ev'] - 1)
+    vals["mass"] = specs["mass"]
+    vals["xcords"] = array(specs["potential"]["x.values"])
+    vals['potential'] = array(specs["potential"]["y.values"])
+    vals['xopt'] = (
+        specs["xrange"]["xmin"], specs["xrange"]["xmax"],
+        specs["xrange"]["npoint"]
+    )
+    # translate range into python range starting with 0
+    ev_range = tuple(evnr - 1 for evnr in specs["evrange"])
 
     comp_energies, wfuncs, pot = schroedinger(vals, interpol=True,
-                                              interpoltype=kind,
-                                              select_range=evs)
-
-    comp_funcs = insert(wfuncs.T, 0, values=pot[:, 1].T, axis=1)
+                                              interpoltype=specs["interpolation.type"],
+                                              select_range=ev_range)
     ref_energies = loadtxt('tests/test_data/energies_{}.ref'.format(problem))
-    ref_wfuncs = loadtxt('tests/test_data/wfuncs_{}.ref'.format(problem))
 
     assert allclose(ref_energies, comp_energies)
-    assert allclose(ref_wfuncs, comp_funcs)

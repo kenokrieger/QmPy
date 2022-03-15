@@ -1,0 +1,27 @@
+{
+  "computation": {
+    "mass": 4.0,
+    "xrange": {
+      "xmin": -5.0,
+      "xmax": 5.0,
+      "npoint": 1999
+    },
+    "evrange": [
+      1,
+      5
+    ],
+    "interpolation.type": "polynomial",
+    "potential": {
+      "x.values": [
+        -1.0,
+        0.0,
+        1.0
+      ],
+      "y.values": [
+        0.5,
+        0.0,
+        0.5
+      ]
+    }
+  }
+}

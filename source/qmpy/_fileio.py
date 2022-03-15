@@ -14,6 +14,12 @@ KEYS_REQUIRED_FOR_COMPUTATION = [
 KEYS_REQUIRED_FOR_XRANGE = ["xmin", "xmax", "npoint"]
 KEYS_REQUIRED_FOR_POTENTIAL = ["x.values", "y.values"]
 
+DEFAULT_VISUALISATION_CONFIGURATION = {
+    "autoscale": True,
+    "scale": None,
+    "xlim": None,
+    "ylim": None
+}
 
 def _read_config(filename):
     """
@@ -38,6 +44,8 @@ def _read_config(filename):
     if "computation" not in configuration:
         err_msg = "Missing required field 'computation' in configuration file."
         raise ValueError(err_msg)
+    if "visualisation" not in configuration:
+        configuration["visualisation"] = DEFAULT_VISUALISATION_CONFIGURATION
     # if a path to a file instead of explicit values was specified,
     # read values from file
     if type(configuration["computation"].get("potential")) is str:
@@ -59,8 +67,13 @@ def _read_json(filename):
         dict: The parsed data.
 
     """
-    with open(filename, "r") as f:
-        content = f.read()
+    try:
+        with open(filename, "r") as f:
+            content = f.read()
+    except OSError as e:
+        err_msg = "Error reading config file '{}': {}".format(filename, e)
+        print(err_msg)
+        return None
 
     try:
         data = json.loads(content)
@@ -166,6 +179,7 @@ def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
         energdata (array): The data to be written on energies.dat
         wfuncsdata (array): The data to be written on wavefuncs.dat
         expvaldata (array): The data to be written on expvalues.dat
+
     """
     potpath = os.path.join(dirname, "potential.dat")
     energiespath = os.path.join(dirname, "energies.dat")
@@ -194,6 +208,7 @@ def _read_data_files(dirname):
         x-coordinates
         expvaluesdata (array): the expected values with the respective
         uncertainities
+
     """
     potpath = os.path.join(dirname, "potential.dat")
     energiespath = os.path.join(dirname, "energies.dat")

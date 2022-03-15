@@ -1,15 +1,17 @@
-""" Contains functions for plotting the potential, the eigenvalues and the
-    respective wave functions as well as the expected values of the
-    x-coordinate for each eigenvalue, using the data from the files that
-    contain the solution of the problem.
 """
-
+Contains functions for plotting the potential, the eigenvalues and the
+respective wave functions as well as the expected values of the
+x-coordinate for each eigenvalue, using the data from the files that
+contain the solution of the problem.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
+
 from qmpy._fileio import _read_data_files
 
 
-def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
-                 sname='qmpy_plot.pdf', show=False):
+def qm_plot(dirname, auto_scale=True, scale=None, xlim=None,
+            ylim=None, sname='qmpy_plot.pdf', show=False):
     """
     Plots the potential, the eigenvalues and the respective
     wave functions as well as the expected values for each eigenvalue,
@@ -25,17 +27,20 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
         scale (float): Manually set a value for the scale factor. Defaults to
             None.
         xlim (tuple): The limits for the x-axis as a tuple ```(xmin, xmamx)```.
+            Defaults to None.
         ylim (tuple): The limits for the y-axis as a tuple ```(ymin, ymax)```.
+            Defaults to None.
         sname (str): The name for the file to save the plot to. Defaults to
             'qmpy_plot.pdf'.
 
     Return:
-        touple: The figure and axes of the plot. Where ax1 is the left and
-        ax2 is the right subplot.
+        touple: The figure and axes of the plot where ax1 is the left and
+            ax2 is the right subplot.
 
     """
     plot_data = _isolate_plot_data(dirname)
     fig = plt.figure(1)
+
     title = r'Potential, eigenstates, $ \langle x \rangle $'
     ax1 = _make_subplot(fig, 121, title)
     _plot_pot(ax1, plot_data)
@@ -71,7 +76,8 @@ def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
 
 
 def _isolate_plot_data(dirname):
-    """ Isolates the necessary data to plot the potential, the eigenvalues
+    """
+    Isolates the necessary data to plot the potential, the eigenvalues
     and the respective wave functions as well as the expected values
     for each eigenvalue
 
@@ -225,14 +231,16 @@ def _compscale(data):
     """
     wfuncs = data['wfuncs'].T
     energies = data['energies']
-    scale = 1e6  # choose an arbitray large number
+    scale = 1e6  # any arbitray large number
 
     for index in range(len(energies) - 1):
-        new_scale = (energies[index + 1] - energies[index]) / (
-            abs(min(wfuncs[index + 1])) + max(wfuncs[index]))
+        # if the wavefunctions belong to the same eigenvalue
+        if np.abs(energies[index + 1] - energies[index]) < 1e-3:
+            continue
+        new_scale = np.abs(energies[index + 1] - energies[index]) / (
+            np.abs(np.min(wfuncs[index + 1])) + np.max(wfuncs[index]))
         if new_scale < scale:
             scale = new_scale
-
     return scale
 
 
