@@ -5,14 +5,15 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="qmpy-schrodinger",  # Name for PyPI
-    version="2.1.11",
+    version="2.1.14",
     author="Keno Krieger, Helmut Wecke",
     author_email="kriegerk@uni-bremen.de",
     description="Package for numerical solving of the schroedinger equation",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/kenokrieger/QmPy",
-    packages=setuptools.find_packages(),
+    package_dir = {"": "source"},
+    packages=setuptools.find_packages(where="source"),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",
