@@ -5,7 +5,7 @@
 """
 
 import matplotlib.pyplot as plt
-from qmpy._fileio import _readplotsfiles
+from qmpy._fileio import _read_data_files
 
 
 def qm_plottings(dirname, auto_scale=True, scale=None, xlim=None, ylim=None,
@@ -100,14 +100,14 @@ def _isolate_plot_data(dirname):
                 x-coordinate for each state.
 
     """
-    potdata, energdata, wfuncsdata, expvaldata = _readplotsfiles(dirname)
+    potdata, energdata, wfuncsdata, expvaldata = _read_data_files(dirname)
     plot_data = dict()
-    plot_data['xcoords'] = potdata[:, 0].copy()
-    plot_data['pots'] = potdata[:, 1].copy()
+    plot_data['xcoords'] = potdata[:, 0]
+    plot_data['pots'] = potdata[:, 1]
     plot_data['energies'] = energdata
-    plot_data['wfuncs'] = wfuncsdata[:, 1:].copy()
-    plot_data['expvals'] = expvaldata[:, 0].copy()
-    plot_data['uncertainties'] = expvaldata[:, 1].copy()
+    plot_data['wfuncs'] = wfuncsdata[:, 1:]
+    plot_data['expvals'] = expvaldata[:, 0]
+    plot_data['uncertainties'] = expvaldata[:, 1]
 
     return plot_data
 

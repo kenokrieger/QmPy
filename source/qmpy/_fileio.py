@@ -36,7 +36,8 @@ def _read_config(filename):
     if configuration is None:
         raise ValueError("Error when parsing file content.")
     if "computation" not in configuration:
-        raise ValueError("Missing required field 'computation'.")
+        err_msg = "Missing required field 'computation' in configuration file."
+        raise ValueError(err_msg)
     # if a path to a file instead of explicit values was specified,
     # read values from file
     if type(configuration["computation"].get("potential")) is str:
@@ -84,6 +85,7 @@ def _validate_configuration(data):
         ValueError: If keys are missing.
 
     """
+    #recursively check if all keys and 'sub keys' exist
     missing_keys = _find_missing_keys(data["computation"],
                                       KEYS_REQUIRED_FOR_COMPUTATION)
     if missing_keys:
@@ -100,8 +102,12 @@ def _validate_configuration(data):
             )
         raise ValueError(errmsg)
 
-    missing_keys = _find_missing_keys(data["computation"]["potential"],
-                                      KEYS_REQUIRED_FOR_POTENTIAL)
+
+    if type(data["computation"]["potential"]) is not dict:
+        missing_keys = KEYS_REQUIRED_FOR_POTENTIAL
+    else:
+        missing_keys = _find_missing_keys(data["computation"]["potential"],
+                                          KEYS_REQUIRED_FOR_POTENTIAL)
     if missing_keys:
         errmsg = \
             "Missing input value(s) required in field 'potential': {0} ".format(
@@ -121,7 +127,11 @@ def _read_potential(filename):
         dict: The values of the file separated in x and y values.
 
     """
-    data = np.loadtxt(filename)
+    try:
+        data = np.loadtxt(filename)
+    except OSError as e:
+        print("Error when reading data file: '{}".format(e))
+        return None
     return {
         "x.values": data[:, 0],
         "y.values": data[:, 1]
@@ -167,7 +177,7 @@ def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
     np.savetxt(expvaluespath, expvaldata)
 
 
-def _readplotsfiles(dirname):
+def _read_data_files(dirname):
     """Reads the files in the given directory and exports the data needed
     to use the QM_Plottings function on the _graphics module
 
@@ -194,9 +204,3 @@ def _readplotsfiles(dirname):
     wfuncsdata = np.loadtxt(wavefuncspath)
     expvaldata = np.loadtxt(expvaluespath)
     return potdata, energdata, wfuncsdata, expvaldata
-
-
-if __name__ == "__main__":
-    _read_config("schrodinger.json")
-    _read_config("schrodinger2.json")
-    _read_config("schrodinger3.json")

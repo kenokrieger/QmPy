@@ -1,4 +1,4 @@
-Copyright (c) 2021, Keno Krieger, Helmut Wecke.
+Copyright (c) 2022, Keno Krieger, Helmut Wecke.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

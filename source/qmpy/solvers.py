@@ -162,7 +162,7 @@ def _basic_schroedinger(mass, xcords, potential, select_range=None):
     else:
         energies, wfuncs = eigh_tridiagonal(diag, offdiag)
 
-    wfuncs = wfuncs.copy().T
+    wfuncs = wfuncs.T
 
     for index, wfunc in enumerate(wfuncs):
         norm = 1 / np.sqrt(np.sum(wfunc ** 2) * delta)
