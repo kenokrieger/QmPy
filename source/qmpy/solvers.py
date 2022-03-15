@@ -15,9 +15,9 @@ def schroedinger(vals, select_range=None, interpol=False,
     Args:
         vals (dict): Needed values for computation. Necessary keys are:
 
-            - **mass** (*float*) - The mass of the system
+            - **mass** (*float*) - The mass of the system.
             - **xcords** (*1darray*) - The xcoordinates corresponding to the
-                potential values
+                                       potential values.
             - **potential** (*1darray*) - The values of the potential.
 
             Optional keys are:
@@ -31,7 +31,9 @@ def schroedinger(vals, select_range=None, interpol=False,
         select_range (tuple, optional): Indices of the desired eigenvalues as
             tuple ``(ev_min, ev_max)``. Defaults to None meaning all
             eigenvalues are calculated.
+
         interpol (bool): Interpolate the given data points. Defaults to False.
+        
         interpoltype (str, optional): The kind of interpolation to use.
             Accepted options are 'linear', 'cspline' or 'polynomial'. Defaults
             to 'linear'.
@@ -81,12 +83,13 @@ def calculate_expval(xcoords, wfuncs):
        \\int_{x_{min}}^{x_{max}} | \\psi (x) |^2 x dx
 
     Args:
-        xcoords (1darray): Array containing the x-coordinates
-        wfuncs (ndarray): Array containing the wave functions that
-            correspond to the x-coordinates
+        xcoords (1darray): Array containing the x-coordinates.
+
+        wfuncs (ndarray): Array containing the wave functions that correspond to
+            the x-coordinates.
 
     Returns:
-        1darray: The expected values of the x-coordinate
+        1darray: The expected values of the x-coordinate.
 
     """
     delta = np.abs(xcoords[0] - xcoords[-1]) / (len(xcoords) + 1)
@@ -108,7 +111,8 @@ def calculate_uncertainty(xcoords, wfuncs):
     for each wavefunction.
 
     Args:
-        xcoords (1darray): Array containing the x-coordinates
+        xcoords (1darray): Array containing the x-coordinates.
+
         wfuncs (ndarray): Array containing the wave functions that
             correspond to the x-coordinates
 

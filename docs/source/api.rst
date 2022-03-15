@@ -9,8 +9,8 @@ solvers
 .. automodule:: solvers
    :members:
 
-Examples
-========
+Examples:
+=========
 
     .. code-block:: python
 
@@ -41,8 +41,8 @@ graphics
 .. automodule:: graphics
    :members:
 
-Examples
-========
+Examples:
+=========
 
     .. code-block:: python
 

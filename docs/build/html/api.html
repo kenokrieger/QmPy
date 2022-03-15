@@ -1,71 +1,29 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>API-Documentation &#8212; QmPy  documentation</title>
-    <link rel="stylesheet" href="_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript" src="_static/sidebar.js"></script>
-    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="qmsolve" href="qmsolve.html" />
     <link rel="prev" title="Documentation" href="index.html" />
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head><body>
-<div class="topbar">
-  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">Qm</span><span id="logotext2">Py</span><span id="logotext3">:docs</span></a>
-  <ul>
-    
-    <li><a class="homelink" title="Github Repository" href="http://www.github.com/kenokrieger/QmPy"></a></li>
-    <li><a title="General Index" href="genindex.html">Index</a></li>
-    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
-    <li>
-      
-      
-<form action="search.html" method="get">
-  <input type="text" name="q" placeholder="Search" />
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-      
-    </li>
-  </ul>
-</div>
-
-<div class="related">
-    <h3>Navigation</h3>
-    <ul>
-      <li class="right">
-	<a href="qmsolve.html" title="qmsolve">
-	  next &raquo;
-	</a>
-      </li>
-      <li class="right">
-	<a href="index.html" title="Documentation">
-	  &laquo; previous
-	</a>
-	 |
-      </li>
-      <li>
-	<a href="index.html">QmPy  documentation</a>
-	 &#187;
-      </li>
-      
-      <li>API-Documentation</li> 
-    </ul>
-</div>
   
 
     <div class="document">
@@ -78,119 +36,110 @@
 <div class="section" id="module-solvers">
 <span id="solvers"></span><h2>solvers<a class="headerlink" href="#module-solvers" title="Permalink to this headline">¶</a></h2>
 <p>Contains numerical solver routines for the schroedinger equation</p>
-<dl class="py function">
+<dl class="function">
 <dt id="solvers.calculate_expval">
-<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_expval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoords</span></em>, <em class="sig-param"><span class="n">wfuncs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_expval" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">solvers.</code><code class="descname">calculate_expval</code><span class="sig-paren">(</span><em>xcoords</em>, <em>wfuncs</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_expval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the expected values <span class="math notranslate nohighlight">\(&lt;x&gt;\)</span> for the x-coordinate by
 numerically calculating the integral</p>
 <div class="math notranslate nohighlight">
 \[\int_{x_{min}}^{x_{max}} | \psi (x) |^2 x dx\]</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>xcoords</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
-<li><p><strong>wfuncs</strong> (<em>ndarray</em>) – Array containing the wave functions that
-correspond to the x-coordinates</p></li>
-</ul>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">xcoords (1darray): Array containing the x-coordinates.</p>
+<dl class="last docutils">
+<dt>wfuncs (ndarray): Array containing the wave functions that correspond to</dt>
+<dd>the x-coordinates.</dd>
+</dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The expected values of the x-coordinate</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>1darray</p>
-</dd>
+<dt>Returns:</dt>
+<dd>1darray: The expected values of the x-coordinate.</dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="solvers.calculate_uncertainty">
-<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">calculate_uncertainty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">xcoords</span></em>, <em class="sig-param"><span class="n">wfuncs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_uncertainty" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">solvers.</code><code class="descname">calculate_uncertainty</code><span class="sig-paren">(</span><em>xcoords</em>, <em>wfuncs</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.calculate_uncertainty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the uncertainity <span class="math notranslate nohighlight">\(\Delta x\)</span> defined as</p>
 <div class="math notranslate nohighlight">
 \[\Delta x = \sqrt{&lt;x^2&gt; - &lt;x&gt;^2}\]</div>
 <p>for each wavefunction.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>xcoords</strong> (<em>1darray</em>) – Array containing the x-coordinates</p></li>
-<li><p><strong>wfuncs</strong> (<em>ndarray</em>) – Array containing the wave functions that
-correspond to the x-coordinates</p></li>
-</ul>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">xcoords (1darray): Array containing the x-coordinates.</p>
+<dl class="last docutils">
+<dt>wfuncs (ndarray): Array containing the wave functions that</dt>
+<dd>correspond to the x-coordinates</dd>
+</dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The uncertainity of the x-coordinate.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>1darray</p>
-</dd>
+<dt>Returns:</dt>
+<dd>1darray: The uncertainity of the x-coordinate.</dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="solvers.schroedinger">
-<code class="sig-prename descclassname">solvers.</code><code class="sig-name descname">schroedinger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vals</span></em>, <em class="sig-param"><span class="n">select_range</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">interpol</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">interpoltype</span><span class="o">=</span><span class="default_value">'linear'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.schroedinger" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">solvers.</code><code class="descname">schroedinger</code><span class="sig-paren">(</span><em>vals</em>, <em>select_range=None</em>, <em>interpol=False</em>, <em>interpoltype='linear'</em><span class="sig-paren">)</span><a class="headerlink" href="#solvers.schroedinger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Solves the 1-dimensional schroedinger equation for given numerical
 values of x-coordinates and the corresponding value of the potential.
 It also supports interpolation of the given data points aswell as settings
 for higher accuracy.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>vals</strong> (<em>dict</em>) – <p>Needed values for computation. Necessary keys are:</p>
-<ul>
-<li><p><strong>mass</strong> (<em>float</em>) - The mass of the system</p></li>
-<li><dl class="simple">
-<dt><strong>xcords</strong> (<em>1darray</em>) - The xcoordinates corresponding to the</dt><dd><p>potential values</p>
-</dd>
-</dl>
-</li>
-<li><p><strong>potential</strong> (<em>1darray</em>) - The values of the potential.</p></li>
-</ul>
-<p>Optional keys are:</p>
-<ul>
-<li><dl class="simple">
-<dt><strong>xopt</strong> (<em>tuple</em>) - Options for the x-range of the output of</dt><dd><p>form <code class="docutils literal notranslate"><span class="pre">(xmin,</span> <span class="pre">xmax,</span> <span class="pre">npoints)</span></code>. If vals does not have a key
-named ‘xopt’ he range of the xcords-array and 1999 points
-will be used for the interpolation (if interpol is set to
-True).</p>
-</dd>
-</dl>
-</li>
-</ul>
-</p></li>
-<li><p><strong>select_range</strong> (<em>tuple</em><em>, </em><em>optional</em>) – Indices of the desired eigenvalues as
-tuple <code class="docutils literal notranslate"><span class="pre">(ev_min,</span> <span class="pre">ev_max)</span></code>. Defaults to None meaning all
-eigenvalues are calculated.</p></li>
-<li><p><strong>interpol</strong> (<em>bool</em>) – Interpolate the given data points. Defaults to False.</p></li>
-<li><p><strong>interpoltype</strong> (<em>str</em><em>, </em><em>optional</em>) – The kind of interpolation to use.
-Accepted options are ‘linear’, ‘cspline’ or ‘polynomial’. Defaults
-to ‘linear’.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p><code class="docutils literal notranslate"><span class="pre">(energies,</span> <span class="pre">wfuncs,</span> <span class="pre">pot)</span></code></p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">vals (dict): Needed values for computation. Necessary keys are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><strong>energies</strong> (<em>1darray</em>) - The energy levels of each
-wavefunction. The entries correspond to the rows in wfuncs.</p></li>
-<li><p><strong>wfuncs</strong> (<em>ndarray</em>) - Array where each row contains the
-numerical value of a computed  normalized wavefunction. Each
-column corresponds to one x-coordinate of the input array.</p></li>
-<li><p><strong>pot</strong> (<em>2darray or None</em>) - The interpolated values of x- and
-y-coordinates. If interpol is set to False None will be returned
-instead.</p></li>
+<li><strong>mass</strong> (<em>float</em>) - The mass of the system.</li>
+<li><dl class="first docutils">
+<dt><strong>xcords</strong> (<em>1darray</em>) - The xcoordinates corresponding to the</dt>
+<dd>potential values.</dd>
+</dl>
+</li>
+<li><strong>potential</strong> (<em>1darray</em>) - The values of the potential.</li>
+</ul>
+<p>Optional keys are:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><strong>xopt</strong> (<em>tuple</em>) - Options for the x-range of the output of</dt>
+<dd>form <code class="docutils literal notranslate"><span class="pre">(xmin,</span> <span class="pre">xmax,</span> <span class="pre">npoints)</span></code>. If vals does not have a key
+named ‘xopt’ he range of the xcords-array and 1999 points
+will be used for the interpolation (if interpol is set to
+True).</dd>
+</dl>
+</li>
 </ul>
 </div></blockquote>
-</p>
+<dl class="docutils">
+<dt>select_range (tuple, optional): Indices of the desired eigenvalues as</dt>
+<dd>tuple <code class="docutils literal notranslate"><span class="pre">(ev_min,</span> <span class="pre">ev_max)</span></code>. Defaults to None meaning all
+eigenvalues are calculated.</dd>
+</dl>
+<p>interpol (bool): Interpolate the given data points. Defaults to False.</p>
+<dl class="last docutils">
+<dt>interpoltype (str, optional): The kind of interpolation to use.</dt>
+<dd>Accepted options are ‘linear’, ‘cspline’ or ‘polynomial’. Defaults
+to ‘linear’.</dd>
+</dl>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>touple</p>
+<dt>Returns:</dt>
+<dd><p class="first">touple: <code class="docutils literal notranslate"><span class="pre">(energies,</span> <span class="pre">wfuncs,</span> <span class="pre">pot)</span></code></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><strong>energies</strong> (<em>1darray</em>) - The energy levels of each
+wavefunction. The entries correspond to the rows in wfuncs.</li>
+<li><strong>wfuncs</strong> (<em>ndarray</em>) - Array where each row contains the
+numerical value of a computed  normalized wavefunction. Each
+column corresponds to one x-coordinate of the input array.</li>
+<li><strong>pot</strong> (<em>2darray or None</em>) - The interpolated values of x- and
+y-coordinates. If interpol is set to False None will be returned
+instead.</li>
+</ul>
+</div></blockquote>
 </dd>
 </dl>
 </dd></dl>
 
 <div class="section" id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<h3>Examples:<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qmpy.solvers</span> <span class="kn">import</span> <span class="n">schroedinger</span><span class="p">,</span> <span class="n">calculate_expval</span><span class="p">,</span> <span class="n">calculate_uncertainty</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">zeros</span>
@@ -222,41 +171,42 @@ instead.</p></li>
 respective wave functions as well as the expected values of the
 x-coordinate for each eigenvalue, using the data from the files that
 contain the solution of the problem.</p>
-<dl class="py function">
-<dt id="graphics.qm_plottings">
-<code class="sig-prename descclassname">graphics.</code><code class="sig-name descname">qm_plottings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dirname</span></em>, <em class="sig-param"><span class="n">auto_scale</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">scale</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">xlim</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ylim</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sname</span><span class="o">=</span><span class="default_value">'qmpy_plot.pdf'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#graphics.qm_plottings" title="Permalink to this definition">¶</a></dt>
+<dl class="function">
+<dt id="graphics.qm_plot">
+<code class="descclassname">graphics.</code><code class="descname">qm_plot</code><span class="sig-paren">(</span><em>dirname</em>, <em>auto_scale=True</em>, <em>scale=None</em>, <em>xlim=None</em>, <em>ylim=None</em>, <em>sname='qmpy_plot.pdf'</em>, <em>show=False</em><span class="sig-paren">)</span><a class="headerlink" href="#graphics.qm_plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the potential, the eigenvalues and the respective
 wave functions as well as the expected values for each eigenvalue,
 using the data from the files that contain the solution of the problem.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dirname</strong> (<em>str</em>) – Name of the directory or path from which
-the files are going to be plotted. The directory must have
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>dirname(str): Name of the directory or path from which</dt>
+<dd>the files are going to be plotted. The directory must have
 the four following files: potential.dat, energies.dat,
-wavefuncs.dat, and expvalues.dat.</p></li>
-<li><p><strong>auto_scale</strong> (<em>bool</em>) – Automatically scale the wavefunctions. Defaults to
-True.</p></li>
-<li><p><strong>scale</strong> (<em>float</em>) – Manually set a value for the scale factor. Defaults to
-None.</p></li>
-<li><p><strong>xlim</strong> (<em>tuple</em>) – The limits for the x-axis as a tuple <code class="docutils literal notranslate"><span class="pre">`(xmin,</span> <span class="pre">xmamx)`</span></code>.</p></li>
-<li><p><strong>ylim</strong> (<em>tuple</em>) – The limits for the y-axis as a tuple <code class="docutils literal notranslate"><span class="pre">`(ymin,</span> <span class="pre">ymax)`</span></code>.</p></li>
-<li><p><strong>sname</strong> (<em>str</em>) – The name for the file to save the plot to. Defaults to
-‘qmpy_plot.pdf’.</p></li>
-</ul>
+wavefuncs.dat, and expvalues.dat.</dd>
+<dt>auto_scale (bool): Automatically scale the wavefunctions. Defaults to</dt>
+<dd>True.</dd>
+<dt>scale (float): Manually set a value for the scale factor. Defaults to</dt>
+<dd>None.</dd>
+<dt>xlim (tuple): The limits for the x-axis as a tuple <code class="docutils literal notranslate"><span class="pre">(xmin,</span> <span class="pre">xmamx)</span></code>.</dt>
+<dd>Defaults to None.</dd>
+<dt>ylim (tuple): The limits for the y-axis as a tuple <code class="docutils literal notranslate"><span class="pre">(ymin,</span> <span class="pre">ymax)</span></code>.</dt>
+<dd>Defaults to None.</dd>
+<dt>sname (str): The name for the file to save the plot to. Defaults to</dt>
+<dd>‘qmpy_plot.pdf’.</dd>
+</dl>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The figure and axes of the plot. Where ax1 is the left and
-ax2 is the right subplot.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>touple</p>
+<dt>Return:</dt>
+<dd><dl class="first last docutils">
+<dt>touple: The figure and axes of the plot where ax1 is the left and</dt>
+<dd>ax2 is the right subplot.</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
 
-<div class="section" id="id1">
-<h3>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="examples-1">
+<h3>Examples:<a class="headerlink" href="#examples-1" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qmpy.graphics</span> <span class="kn">import</span> <span class="n">qm_plottings</span>
 
@@ -274,58 +224,63 @@ ax2 is the right subplot.</p>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">QmPy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API-Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
 <ul>
-<li><a class="reference internal" href="#">API-Documentation</a><ul>
-<li><a class="reference internal" href="#module-solvers">solvers</a><ul>
-<li><a class="reference internal" href="#examples">Examples</a></li>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Documentation</a></li>
+  </ul></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#module-graphics">graphics</a><ul>
-<li><a class="reference internal" href="#id1">Examples</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Documentation</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="qmsolve.html"
-                        title="next chapter">qmsolve</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/api.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<form action="search.html" method="get">
-  <input type="text" name="q" placeholder="Search" />
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-<footer class="footer">
-  <p class="pull-right">
-    <a href="_sources/api.rst.txt"
-       rel="nofollow">Page Source</a> &nbsp;
-    <a href="#">Back to Top</a></p>
-  <p>
-    &copy; Copyright 2020, Helmut Wecke, Keno Krieger.<br/>
-    Created using <a href="http://www.sphinx-doc.org/en/stable/">Sphinx</a> 3.1.2. &nbsp;
-  </p>
-</footer>
+    <div class="footer">
+      &copy;2022, Keno Krieger, Helmut Wecke.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
   </body>
 </html>

@@ -34,14 +34,6 @@ For easy installation with pip use:
    pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 
 
-Executable Script
-*****************
-
-.. toctree::
-   :maxdepth: 1
-
-   qmsolve
-
 Indices and tables
 ******************
 

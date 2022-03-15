@@ -26,9 +26,9 @@ def qm_plot(dirname, auto_scale=True, scale=None, xlim=None,
             True.
         scale (float): Manually set a value for the scale factor. Defaults to
             None.
-        xlim (tuple): The limits for the x-axis as a tuple ```(xmin, xmamx)```.
+        xlim (tuple): The limits for the x-axis as a tuple ``(xmin, xmamx)``.
             Defaults to None.
-        ylim (tuple): The limits for the y-axis as a tuple ```(ymin, ymax)```.
+        ylim (tuple): The limits for the y-axis as a tuple ``(ymin, ymax)``.
             Defaults to None.
         sname (str): The name for the file to save the plot to. Defaults to
             'qmpy_plot.pdf'.

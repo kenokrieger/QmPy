@@ -17,8 +17,8 @@ algorithms.
 
 ## Requirements
 
-This package requires Python 3.6 or higher and the packages numpy, scipy,
-matplotlib and os.
+This package requires Python 3.6 or higher and the packages numpy, scipy and
+matplotlib.
 
 ## Installation
 
@@ -33,32 +33,43 @@ pip install -i https://test.pypi.org/simple/ qmpy-schrodinger
 ### Using the script
 
 The script requires a configuration file which contains all the necessary
-information about the quantum mechanical system. This file needs to be named
-'schrodinger.inp' and must have the following structure: <br/>
+information about the quantum mechanical system. The data is provided in
+json format. By default the script will search for a file 'qmsolve_config.json'.
+An example of such a file is included below. <br/>
+```json
+{
+  "computation": {
+    "mass": 4.0,
+    "xrange": {
+      "xmin": -20.0,
+      "xmax":  20.0,
+      "npoint": 1999
+    },
+    "evrange": [1, 10],
+    "interpolation.type": "cspline",
+    "potential": {
+      "x.values": [-20.0, -10.0, 0.0, 10.0, 20.0],
+      "y.values": [35.0, 0.0, 2.0, 0.0, 35.0]
+    }
+  },
+  "visualisation": {
+    "autoscale": true,
+    "scale": null,
+    "xlim": null,
+    "ylim": null
+  }
+}
 ```
-mass = float
-xrange = float, float, int
-evrange = int, int
-interpolation = str (can be 'linear', 'polynomial', or 'cspline'))
-/pivots
-(float) (float)
-float float
-float float
-... ...
-pivots/
-```
-By default qmsolve will look for the 'schrodinger.inp' file in the directory
-where it is run. You can, however, specify the path to the file with the `-i`
-option. <br/>
-The script can be run via the command line by using
+The field 'visualisation' is entirely optional and just for customisation
+purposes. The script can be run via the command line by using
 ```shell
 ./qmsolve
 ```
-
 It supports computing energies, wavefunctions and expected values for
-the x-coordinate, which is invoked with the command `./qmsolve compute`. The results may
-also be visualized by using `./qmsolve visualise`. It also takes numerous optional arguments
-which will be listed when using the `-h` option with one of the commands.
+the x-coordinate, which is invoked with the command `./qmsolve compute`. The
+results may also be visualized by using `./qmsolve visualise`. It also takes
+numerous optional arguments which will be listed when using the `-h` option with
+one of the commands.
 
 ### Using the modules
 
@@ -107,9 +118,8 @@ qm_plottings(datadir, sname='my_plot.png')
 
 ## Documentation
 
-The documentation can be found at [kenokrieger.github.io/qmpy](http://kenokrieger.github.io/QmPy).
-If you want to create the documentation yourself using sphinx you may do so by
-changing in the docs/ directory and executing the command `make html`.
+The documentation can be found at
+[kenokrieger.com/code_projects/qmpy](https://kenokrieger.com/code_projects/qmpy).
 
 ## Tests
 
