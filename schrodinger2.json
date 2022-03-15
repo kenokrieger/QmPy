@@ -1,0 +1,14 @@
+{
+  "computation": {
+    "mass": 4.0,
+    "xrange": {
+      "xmin": -20.0,
+      "xmax":  20.0,
+      "npoint": 1999
+    },
+    "evrange": [1, 10],
+    "interpolation.type": "cspline",
+    "potential": "potential.inp"
+  },
+  "visualisation": null
+}

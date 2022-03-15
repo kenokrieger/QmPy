@@ -5,104 +5,143 @@ Schrodinger's equation into an output file.
 """
 import os
 import numpy as np
+import json
+from json.decoder import JSONDecodeError
+
+KEYS_REQUIRED_FOR_COMPUTATION = [
+    "mass", "xrange", "evrange", "interpolation.type", "potential"
+]
+KEYS_REQUIRED_FOR_XRANGE = ["xmin", "xmax", "npoint"]
+KEYS_REQUIRED_FOR_POTENTIAL = ["x.values", "y.values"]
 
 
-def _read_config(inputfilepath):
-    """Reads the input file "schrodinger.inp" that has the user
-    defined data which describes the problem
+def _read_config(filename):
+    """
+    Extracts information for compuation and visualisation from a configuration
+    file.
 
     Args:
-        inputfilepath (str): Path of the file which is going to be read
+        filename(str or path): The path to the file.
+
+    Return:
+        dict: The configuration as a dictionary.
+
+    Raises:
+        ValueError: If an exception while parsing occured or the configuration
+            is missing required entries.
+
+    """
+    configuration = _read_json(filename)
+
+    if configuration is None:
+        raise ValueError("Error when parsing file content.")
+    if "computation" not in configuration:
+        raise ValueError("Missing required field 'computation'.")
+    # if a path to a file instead of explicit values was specified,
+    # read values from file
+    if type(configuration["computation"].get("potential")) is str:
+        potential = _read_potential(configuration["computation"]["potential"])
+        configuration["computation"]["potential"] = potential
+
+    _validate_configuration(configuration)
+    return configuration
+
+
+def _read_json(filename):
+    """
+    Parses the json configuration data to a python dictionary.
+
+    Args:
+        filename(str or path): The path to the file.
 
     Returns:
-        specs (dict): A dictionary that contains the different parameters :
-        mass, x_min, x_max, nPoint, first_EV, last_EV, interpol_type,
-        interpol_num, and interpol_xy_decs
+        dict: The parsed data.
+
     """
-    required_keys = ["mass", "xrange", "evrange", "interpolation", "pivots"]
-    pivotlines = [-1, -1]
-    specs = dict()
-    transforms = {
-        "mass": float,
-        "xrange": (float, float, int),
-        "evrange": (int, int),
-        "interpolation": str
-    }
-    with open(inputfilepath, 'r') as file:
-        lines = file.readlines()
-        for idx, line in enumerate(lines):
-            # if line is a comment
-            if line[0] == '#':
-                continue
-            else:
-                if "/pivots" in line:
-                    pivotlines[0] = idx + 1
-                elif "pivots/" in line:
-                    pivotlines[1] = idx - pivotlines[0]
-                elif '=' in line:
-                    _add_configuration(line, specs, transforms)
+    with open(filename, "r") as f:
+        content = f.read()
 
-    if any([pivotline < 0 for pivotline in pivotlines]):
-        errmsg = "Missing declaration for start or end of pivots in file '{}'\n" \
-                 "Start of pivot declaration is indicated by '/pivots' and end " \
-                 "by 'pivots/'".format(inputfilepath)
-        raise ValueError(errmsg)
-    else:
-        specs["pivots"] = np.loadtxt(inputfilepath, skiprows=pivotlines[0],
-                                     max_rows=pivotlines[1])
-    missing_keys = _find_missing_keys(specs, required_keys)
-    if missing_keys:
-
-        errmsg = "Missing input value(s): {0} in file '{1}'".format(
-            ", ".join(missing_keys), inputfilepath)
-        raise ValueError(errmsg)
-    else:
-        return specs
+    try:
+        data = json.loads(content)
+    except JSONDecodeError as e:
+        print("Decode error when parsing file '{}': {}".format(filename, e))
+        return None
+    return data
 
 
-def _add_configuration(line, specs, transforms):
+def _validate_configuration(data):
     """
-    Takes a line from a configuration file containing a '=' as input. And
-    extracts the name for the key and its value from it. Key and value will be
-    added to the given dictionary and values will be transformed according to
-    the dictionary 'transforms'.
+    Checks if all the values needed for computation and visualisation
+    were provided in the input and that they have the correct type.
 
     Args:
-        line(str): The line from the configuration file.
-        specs(dict): The dictionary to add the extracted information to.
-        transforms(dict): Types the the input values shall be casted to.
-            The values of the dict are either cast functions or tuples of
-            cast functions depending on the type of the input value.
+        data(dict): The configuration to validate.
 
     Returns:
         None.
 
-    """
-    key, value = (arg.strip() for arg in line.split('='))
-    castings = transforms[key]
+    Raises:
+        ValueError: If keys are missing.
 
-    if not isinstance(castings, tuple):
-        specs[key] = castings(value)
-    else:
-        specs[key] = tuple(cast(val.strip())
-            for val, cast in zip(value.split(','), castings))
+    """
+    missing_keys = _find_missing_keys(data["computation"],
+                                      KEYS_REQUIRED_FOR_COMPUTATION)
+    if missing_keys:
+        errmsg = "Missing input value(s) required for computation: {0} ".format(
+            ", ".join(missing_keys))
+        raise ValueError(errmsg)
+
+    missing_keys = _find_missing_keys(data["computation"]["xrange"],
+                                      KEYS_REQUIRED_FOR_XRANGE)
+    if missing_keys:
+        errmsg = \
+            "Missing input value(s) required in field 'xrange': {0} ".format(
+                ", ".join(missing_keys)
+            )
+        raise ValueError(errmsg)
+
+    missing_keys = _find_missing_keys(data["computation"]["potential"],
+                                      KEYS_REQUIRED_FOR_POTENTIAL)
+    if missing_keys:
+        errmsg = \
+            "Missing input value(s) required in field 'potential': {0} ".format(
+            ", ".join(missing_keys)
+            )
+        raise ValueError(errmsg)
+
+
+def _read_potential(filename):
+    """
+    Reads the values for the potential from a data file.
+
+    Args:
+        filename(str or path): The path to the data file.
+
+    Returns:
+        dict: The values of the file separated in x and y values.
+
+    """
+    data = np.loadtxt(filename)
+    return {
+        "x.values": data[:, 0],
+        "y.values": data[:, 1]
+    }
 
 
 def _find_missing_keys(specs, required_keys):
     """
-    Checks whether all keys in a dictionary exist and have the right values.
+    Given a list of keys and a dictionary, find keys missing in the dictionary.
 
     Args:
         specs(dict): The dictionary to check.
         required_keys(list): All required keys.
 
     Returns:
-        A list of missing keys.
+        list: A list of missing keys.
 
     """
-    missing_keys = [item for item in required_keys if item not in specs.keys()]
+    missing_keys = [item for item in required_keys if item not in specs]
     return missing_keys
-
 
 
 def _write_data(dirname, potdata, energdata, wfuncsdata, expvaldata):
@@ -155,3 +194,9 @@ def _readplotsfiles(dirname):
     wfuncsdata = np.loadtxt(wavefuncspath)
     expvaldata = np.loadtxt(expvaluespath)
     return potdata, energdata, wfuncsdata, expvaldata
+
+
+if __name__ == "__main__":
+    _read_config("schrodinger.json")
+    _read_config("schrodinger2.json")
+    _read_config("schrodinger3.json")
