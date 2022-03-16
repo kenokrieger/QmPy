@@ -116,14 +116,14 @@ Plotting numerical data contained in a directory
 
 ```python
 
-from qmpy.graphics import qm_plottings
+from qmpy.graphics import qm_plot
 
 # directory containing the files potential.dat, energies.dat,
 # wavefuncs.dat, and expvalues.dat.
 datadir = 'myqmdata/'
 
 # plot the data and save the plot as 'my_plot.png'
-qm_plottings(datadir, sname='my_plot.png')
+qm_plot(datadir, sname='my_plot.png')
 
 ```
 
